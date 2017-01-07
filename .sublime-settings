@@ -1,0 +1,35 @@
+{
+	"auto_complete_commit_on_tab": true,
+	"bold_folder_labels": false,
+	"color_scheme": "Packages/Theme - Cobalt2/cobalt2.tmTheme",
+	"file_exclude_patterns":
+	[
+		".*"
+	],
+	"folder_exclude_patterns":
+	[
+		"node*",
+		".git",
+		"dist",
+		"lib",
+		"www"
+	],
+	"font_face": "Menlo Regular",
+	"font_size": 12,
+	"highlight_line": true,
+	"highlight_modified_tabs": true,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"indent_guide_options":
+	[
+		"draw_normal",
+		"draw_active"
+	],
+	"margin": -5,
+	"scroll_past_end": true,
+	"tab_size": 2,
+	"theme": "Cobalt2.sublime-theme",
+	"word_wrap": "true"
+}

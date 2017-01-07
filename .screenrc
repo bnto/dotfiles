@@ -1,0 +1,51 @@
+# .screenrc
+
+# Sets the number of colours used by the terminal emulator
+term screen-256color
+
+# Enable mouse scrolling and scroll bar history scrolling
+termcapinfo xterm* ti@:te@
+
+# login shell
+#deflogin on
+#shell "-/bin/bash"
+shell -$SHELL
+
+# Start Screen numbering at 1 instead of 0
+bind c screen 1
+bind ^c screen 1
+bind 0 select 10                                                            
+screen 1
+
+# Remove the Startup Message, and switch off the audible bell
+startup_message off
+vbell on
+vbell_msg " *beep* "
+
+# If a window goes unresponsive, don't block the whole session waiting for it.
+nonblock on
+
+# This sets the scrollback buffer in lines
+#defscrollback 2048
+
+# emulate .logout message
+#pow_detach_msg "Screen session of $LOGNAME $:cr:$:nl:ended."
+
+# others
+encoding UTF-8 UTF-8
+defutf8 on
+#autodetach on
+#nethack on
+#defkanji euc
+#markkeys "h=^B:l=^F:$=^E"
+
+hardstatus lastline "%H | %-w%{+b r}%n %t%{-}%+w"
+
+
+# Add the Windows List to the bottom of the terminal, as well as the status line
+hardstatus alwayslastline
+hardstatus string '%{= kG}%-Lw%{= kW}%50> %n*%f %t%{= kG}%+Lw%< %{= kG}%-=%D %m/%d/%y | %C:%s %A'
+
+# use shift + right/left arrow to switch screens
+bindkey ^[[1;2D prev
+bindkey ^[[1;2C next
