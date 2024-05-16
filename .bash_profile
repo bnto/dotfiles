@@ -1,68 +1,62 @@
 # .bash_profile
 
-alias dev='cd ~/Documents/dev/'
-alias twiss='node ~/Documents/dev/018-twitch-status/mylist.js'
-alias cloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
-alias todo='cat ~/Documents/goals-of-the-week/README.md'
-alias resume='screen -R'
-alias tree='tree -I "node_modules"'
+## replace default shell with bash: chsh -s /bin/bash
 
-take(){ mkdir "$1" && cd "$1" ;}
-twitch() { livestreamer -v --player /Applications/mpv.app/Contents/MacOS/mpv twitch.tv/"$1" "$2" --twitch-oauth-token= ;}
-twee(){ node ~/Documents/dev/020-latest-tweets/small.js "$1" ;}
-gaf() { node ~/Documents/dev/022-belong/gaf.short.js ;}
-gafo() { node ~/Documents/dev/022-belong/gafo.short.js ;}
-killscreens () {
-    screen -ls | grep Detached | cut -d. -f1 | awk '{print $1}' | xargs kill
-}
+export BASH_SILENCE_DEPRECATION_WARNING=1
+export EDITOR=nvim
 
--(){ cd - ;}
-function ht { history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head ;}
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
+if [ -f ~/.git-completion.bash ]; then
+. ~/.git-completion.bash
+fi
 
-# Include Z, yo
-# . ~/.z.sh
+# aliases
+alias ll="ls -ahl"
+alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+alias ..="cd .."
 
+alias vim="nvim"
+alias v="nvim"
 
-PS1="\[\e[37;44m\] \[\e[m\]\[\e[37;44m\]\w\[\e[m\]\[\e[37;44m\] \[\e[m\] "
+alias gs="git status"
 
+alias lofi="streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' -v"
+alias lofi-vg="streamlink https://youtu.be/re_K5hDjd1M worst -p mpv -a '--no-video --volume=50' -v"
+alias lofi-tendo="streamlink https://youtu.be/mSDmr86MdHw worst -p mpv -a '--no-video --volume=50' -v"
 
-# ADD A RANDOM EMOJI TO THE CML
-emojis=(🐶 🦁 🐱 🐭 🐹 🐰 🐸 🐯 🐨 🐻 🐷 🐮 🐵 🐼 🐙)
-emoji='`echo ${emojis[$RANDOM % 15]}`'
-PS1+="$emoji  \[\e[0m\]"
+# Launch Twitch Stream
+tw() { streamlink twitch.tv/"$1" ${2:-480p} -p mpv ;}
 
+# Start line with a random emoji
+emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙)
+emoji='`echo ${emojis[$RANDOM % 16]}`'
 
-#PS1+="\033[32m\]\$(parse_git_branch) \[\033[00m\]"
+PS1="$emoji \[\e[37;44m\] \[\e[m\]\[\e[37;44m\]\w\[\e[m\]\[\e[37;44m\] \[\e[m\]"
+PS1+=" \[\e[0m\]"
+
 export PS1
 
-
-welcome() {
-    #echo -ne; date +"%l:%M %p %A";
-    [ $[ $RANDOM % 25 ] == 0 ] && fortune | cowsay && echo "";
-    #[ $[ $RANDOM % 25 ] == 0 ] && gaf ;
-    #[ $[ $RANDOM % 25 ] == 0 ] && gafo ;
+# Launch NVM
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && nvm() {
+  . "$NVM_DIR/nvm.sh" # This loads nvm
+  nvm list
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 }
-welcome;
 
+# fzf
+eval "$(fzf --bash)"
 
-#OH-MY-GIT config
-#source /Users/christophe/.oh-my-git/prompt.sh
-omg_is_a_git_repo_symbol='🐸'
-omg_has_untracked_files_symbol='💧'
-omg_has_adds_symbol='➕'
-omg_has_deletions_symbol='➖'
-omg_has_cached_deletions_symbol='❌'
-omg_has_modifications_symbol='✏️'
-omg_has_cached_modifications_symbol='📝'
-omg_ready_to_commit_symbol='➡️'
-omg_is_on_a_tag_symbol='🏷'
-omg_needs_to_merge_symbol='ᄉ'
-omg_detached_symbol='💔'
-omg_can_fast_forward_symbol='⏩'
-omg_has_diverged_symbol=''
-omg_not_tracked_branch_symbol='🖥'
-omg_rebase_tracking_branch_symbol='🔧'
-omg_merge_tracking_branch_symbol='🌱 '
-omg_should_push_symbol='⏫'
-omg_has_stashes_symbol='🌟'
+# -- Use fd instead of fzf --
+export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
+
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
