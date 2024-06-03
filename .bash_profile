@@ -4,6 +4,7 @@
 
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export EDITOR=nvim
+export HISTCONTROL=ignoreboth:erasedups
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -13,13 +14,18 @@ fi
 
 # aliases
 alias ll="ls -ahl"
-alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 alias ..="cd .."
+
+alias cp="cp -i"
+alias mv="mv -i"
+
+alias grep="grep --color=auto"
 
 alias vim="nvim"
 alias v="nvim"
 
 alias gs="git status"
+alias log="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 
 alias lofi="streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' -v"
 alias lofi-vg="streamlink https://youtu.be/re_K5hDjd1M worst -p mpv -a '--no-video --volume=50' -v"
