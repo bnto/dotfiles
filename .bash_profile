@@ -6,6 +6,9 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export EDITOR=nvim
 export HISTCONTROL=ignoreboth:erasedups
 
+## Use Homebrew's coreutils
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 if [ -f ~/.git-completion.bash ]; then
@@ -14,6 +17,7 @@ fi
 
 # aliases
 alias ll="ls -ahl"
+alias ls="ls --color --group-directories-first"
 alias ..="cd .."
 
 alias cp="cp -i"
