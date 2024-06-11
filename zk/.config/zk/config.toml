@@ -1,0 +1,25 @@
+# zk configuration file
+[note]
+filename = "{{id}}-{{slug title}}"
+template = "default.md"
+
+[extra]
+[format.markdown]
+link-format = "wiki"
+hashtags = true
+colon-tags = false
+multiword-tags = false
+
+[tool]
+fzf-preview = "bat -p --color always {-1}"
+
+[lsp]
+[lsp.diagnostics]
+wiki-title = "hint"
+dead-link = "error"
+
+[lsp.completion]
+
+[filter]
+
+[alias]
