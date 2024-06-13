@@ -1,0 +1,30 @@
+browser "readable '%u' | pandoc -f html -t gfm | glow -p"
+show-read-feeds no
+download-full-page yes
+feed-sort-order lastupdated-desc
+
+urls-source "feedhq"
+feedhq-url "https://bazqux.com/"
+feedhq-login ""
+feedhq-password ""
+feedhq-flag-star "s"
+
+# openbrowser-and-mark-jumps-to-next-unread yes
+
+bind-key j next
+bind-key J next-feed
+bind-key k prev
+bind-key K prev-feed
+
+bind-key o open-in-browser-and-mark-read
+bind-key O open-in-browser
+
+# open feed/article with spacebar
+bind-key SPACE open
+
+# star articles
+unbind-key s
+bind-key s edit-flags
+
+# Open in browser
+macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser "readable '%u' | pandoc -f html -t gfm | glow -p"
