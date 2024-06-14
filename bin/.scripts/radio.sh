@@ -3,7 +3,7 @@
 # check if radio is on
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 if [[ -n $mpv ]]; then
-  kill $mpv &
+  kill $mpv & exit;
 fi
 
 selected=`echo lofi vg tendo | tr " " "\n" | fzf`
