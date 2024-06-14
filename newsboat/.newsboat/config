@@ -1,13 +1,27 @@
 browser "readable '%u' | pandoc -f html -t gfm | glow -p"
+browser "\
+is_image=$(echo %u | grep -E -c '.(jpg|jpeg|png|gif)');\
+if [[ $is_image -eq 1 ]]; then curl %u | wezterm imgcat;read -n 1 -s;clear; \
+else curl -L -v --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p; \
+fi"
 show-read-feeds no
+confirm-mark-feed-read no
 download-full-page yes
 feed-sort-order lastupdated-desc
+datetime-format "%d/%m"
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
 feedhq-login ""
 feedhq-password ""
 feedhq-flag-star "s"
+
+# Interface
+articlelist-title-format " %T (%u unread)"
+feedlist-title-format " %N - Feeds (%u unread, %t total)"
+itemview-title-format " %T"
+feedlist-format "%n %4U %t"
+articlelist-format "%f %D  %?T?|%-17T|  ?%t"
 
 # openbrowser-and-mark-jumps-to-next-unread yes
 
