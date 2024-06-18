@@ -9,6 +9,8 @@ confirm-mark-feed-read no
 download-full-page yes
 feed-sort-order lastupdated-desc
 datetime-format "%d/%m"
+prepopulate-query-feeds yes
+max-items 25
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
@@ -18,17 +20,28 @@ feedhq-flag-star "s"
 
 # Interface
 articlelist-title-format " %T (%u unread)"
-feedlist-title-format " %N - Feeds (%u unread, %t total)"
+feedlist-title-format " Feeds (%u unread, %t total)"
 itemview-title-format " %T"
-feedlist-format "%n %4U %t"
-articlelist-format "%f %D  %?T?|%-17T|  ?%t"
+urlview-title-format " #"
 
+feedlist-format "%n %3U %t"
+articlelist-format "%f %D  %?T?%-15T  ?%t"
+
+# highlight article "^(Feed|Link):.*$" yellow default bold
+# highlight article "^(Title|Date|Author):.*$" yellow default bold
+# highlight article "https?://[^ ]+" blue default underline
+# highlight article "\\[[0-9]+\\]" yellow default bold
+# highlight article "\\[image\\ [0-9]+\\]" yellow default bold
+# highlight feedlist "^─.*$" yellow color235 bold
+
+show-keymap-hint no
+swap-title-and-hints no
 # openbrowser-and-mark-jumps-to-next-unread yes
 
-bind-key j next
-bind-key J next-feed
-bind-key k prev
-bind-key K prev-feed
+bind-key j down
+bind-key k up
+bind-key j next articlelist
+bind-key k prev articlelist
 
 bind-key o open-in-browser-and-mark-read
 bind-key O open-in-browser
@@ -41,4 +54,3 @@ unbind-key s
 bind-key s edit-flags
 
 # Open in browser
-macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser "readable '%u' | pandoc -f html -t gfm | glow -p"
