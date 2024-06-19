@@ -1,9 +1,16 @@
-browser "readable '%u' | pandoc -f html -t gfm | glow -p"
 browser "\
-is_image=$(echo %u | grep -E -c '.(jpg|jpeg|png|gif)');\
+is_image=$(echo %u | grep -E -c '.(jpg|jpeg|png|gif|webp)');\
+is_youtube=$(echo %u | grep -E -c 'youtube.com|youtu.be');\
+is_video=$(echo %u | grep -E -c '.(mp4|mkv|webm)');\
+is_reddit=$(echo %u | grep -E -c 'reddit.com');\
 if [[ $is_image -eq 1 ]]; then curl %u | wezterm imgcat;read -n 1 -s;clear; \
 else curl -L -v --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p; \
+elif [[ $is_youtube -eq 1 ]]; then mpv %u -v --speed=2; \
+elif [[ $is_video -eq 1 ]]; then mpv %u; \
+elif [[ $is_reddit -eq 1 ]]; then reddio print -s top $(echo %u | grep -E -o '(comments\/.*)') | glow -p; \
+else curl -L %u | readable | pandoc -f html -t gfm | glow -p;clear; \
 fi"
+
 show-read-feeds no
 confirm-mark-feed-read no
 download-full-page yes
@@ -27,12 +34,15 @@ urlview-title-format " #"
 feedlist-format "%n %3U %t"
 articlelist-format "%f %D  %?T?%-15T  ?%t"
 
-# highlight article "^(Feed|Link):.*$" yellow default bold
-# highlight article "^(Title|Date|Author):.*$" yellow default bold
-# highlight article "https?://[^ ]+" blue default underline
-# highlight article "\\[[0-9]+\\]" yellow default bold
-# highlight article "\\[image\\ [0-9]+\\]" yellow default bold
-# highlight feedlist "^─.*$" yellow color235 bold
+highlight article "^(Feed|Title|Author|Link|Date|Linux):.*" color75 default
+highlight article "^Podcast Download URL:.*" color71 default
+highlight article "^Links:" white color0 underline
+highlight article "\\[[0-9][0-9]*\\]" color72 default bold
+highlight article "\\[image [0-9][0-9]*\\]" color72 default bold
+highlight article "\\[embedded flash: [0-9][0-9]*\\]" color72 default bold
+highlight article ":.*\\(link\\)$" color74 default
+highlight article ":.*\\(image\\)$" color74 default
+highlight article ":.*\\(embedded flash\\)$" color74 default
 
 show-keymap-hint no
 swap-title-and-hints no
