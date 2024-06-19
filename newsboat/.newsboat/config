@@ -4,11 +4,10 @@ is_youtube=$(echo %u | grep -E -c 'youtube.com|youtu.be');\
 is_video=$(echo %u | grep -E -c '.(mp4|mkv|webm)');\
 is_reddit=$(echo %u | grep -E -c 'reddit.com');\
 if [[ $is_image -eq 1 ]]; then curl %u | wezterm imgcat;read -n 1 -s;clear; \
-else curl -L -v --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p; \
-elif [[ $is_youtube -eq 1 ]]; then mpv %u -v --speed=2; \
+elif [[ $is_youtube -eq 1 ]]; then curl -X POST -F src=%u -F folder_id=PLbaYR9HrdFtC7oztsm0KQ https://www.premiumize.me/api/transfer/create?apikey=$PM_API_KEY;read -n 1 -s;clear; \
 elif [[ $is_video -eq 1 ]]; then mpv %u; \
 elif [[ $is_reddit -eq 1 ]]; then reddio print -s top $(echo %u | grep -E -o '(comments\/.*)') | glow -p; \
-else curl -L %u | readable | pandoc -f html -t gfm | glow -p;clear; \
+else curl -L --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p;clear; \
 fi"
 
 show-read-feeds no

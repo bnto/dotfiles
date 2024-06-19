@@ -5,6 +5,10 @@ export BASH_SILENCE_DEPRECATION_WARNING=1
 export EDITOR=nvim
 export HISTCONTROL=ignoreboth:erasedups
 
+# Secret keys here
+export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_COOKIE -w)"
+export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
+
 if [ -x /opt/homebrew/bin/brew ]; then
 eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
