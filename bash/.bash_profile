@@ -13,6 +13,10 @@ if [ -f ~/.git-completion.bash ]; then
 . ~/.git-completion.bash
 fi
 
+if [ -f ~/.bash_aliases ]; then
+. ~/.bash_aliases
+fi
+
 # Start line with a random emoji
 emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙)
 emoji='`echo ${emojis[$RANDOM % 16]}`'
