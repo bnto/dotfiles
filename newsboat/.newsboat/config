@@ -36,8 +36,8 @@ max-items 25
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
-feedhq-login ""
-feedhq-password ""
+feedhq-login "$FEEDHQ_LOGIN"
+feedhq-password "$FEEDHQ_PASSWORD"
 feedhq-flag-star "s"
 
 # Interface
