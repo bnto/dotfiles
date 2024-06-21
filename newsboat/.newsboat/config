@@ -1,12 +1,28 @@
 browser "\
 is_image=$(echo %u | grep -E -c '.(jpg|jpeg|png|gif|webp)');\
-is_youtube=$(echo %u | grep -E -c 'youtube.com|youtu.be');\
+is_youtube=$(echo %u | grep -E -c 'youtube.com');\
 is_video=$(echo %u | grep -E -c '.(mp4|mkv|webm)');\
 is_reddit=$(echo %u | grep -E -c 'reddit.com');\
-if [[ $is_image -eq 1 ]]; then curl %u | wezterm imgcat;read -n 1 -s;clear; \
-elif [[ $is_youtube -eq 1 ]]; then curl -X POST -F src=%u -F folder_id=PLbaYR9HrdFtC7oztsm0KQ https://www.premiumize.me/api/transfer/create?apikey=$PM_API_KEY;read -n 1 -s;clear; \
-elif [[ $is_video -eq 1 ]]; then mpv %u; \
-elif [[ $is_reddit -eq 1 ]]; then reddio print -s top $(echo %u | grep -E -o '(comments\/.*)') | glow -p; \
+\
+if [[ $is_image -eq 1 ]]; \
+  then curl %u | wezterm imgcat;\
+  read -n 1 -s;clear; \
+\
+elif [[ $is_youtube -eq 1 ]]; \
+  then curl -X GET -G \
+  -d url=%u \
+  -d tags=yt \
+  -d toread=yes \
+  -d description=$(echo %T | tr ' ' '_') \
+  https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN;\
+  read -n 1 -s;clear; \
+\
+elif [[ $is_video -eq 1 ]]; \
+  then mpv %u; \
+\
+elif [[ $is_reddit -eq 1 ]]; \
+  then reddio print -s top $(echo %u | grep -E -o '(comments\/.*)') | glow -p; \
+\
 else curl -L --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p;clear; \
 fi"
 
@@ -45,7 +61,6 @@ highlight article ":.*\\(embedded flash\\)$" color74 default
 
 show-keymap-hint no
 swap-title-and-hints no
-# openbrowser-and-mark-jumps-to-next-unread yes
 
 bind-key j down
 bind-key k up
