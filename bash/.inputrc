@@ -1,6 +1,6 @@
 set completion-ignore-case On
 
-# Keybinds for tmux-session and zk
-"\C-ff": "~/.scripts/./tmux-session.sh\n"
-"\C-fr": "~/.scripts/./radio.sh\n"
+# Keybinds
+"\C-ff": ",tmux-session\n"
+"\C-fr": ",radio\n"
 "\C-fn": "newsboat\n"

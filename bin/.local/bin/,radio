@@ -13,7 +13,8 @@ fi
 
 case $selected in
     "lofi")
-      streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' -v &
+      # streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' -v &
+      streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' &
       radio="https://youtu.be/jfKfPfyJRdk"
       ;;
     "vg")
