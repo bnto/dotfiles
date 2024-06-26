@@ -11,6 +11,8 @@ export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
 export PINBOARD_TOKEN=$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)
 export FEEDHQ_LOGIN=$(security find-generic-password -a ${USER} -s FEEDHQ_LOGIN -w)
 export FEEDHQ_PASSWORD=$(security find-generic-password -a ${USER} -s FEEDHQ_PASSWORD -w)
+# Add my custom scripts
+PATH="~/.local/bin:$PATH"
 
 if [ -x /opt/homebrew/bin/brew ]; then
 eval "$(/opt/homebrew/bin/brew shellenv)"
