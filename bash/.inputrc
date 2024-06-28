@@ -2,5 +2,7 @@ set completion-ignore-case On
 
 # Keybinds
 "\C-ff": ",tmux-session\n"
+"\C-fz": "zk edit -i\nclear\n"
+"\C-ft": ",task\n"
 "\C-fr": ",radio\n"
 "\C-fn": "newsboat\n"
