@@ -14,6 +14,9 @@ export FEEDHQ_PASSWORD=$(security find-generic-password -a ${USER} -s FEEDHQ_PAS
 # Add my custom scripts
 PATH="~/.local/bin:$PATH"
 
+## Use Homebrew's coreutils
+PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
+
 if [ -x /opt/homebrew/bin/brew ]; then
 eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
@@ -25,6 +28,14 @@ fi
 if [ -f ~/.bash_aliases ]; then
 . ~/.bash_aliases
 fi
+
+# Launch NVM
+export NVM_DIR=$HOME/.nvm
+[ -s "$NVM_DIR/nvm.sh" ] && nvm() {
+  . "$NVM_DIR/nvm.sh" # This loads nvm
+  nvm list
+  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+}
 
 # Start line with a random emoji
 emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙)
