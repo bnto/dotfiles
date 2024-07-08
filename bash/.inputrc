@@ -1,5 +1,11 @@
 set completion-ignore-case On
 
+# Arrow keys match what you've typed so far against your command history
+"\e[A": history-search-backward
+"\e[B": history-search-forward
+"\e[C": forward-char
+"\e[D": backward-char
+
 # Keybinds
 "\C-ff": ",tmux-session\n"
 "\C-fz": "zk edit -i\nclear\n"
