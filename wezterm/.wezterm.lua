@@ -10,11 +10,19 @@ config.font_size = 18
 config.hide_tab_bar_if_only_one_tab = true
 config.use_fancy_tab_bar = false
 config.color_scheme = "Cobalt2"
+-- Transparent window
+-- config.window_background_opacity = 0.8
+-- config.macos_window_background_blur = 60
+-- config.window_decorations = "RESIZE | TITLE | MACOS_FORCE_ENABLE_SHADOW"
 
 wezterm.on("format-window-title", function()
   return ""
 end)
 
+config.inactive_pane_hsb = {
+  saturation = 0.8,
+  brightness = 0.3,
+}
 config.quit_when_all_windows_are_closed = false
 config.window_close_confirmation = "NeverPrompt"
 
