@@ -1,4 +1,6 @@
 # zk configuration file
+[notebook]
+dir = "~/.zk/notes"
 [note]
 filename = "{{id}}-{{slug title}}"
 template = "default.md"
