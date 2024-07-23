@@ -59,6 +59,20 @@ highlight article ":.*\\(link\\)$" color74 default
 highlight article ":.*\\(image\\)$" color74 default
 highlight article ":.*\\(embedded flash\\)$" color74 default
 
+# better coloring
+color background         default   default
+color listnormal         default   default
+color listnormal_unread  default   default
+color listfocus          black     cyan
+color listfocus_unread   black     cyan
+color info               default   black
+color article            default   default
+
+# highlights
+highlight article "^(Title):.*$" blue default
+highlight article "https?://[^ ]+" red default
+highlight article "\\[image\\ [0-9]+\\]" green default
+
 show-keymap-hint no
 swap-title-and-hints no
 
