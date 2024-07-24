@@ -25,16 +25,6 @@ local dawn_palette = {
   -- highlight_high = '#cecacd',
 }
 
-local dawn_active_tab = {
-  bg_color = dawn_palette.overlay,
-  fg_color = dawn_palette.text,
-}
-
-local dawn_inactive_tab = {
-  bg_color = dawn_palette.base,
-  fg_color = dawn_palette.muted,
-}
-
 config.colors = {
   tab_bar = {
     background = dawn_palette.base,
@@ -52,7 +42,10 @@ config.colors = {
       fg_color = dawn_palette.text,
       italic = true,
     },
-    new_tab = dawn_inactive_tab,
+    new_tab = {
+      bg_color = dawn_palette.base,
+      fg_color = dawn_palette.muted,
+    },
     new_tab_hover = {
       bg_color = dawn_palette.overlay,
       fg_color = dawn_palette.text,
@@ -60,6 +53,8 @@ config.colors = {
     },
     inactive_tab_edge = dawn_palette.muted,
   },
+  selection_bg = dawn_palette.rose,
+  selection_fg = "#ffffff",
 }
 
 -- Transparent window

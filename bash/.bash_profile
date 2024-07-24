@@ -61,7 +61,7 @@ emoji='`echo ${emojis[$RANDOM % 16]}`'
 
 # PS1="$emoji \[\e[37;44m\] \[\e[m\]\[\e[39;44m\]\W\[\e[m\]\[\e[39;44m\] \[\e[m\] \[\e[0m\]"
 
-# pine-rose-danw colorscheme
+# rose-pine-dawn colorscheme
 base_bg='\[\e[48;2;242;233;225m\]'
 base_fg='\[\e[38;2;242;233;225m\]'
 overlay_bg='\[\e[48;2;152;147;165m\]'

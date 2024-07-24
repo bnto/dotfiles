@@ -2,7 +2,7 @@
   "document": {
     "block_prefix": "\n",
     "block_suffix": "\n",
-    "color": "#cdd6f4",
+    "color": "#575279",
     "margin": 2
   },
   "block_quote": {
@@ -15,34 +15,34 @@
   },
   "heading": {
     "block_suffix": "\n",
-    "color": "#cdd6f4",
+    "color": "#575279",
     "bold": true
   },
   "h1": {
     "prefix": "▓▓▓ ",
     "suffix": " ",
-    "color": "#f38ba8",
+    "color": "#b4637a",
     "bold": true
   },
   "h2": {
     "prefix": "▓▓▓▓ ",
-    "color": "#fab387"
+    "color": "#ea9d34"
   },
   "h3": {
     "prefix": "▓▓▓▓▓ ",
-    "color": "#f9e2af"
+    "color": "#d7827e"
   },
   "h4": {
     "prefix": "▓▓▓▓▓▓ ",
-    "color": "#a6e3a1"
+    "color": "#56949f"
   },
   "h5": {
     "prefix": "▓▓▓▓▓▓▓ ",
-    "color": "#74c7ec"
+    "color": "#286983"
   },
   "h6": {
     "prefix": "▓▓▓▓▓▓▓▓ ",
-    "color": "#b4befe"
+    "color": "#907aa9"
   },
   "text": {},
   "strikethrough": {
@@ -55,7 +55,7 @@
     "bold": true
   },
   "hr": {
-    "color": "#6c7086",
+    "color": "#9893a5",
     "format": "\n--------\n"
   },
   "item": {
@@ -69,118 +69,118 @@
     "unticked": "[ ] "
   },
   "link": {
-    "color": "#89b4fa",
+    "color": "#56949f",
     "underline": true
   },
   "link_text": {
-    "color": "#b4befe",
+    "color": "#907aa9",
     "bold": true
   },
   "image": {
-    "color": "#89b4fa",
+    "color": "#56949f",
     "underline": true
   },
   "image_text": {
-    "color": "#b4befe",
+    "color": "#907aa9",
     "format": "Image: {{.text}} →"
   },
   "code": {
     "prefix": " ",
     "suffix": " ",
-    "color": "#eba0ac",
-    "background_color": "#181825"
+    "color": "#b4637a",
+    "background_color": "#f2e9e1"
   },
   "code_block": {
-    "color": "#181825",
+    "color": "#f2e9e1",
     "margin": 2,
     "chroma": {
       "text": {
-        "color": "#cdd6f4"
+        "color": "#575279"
       },
       "error": {
-        "color": "#cdd6f4",
-        "background_color": "#f38ba8"
+        "color": "#575279",
+        "background_color": "#b4637a"
       },
       "comment": {
-        "color": "#6c7086"
+        "color": "#9893a5"
       },
       "comment_preproc": {
-        "color": "#89b4fa"
+        "color": "#56949f"
       },
       "keyword": {
-        "color": "#cba6f7"
+        "color": "#907aa9"
       },
       "keyword_reserved": {
-        "color": "#cba6f7"
+        "color": "#907aa9"
       },
       "keyword_namespace": {
-        "color": "#f9e2af"
+        "color": "#d7827e"
       },
       "keyword_type": {
-        "color": "#f9e2af"
+        "color": "#d7827e"
       },
       "operator": {
-        "color": "#89dceb"
+        "color": "#286983"
       },
       "punctuation": {
-        "color": "#9399b2"
+        "color": "#9893a5"
       },
       "name": {
-        "color": "#b4befe"
+        "color": "#907aa9"
       },
       "name_builtin": {
-        "color": "#fab387"
+        "color": "#ea9d34"
       },
       "name_tag": {
-        "color": "#cba6f7"
+        "color": "#907aa9"
       },
       "name_attribute": {
-        "color": "#f9e2af"
+        "color": "#d7827e"
       },
       "name_class": {
-        "color": "#f9e2af"
+        "color": "#d7827e"
       },
       "name_constant": {
-        "color": "#f9e2af"
+        "color": "#d7827e"
       },
       "name_decorator": {
-        "color": "#f5c2e7"
+        "color": "#b4637a"
       },
       "name_exception": {},
       "name_function": {
-        "color": "#89b4fa"
+        "color": "#56949f"
       },
       "name_other": {},
       "literal": {},
       "literal_number": {
-        "color": "#fab387"
+        "color": "#ea9d34"
       },
       "literal_date": {},
       "literal_string": {
-        "color": "#a6e3a1"
+        "color": "#56949f"
       },
       "literal_string_escape": {
-        "color": "#f5c2e7"
+        "color": "#b4637a"
       },
       "generic_deleted": {
-        "color": "#f38ba8"
+        "color": "#b4637a"
       },
       "generic_emph": {
-        "color": "#cdd6f4",
+        "color": "#575279",
         "italic": true
       },
       "generic_inserted": {
-        "color": "#a6e3a1"
+        "color": "#56949f"
       },
       "generic_strong": {
-        "color": "#cdd6f4",
+        "color": "#575279",
         "bold": true
       },
       "generic_subheading": {
-        "color": "#89dceb"
+        "color": "#286983"
       },
       "background": {
-        "background_color": "#181825"
+        "background_color": "#f2e9e1"
       }
     }
   },
@@ -197,3 +197,4 @@
   "html_block": {},
   "html_span": {}
 }
+
