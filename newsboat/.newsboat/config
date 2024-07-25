@@ -1,30 +1,4 @@
-browser "\
-is_image=$(echo %u | grep -E -c '.(jpg|jpeg|png|gif|webp)');\
-is_youtube=$(echo %u | grep -E -c 'youtube.com');\
-is_video=$(echo %u | grep -E -c '.(mp4|mkv|webm)');\
-is_reddit=$(echo %u | grep -E -c 'reddit.com');\
-\
-if [[ $is_image -eq 1 ]]; \
-  then curl %u | wezterm imgcat;\
-  read -n 1 -s;clear; \
-\
-elif [[ $is_youtube -eq 1 ]]; \
-  then curl -X GET -G \
-  -d url=%u \
-  -d tags=yt \
-  -d toread=yes \
-  -d description=$(echo %T | tr ' ' '_') \
-  https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN;\
-  read -n 1 -s;clear; \
-\
-elif [[ $is_video -eq 1 ]]; \
-  then mpv %u; \
-\
-elif [[ $is_reddit -eq 1 ]]; \
-  then reddio print -s top $(echo %u | grep -E -o '(comments\/.*)') | glow -p; \
-\
-else curl -L --cookie $COURRIER_COOKIE %u | readable | pandoc -f html -t gfm | glow -p;clear; \
-fi"
+browser ",linkhandler %u"
 
 show-read-feeds no
 confirm-mark-feed-read no
@@ -92,3 +66,4 @@ unbind-key s
 bind-key s edit-flags
 
 # Open in browser
+macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
