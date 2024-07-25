@@ -1,0 +1,46 @@
+#!/bin/sh
+[ -z "$1" ] && { "$BROWSER"; exit; }
+
+case "$1" in
+  # Render images
+  *png|*jpg|*jpe|*jpeg|*gif)
+    curl "$1" | wezterm imgcat
+    read -n 1 -s
+    clear
+    ;;
+  # Play video
+  *mkv|*webm|*mp4)
+    mpv "$1"
+    ;;
+  # Show top reddit comments
+  *reddit.com*)
+    reddio print -s top $(echo "$1" | grep -E -o '(comments\/.*)') | glow -p
+    ;;
+  # everything else gets filtered through readability
+  http://*|https://*)
+    curl -L "$1" | readable | pandoc -f html -t gfm | glow -p
+    clear
+    ;;
+  '!http'*)
+    os=$(uname -s | tr '[:upper:]' '[:lower:]')
+    case "$os" in
+      linux*)
+        setsid -f firefox "${1##!}"
+        ;;
+      darwin*)
+        open -a 'Safari' "${1##!}"
+        ;;
+      msys*|cygwin*|mingw*|nt|win*)
+        printf "Windows not supported.\n" >&2
+        ;;
+      *)
+        printf "Operating system %s is unknown.\n" "$os"
+        ;;
+    esac
+    ;;
+  *)
+    if [ -f "$1" ]; then "$EDITOR" "$1"
+    else open "$1" >/dev/null 2>&1
+    fi
+    ;;
+esac
