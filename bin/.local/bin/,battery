@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
 
-ioreg -n AppleSmartBattery -r | awk '$1~/Capacity/{c[$1]=$3} END{OFMT="%.2f%%"; max=c["\"MaxCapacity\""]; print (max>0? 100*c["\"CurrentCapacity\""]/max: "?")}'
-
-# pmset -g batt | cat | grep -oh "[0-9]*\%" | cat
+echo "$(pmset -g batt)" | grep -o '[0-9]\+%' | tr -d '%'
