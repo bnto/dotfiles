@@ -1,16 +1,59 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
-
--- This will hold the configuration.
 local config = wezterm.config_builder()
 
--- This is where you actually apply your config choices
+-- ## set default shell
 config.default_prog = { "/bin/bash", "-l" }
+
+-- ## window configuration
+config.quit_when_all_windows_are_closed = false
+config.window_close_confirmation = "NeverPrompt"
+config.adjust_window_size_when_changing_font_size = false
+config.window_padding = {
+  bottom = 0,
+  top = 10,
+}
+config.inactive_pane_hsb = {
+  saturation = 0.8,
+  brightness = 0.3,
+}
+
+-- ## font configuration
 config.font_size = 18
+config.font = wezterm.font("Iosevka Nerd Font", { weight = "Regular" })
+
+-- ## disable ligatures
+config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
+
+-- ## tab bar configuration
 config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
+
+-- ## colorscheme
 config.color_scheme = "rose-pine-dawn"
--- config tabbar color for rose-pine-dawn
+
+-- ## transparent window
+config.window_background_opacity = 1
+config.macos_window_background_blur = 0
+config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
+
+-- ## key mapping
+-- config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1001 } -- Set <C-a> as the leader key
+-- config.disable_default_key_bindings = true
+-- config.use_dead_keys = false
+-- config.default_cursor_style = "BlinkingBlock"
+config.send_composed_key_when_left_alt_is_pressed = true
+config.send_composed_key_when_right_alt_is_pressed = false
+config.keys = {
+  -- Turn off the default CMD-m Hide action, allowing CMD-m to
+  -- be potentially recognized and handled by the tab
+  {
+    key = "m",
+    mods = "CMD",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+}
+
 local dawn_palette = {
   base = "#faf4ed",
   overlay = "#f2e9e1",
@@ -57,45 +100,9 @@ config.colors = {
   selection_fg = "#ffffff",
 }
 
--- Transparent window
-config.window_background_opacity = 0.9
-config.macos_window_background_blur = 0
--- config.window_decorations = "RESIZE | TITLE | MACOS_FORCE_ENABLE_SHADOW"
-config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
-
 wezterm.on("format-window-title", function()
   return ""
 end)
-
-config.inactive_pane_hsb = {
-  saturation = 0.8,
-  brightness = 0.3,
-}
-
-config.quit_when_all_windows_are_closed = false
-config.window_close_confirmation = "NeverPrompt"
-
-config.send_composed_key_when_left_alt_is_pressed = true
-config.send_composed_key_when_right_alt_is_pressed = false
--- disable ligatures
-config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
-
--- window size
-config.adjust_window_size_when_changing_font_size = false
-config.window_padding = {
-  bottom = 0,
-  top = 10,
-}
-
-config.keys = {
-  -- Turn off the default CMD-m Hide action, allowing CMD-m to
-  -- be potentially recognized and handled by the tab
-  {
-    key = "m",
-    mods = "CMD",
-    action = wezterm.action.DisableDefaultAssignment,
-  },
-}
 
 wezterm.on("update-right-status", function(window)
   local date = wezterm.strftime("%d/%m")
@@ -114,7 +121,7 @@ wezterm.on("update-right-status", function(window)
     { Text = " " .. hour .. " " },
     { Foreground = { Color = dawn_palette.muted } },
     { Background = { Color = dawn_palette.base } },
-    { Text = " " .. bat .. " "}
+    { Text = " " .. bat .. " " },
   }))
 end)
 
