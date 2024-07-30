@@ -3,7 +3,10 @@
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/Developer -mindepth 1 -maxdepth 3 -type d ! -path "*/node_modules/*" ! -path "*/.git/*" | fzf)
+    selected=$(find ~/Developer \
+      -mindepth 1 -maxdepth 3 \
+      -type d ! -path "*/node_modules/*" ! \
+      -path "*/.git/*" | fzf --border=double --layout=reverse --height=10)
 fi
 
 if [[ -z $selected ]]; then
@@ -14,12 +17,12 @@ selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected -n 🐱 'nvim .'
+    tmux new-session -s $selected_name -c $selected 'nvim .'
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected -n 🐱 'nvim .'
+    tmux new-session -ds $selected_name -c $selected 'nvim .'
 fi
 
 tmux switch-client -t $selected_name
