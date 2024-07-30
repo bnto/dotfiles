@@ -1,12 +1,15 @@
 browser ",linkhandler %u"
 
+# Open in browser
+macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
+macro f set browser "open -a firefox '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
+
 show-read-feeds no
 confirm-mark-feed-read no
 download-full-page yes
+refresh-on-startup yes
 feed-sort-order lastupdated-desc
 datetime-format "%d/%m"
-prepopulate-query-feeds yes
-max-items 25
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
@@ -64,6 +67,3 @@ bind-key SPACE open
 # star articles
 unbind-key s
 bind-key s edit-flags
-
-# Open in browser
-macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
