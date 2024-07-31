@@ -1,5 +1,5 @@
 # style name or JSON path (default "auto")
-style: "~/.config/glow/rose-pine-dawn.json"
+style: "~/.config/glow/rose-pine-moon.json"
 # show local files only; no network (TUI-mode only)
 local: false
 # mouse support (TUI-mode only)

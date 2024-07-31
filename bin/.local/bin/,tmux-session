@@ -6,7 +6,7 @@ else
     selected=$(find ~/Developer \
       -mindepth 1 -maxdepth 3 \
       -type d ! -path "*/node_modules/*" ! \
-      -path "*/.git/*" | fzf --border=double --layout=reverse --height=10)
+      -path "*/.git/*" | fzf --layout=reverse --height=10 --color=bw)
 fi
 
 if [[ -z $selected ]]; then

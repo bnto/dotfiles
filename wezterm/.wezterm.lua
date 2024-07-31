@@ -30,10 +30,11 @@ config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 
 -- ## colorscheme
-config.color_scheme = "rose-pine-dawn"
+-- config.color_scheme = "rose-pine-dawn"
+config.color_scheme = "rose-pine-moon"
 
 -- ## transparent window
-config.window_background_opacity = 1
+config.window_background_opacity = 0.9
 config.macos_window_background_blur = 0
 config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 
