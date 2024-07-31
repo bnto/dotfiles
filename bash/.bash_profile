@@ -4,6 +4,8 @@
 export BASH_SILENCE_DEPRECATION_WARNING=1
 export EDITOR=nvim
 export HISTCONTROL=ignoreboth:erasedups
+export HISTFILESIZE=
+export HISTSIZE=
 
 # Secret keys here
 export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_COOKIE -w)"
@@ -60,8 +62,6 @@ export FZF_DEFAULT_OPTS="--color=16"
 emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙)
 emoji='`echo ${emojis[$RANDOM % 16]}`'
 
-# PS1="$emoji \[\e[37;44m\] \[\e[m\]\[\e[39;44m\]\W\[\e[m\]\[\e[39;44m\] \[\e[m\] \[\e[0m\]"
-
 # rose-pine-dawn colorscheme
 base_bg='\[\e[48;2;242;233;225m\]'
 base_fg='\[\e[38;2;242;233;225m\]'
@@ -87,6 +87,6 @@ iris_bg='\[\e[48;2;144;122;169m\]'
 iris_fg='\[\e[38;2;144;122;169m\]'
 reset='\[\e[0m\]' # reset color
 
-PS1="$emoji ${base_fg}${gold_bg} \W ${reset}${gold_bg}${reset} ${reset}"
+PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
 
 export PS1
