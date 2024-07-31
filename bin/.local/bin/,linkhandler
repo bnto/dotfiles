@@ -3,13 +3,14 @@
 
 case "$1" in
   # Render images
-  *png|*jpg|*jpe|*jpeg|*gif)
-    curl "$1" | wezterm imgcat
+  *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*.twimg.com*)
+    echo "Loading image..." && \
+    curl -s "$1" | wezterm imgcat
     read -n 1 -s
     clear
     ;;
   # Play video
-  *mkv|*webm|*mp4)
+  *.mkv*|*.webm*|*.mp4*)
     mpv "$1"
     ;;
   # Show top reddit comments
@@ -18,7 +19,8 @@ case "$1" in
     ;;
   # everything else gets filtered through readability
   http://*|https://*)
-    curl -L "$1" | readable | pandoc -f html -t gfm | glow -p
+    echo "Loading..." && \
+    curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | pandoc -f html -t gfm --quiet | glow -p
     clear
     ;;
   '!http'*)
