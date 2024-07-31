@@ -7,12 +7,11 @@ export HISTCONTROL=ignoreboth:erasedups
 export HISTFILESIZE=
 export HISTSIZE=
 
-# Secret keys here
-export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_COOKIE -w)"
-export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
-export PINBOARD_TOKEN=$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)
-export FEEDHQ_LOGIN=$(security find-generic-password -a ${USER} -s FEEDHQ_LOGIN -w)
-export FEEDHQ_PASSWORD=$(security find-generic-password -a ${USER} -s FEEDHQ_PASSWORD -w)
+# Load secret keys
+if [ -f ~/.keys ]; then
+  source ~/.keys
+fi
+
 # Add my custom scripts
 PATH="~/.local/bin:$PATH"
 
