@@ -1,8 +1,8 @@
-browser ",linkhandler %u"
+browser ",linkhandler %u %T"
 
 # Open in browser
-macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
-macro f set browser "open -a firefox '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u"
+macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
+macro f set browser "open -a firefox '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
 
 show-read-feeds no
 confirm-mark-feed-read no
