@@ -13,8 +13,8 @@ datetime-format "%d/%m"
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
-feedhq-login "$FEEDHQ_LOGIN"
-feedhq-password "$FEEDHQ_PASSWORD"
+feedhq-login "`echo $FEEDHQ_LOGIN`"
+feedhq-password "`echo $FEEDHQ_PASSWORD`"
 feedhq-flag-star "s"
 
 # Interface
