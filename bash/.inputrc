@@ -12,3 +12,4 @@ set completion-ignore-case On
 "\C-ft": ",task\n"
 "\C-fr": ",radio\n"
 "\C-fn": "newsboat\n"
+"\C-fj": ",twitch\n"

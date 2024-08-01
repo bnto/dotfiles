@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Stalk your favorite Twitch streamers:
+# Fetches followed channels, shows who's live with cool previews,
+# and launches the chosen stream like a boss using streamlink and mpv.
+
+# Replace OAUTH_TOKEN and CLIENT_ID with your actual credentials
+OAUTH_TOKEN=""
+CLIENT_ID=""
+USER_ID=""
+
+# Get list of followed channels
+channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
+-H "Authorization: Bearer $OAUTH_TOKEN" \
+-H "Client-Id: $CLIENT_ID" \
+| jq -r '.data[].broadcaster_id' | awk '{printf "user_id=%s&", $0}' | sed 's/&$//')
+
+# Get list of online channels
+online_channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/streams?$channels" \
+-H "Authorization: Bearer $OAUTH_TOKEN" \
+-H "Client-Id: $CLIENT_ID")
+
+# Render channel list with thumbnails preview
+channels=$(echo $online_channels \
+  | jq -r '.data[] | "\(.user_name) is live playing \(.game_name) with \(.viewer_count) viewers.\t\(.thumbnail_url)"' \
+  | sed -e "s/{height}/300/" -e "s/{width}/600/" \
+  | fzf --color=bw --with-nth=1 --delimiter='\t' \
+  --preview 'curl -s $(echo {2}) | chafa -s 40x20' --preview-window=up)
+
+selection=$(echo $channels)
+
+# Launch stream of selected channel
+if [ -n "$selection" ]; then
+  streamlink twitch.tv/$(echo $selection | awk '{print $1}') ${1:-480p} -p mpv &
+fi
