@@ -4,10 +4,17 @@
 # Fetches followed channels, shows who's live with cool previews,
 # and launches the chosen stream like a boss using streamlink and mpv.
 
+# Dependencies: curl, jq, awk, sed, streamlink, mpv, fzf, chafa
+
 # Replace OAUTH_TOKEN and CLIENT_ID with your actual credentials
 OAUTH_TOKEN=""
 CLIENT_ID=""
 USER_ID=""
+
+# Get your USER_ID with:
+# curl -X GET 'https://api.twitch.tv/helix/users' \
+# -H "Authorization: Bearer $OAUTH_TOKEN" \
+# -H "Client-Id: $CLIENT_ID"
 
 # Get list of followed channels
 channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
@@ -27,6 +34,7 @@ channels=$(echo $online_channels \
   | fzf --color=bw --with-nth=1 --delimiter='\t' \
   --preview 'curl -s $(echo {2}) | chafa -s 40x20' --preview-window=up)
 
+# Select channel interactively
 selection=$(echo $channels)
 
 # Launch stream of selected channel
