@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Stalk your favorite Twitch streamers:
 # Fetches followed channels, shows who's live with cool previews,
