@@ -1,36 +1,45 @@
 #!/usr/bin/env bash
+
+# linkhandler
+#   A bash script that smartly handles a given URL
+
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
 case "$1" in
   # Render images
-  *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*.twimg.com*)
+  *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*)
     echo "Loading image..." && \
     curl -s "$1" | wezterm imgcat
     read -n 1 -s
     clear
     ;;
+
   # Play video
   *.mkv*|*.webm*|*.mp4*)
     mpv "$1"
     ;;
   # Show top reddit comments
   *reddit.com*)
-    reddio print -s top $(echo "$1" | grep -E -o '(comments\/.*)') | glow -p
+    echo "Loading reddio..." && \
+    reddio -v print -s top $(echo "$1" | grep -E -o '(comments\/.*)') | glow -p
     ;;
+
   # everything else gets filtered through readability
   http://*|https://*)
     echo "Loading..." && \
     curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | pandoc -f html -t gfm --quiet | glow -p
     clear
     ;;
-  '!http'*)
+
+  # Open with default browser using +url
+  '+http'*)
     os=$(uname -s | tr '[:upper:]' '[:lower:]')
     case "$os" in
       linux*)
-        setsid -f firefox "${1##!}"
+        setsid -f firefox "${1##+}"
         ;;
       darwin*)
-        open -a 'Safari' "${1##!}"
+        open -a 'Safari' "${1##+}"
         ;;
       msys*|cygwin*|mingw*|nt|win*)
         printf "Windows not supported.\n" >&2
@@ -41,6 +50,8 @@ case "$1" in
     esac
     ;;
   *)
+
+  # Open with default editor
     if [ -f "$1" ]; then "$EDITOR" "$1"
     else open "$1" >/dev/null 2>&1
     fi
