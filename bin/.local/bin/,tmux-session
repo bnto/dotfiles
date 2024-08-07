@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
+CWD=~/Developer
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/Developer \
+  selected=$(find $(echo $CWD) \
       -mindepth 1 -maxdepth 3 \
-      -type d ! -path "*/node_modules/*" ! \
-      -path "*/.git/*" | fzf --layout=reverse --height=10 --color=bw)
+      -type d ! -path "*/node_modules/*" ! -path "*/.git/*" \
+      -exec stat --format '%X %n' {} + | sort -nr | cut -d' ' -f2- | \
+      fzf --layout=reverse --height=10 --color=bw)
 fi
 
 if [[ -z $selected ]]; then
@@ -17,12 +20,12 @@ selected_name=$(basename "$selected" | tr . _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected 'nvim .'
+    tmux new-session -s $selected_name -c $selected 'nvim README.md'
     exit 0
 fi
 
 if ! tmux has-session -t=$selected_name 2> /dev/null; then
-    tmux new-session -ds $selected_name -c $selected 'nvim .'
+    tmux new-session -ds $selected_name -c $selected 'nvim README.md'
 fi
 
-tmux switch-client -t $selected_name
+tmux switch-client -t $selected_name || tmux attach-session -t $selected_name
