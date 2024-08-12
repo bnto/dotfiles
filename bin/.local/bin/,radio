@@ -6,7 +6,7 @@ if [[ -n $mpv ]]; then
   kill $mpv & exit;
 fi
 
-selected=`echo lofi vg tendo | tr " " "\n" | fzf`
+selected=`echo lofi vg tendo jazz coffee space | tr " " "\n" | fzf --layout=reverse --height=10 --color=bw`
 if [[ -z $selected ]]; then
     exit 0
 fi
@@ -24,5 +24,14 @@ case $selected in
     "tendo")
       streamlink https://youtu.be/mSDmr86MdHw worst -p mpv -a '--no-video --volume=50' -v &
       radio="https://youtu.be/mSDmr86MdHw"
+      ;;
+    "jazz")
+      streamlink https://youtu.be/Dx5qFachd3A worst -p mpv -a '--no-video --volume=50' -v &
+      ;;
+    "coffee")
+      streamlink https://youtu.be/fEvM-OUbaKs worst -p mpv -a '--no-video --volume=50' -v &
+      ;;
+    "space")
+      streamlink https://youtu.be/5-anTj1QrWs worst -p mpv -a '--no-video --volume=50' -v &
       ;;
 esac
