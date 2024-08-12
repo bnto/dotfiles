@@ -11,7 +11,6 @@ case "$1" in
     echo "Loading image..." && \
     curl -s "$1" | wezterm imgcat
     read -n 1 -s
-    clear
     ;;
 
   # Save to Pinboard
@@ -28,7 +27,6 @@ case "$1" in
       https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN
     fi
     read -n 1 -s
-    clear
     ;;
 
   # Play video
@@ -47,20 +45,19 @@ case "$1" in
       https://www.premiumize.me/api/transfer/create?apikey=$PM_API_KEY
     fi
     read -n 1 -s
-    clear
     ;;
 
   # Show top reddit comments
   *reddit.com*)
     echo "Loading reddio..." && \
-    reddio -v print -s top $(echo "$1" | grep -E -o '(comments\/.*)') | glow -p
+    reddio print -s top $(echo "$1" | grep -E -o '(comments\/.*)') | glow -p
     ;;
 
   # everything else gets filtered through readability
   http://*|https://*)
-    echo "Loading..." && \
-    curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | pandoc -f html -t gfm --quiet | glow -p
-    clear
+    echo "Loading article..." && \
+    curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | \
+    pandoc -f html -t gfm --wrap=none --quiet | glow -p
     ;;
 
   # Open with default browser using +url
@@ -89,3 +86,6 @@ case "$1" in
     fi
     ;;
 esac
+
+clear # clear the terminal screen
+exit 0
