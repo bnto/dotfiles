@@ -21,10 +21,10 @@ rose_bg='\[\e[48;2;215;130;126m\]'
 rose_fg='\[\e[38;2;215;130;126m\]'
 reset='\[\e[0m\]' # reset color
 
-PS1="$emoji ${base_fg}${gold_bg} \W ${reset}${gold_bg}${reset} ${reset}"
+PS1="$emoji ${base_fg}${empty} \W ${reset} ${reset}"
 export PS1
 
 if [ -z "$DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ]; then
-  PS1="$emoji ${base_fg}${rose_bg} \W ${reset}${rose_bg}${reset} ${reset}"
+  PS1="$emoji ${base_fg}${rose_bg} \W ${reset} ${reset}"
   export PS1
 fi
