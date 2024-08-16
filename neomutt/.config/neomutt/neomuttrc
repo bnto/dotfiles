@@ -1,0 +1,26 @@
+# .config/neomutt/neomuttrc
+
+# Folders
+set folder = ~/.mail/
+set spoolfile = "+INBOX"
+set record = "+Sent"
+set postponed = "+Drafts"
+set trash = "+Deleted Messages"
+
+# Other optional settings
+set move = no
+set editor = nvim
+
+# Display html email
+set mailcap_path = ~/.config/neomutt/mailcap
+auto_view text/html
+
+# Change keybindings
+bind index j next-entry
+bind index k previous-entry
+bind pager j next-line
+bind pager k previous-line
+bind pager <space> next-page
+bind index G imap-fetch-mail
+
+source colors.neomuttrc

@@ -1,0 +1,120 @@
+# Default
+color normal        default default
+color error         color01 default
+color tilde         color20 default
+color message       color06 default
+color attachment    color08 default
+color search        color05 default
+color indicator     color15 color06
+color tree          color03 default
+color signature     color08 default
+
+color status        color08       color00
+color status        color06       color00 '^=([^·]*).*Messages' 1
+color status        color02       color00 '(Messages): ([0-9]+)' 2
+color status        brightcolor07 color00 '(New): ([0-9]+)' 2
+color status        color05       color00 '(Flag): ([0-9]+)' 2
+color status        color04       color00 '(Tag): ([0-9]+)' 2
+color status        brightcolor01 color00 '(Del): ([0-9]+)' 2
+color status        color03       color00 '([^ ]+@[^ ]+) ·' 1
+# Pager status
+color status        green         color00 '^  ([0-9]+)'      1 # number
+color status        brightgreen   color00 '/[0-9]+ ... (.{20})'  1 # author
+color status        brightcolor07 color00 ' · ([^·]*)·+ \('   1 # subject
+
+# Pager
+set pager_format = '  %C/%m %Z %-20.20n · %s %*·· (%P) '
+
+# Index
+set index_format = '%4C %Z %-20.20F (%?l?%4l&%4c?) %?M?{%2M} ?%s %*  %?X?   [%X]?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
+color index_number    color02       default
+color index_collapsed brightcolor03 default
+color index           color08       default '~R'
+color index_author    color07       default '~R'
+color index_subject   color07       default '~R'
+color index           brightcolor07 default '~N'
+color index_author    brightcolor07 default '~N'
+color index_subject   brightcolor07 default '~N'
+color index_flags     brightcolor07 default '~N'
+color index           brightcolor07 default '~v~(~N)' # Collapsed threads with new messages
+color index_author    brightcolor07 default '~v~(~N)'
+color index_subject   brightcolor07 default '~v~(~N)'
+color index_flags     brightcolor07 default '~v~(~N)'
+color index_author    brightcolor01 default '~D'
+color index_subject   brightcolor01 default '~D'
+color index_flags     brightcolor01 default '~D'
+color index_author          color04 default '%f internal'
+color index_author    brightcolor04 default '~N %f internal'
+color index_subject   brightcolor01 default '~D'
+color index_flags     brightcolor05 default '~g' # signed
+color index_flags     brightcolor05 default '~G' # encrypted
+color index_flags     brightcolor00 color05 '~F' # flagged
+color index_flags     brightcolor00 color04 '~T' # tagged
+# These are simply too slow
+# color index           brightcolor00       color09 '~h X-PhishMeTracking'
+# color index_author    brightcolor00       color09 '~h X-PhishMeTracking'
+# color index_subject   brightcolor00       color09 '~h X-PhishMeTracking'
+
+# Attachments
+color attach_headers brightcolor02 default    '\[-- The following data is.*signed.*'
+color attach_headers brightcolor02 default    '\[-- End of.*signed data.*'
+color attach_headers brightcolor00 color05    '\[-- The following data is.*encrypted.*'
+color attach_headers brightcolor00 color05    '\[-- End of.*encrypted data.*'
+color attach_headers brightcolor00 color06    '\[-- Attachment.*'
+color attach_headers color08       default    '\[-- Autoview.*'
+color attach_headers color02       default    '\[-- (BEGIN|END) PGP SIGNED MESSAGE.*'
+color attach_headers color01       default    '\[-- (BEGIN|END) PGP MESSAGE.*'
+color attach_headers color05       default    '\[-- (BEGIN|END) PGP PUBLIC KEY.*'
+
+# Header
+set header_color_partial
+color hdrdefault color08       default
+color header     brightcolor07 default '^(Subject|Betreff).*'
+color header     brightcolor02 default '^(From).*'
+color header     brightcolor00 color09 '^(X-PhishMeTracking:)'
+
+# Body
+color bold        brightcolor20 red
+color underline   brightcolor20 red
+
+# Quoted text
+color quoted  color06 default
+color quoted1 color05 default
+color quoted2 color09 default
+color quoted3 color13 default
+color quoted4 color11 default
+color quoted5 color12 default
+color quoted6 color12 default
+color quoted7 color12 default
+color quoted8 color12 default
+
+# Links
+color body color06 default '[-a-z_0-9.%$]+@[-a-z_0-9.]+\.[-a-z][-a-z]+'
+color body blue    default "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+color body color01 default "\\[[0-9]+\\]"
+color body color15 default "[┌┬┐├┼┤└┴┘│─]"
+color body color08 default "[━]"
+color body brightcolor00 color06 "\\[(cid|image):?[^]]*\\]"
+
+# Header-like in body
+color body    color08       default '^(To|Date|Sent|Cc|Location|When|Where): .*$'
+color body    color08       default '^(An|Datum|Wann|Ort|Gesendet): .*$'
+color body    brightcolor07 default '^(Subject|Betreff): .*'
+color body    brightcolor02 default '^(From|Organizer): .*$'
+color body    brightcolor02 default '^(Von): .*$'
+
+# vcal
+color body    brightcolor07 default '^Subject:.*'
+color body    brightcolor02 default '^Organizer:.*'
+color body    brightcolor05 default '^Start:.*'
+color body    brightcolor05 default '^End:.*'
+
+# Border lines
+color body    color04       default '( *[-+=#*~_]){6,}'
+
+# Compose
+color compose header           color08       default
+color compose security_encrypt brightcolor02 default
+color compose security_sign    brightcolor02 default
+color compose security_both    brightcolor02 default
+color compose security_none    brightcolor01 default

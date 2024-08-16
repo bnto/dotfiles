@@ -1,0 +1,23 @@
+# .mbsyncrc
+
+IMAPAccount iCloud
+Host imap.mail.me.com
+UserCmd "$(security find-generic-password -a ${USER} -s MAIL_LOGIN -w)"
+PassCmd "$(security find-generic-password -a ${USER} -s MAIL_PASS -w)"
+TLSType IMAPS
+AuthMechs LOGIN
+
+IMAPStore iCloud-Remote
+Account iCloud
+
+MaildirStore Local
+Path ~/.mail/
+Inbox ~/.mail/INBOX
+
+Channel iCloud
+Far :iCloud-Remote:
+Near :Local:
+Patterns "INBOX" "Sent" "Drafts" "Trash"
+Create Near
+# Sync Pull
+Sync PullNew PullGone Push
