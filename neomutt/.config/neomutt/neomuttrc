@@ -7,6 +7,12 @@ set record = "+Sent"
 set postponed = "+Drafts"
 set trash = "+Deleted Messages"
 
+# Sending
+set sendmail = "msmtp"
+set realname = ""
+set from = ""
+my_hdr Bcc: xxx@xxx.com # auto BCC
+
 # Other optional settings
 set move = no
 set editor = nvim

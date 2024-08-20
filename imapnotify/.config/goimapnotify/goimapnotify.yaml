@@ -1,0 +1,14 @@
+{
+  "host": "imap.mail.me.com",
+  "port": 993,
+  "tls": true,
+  "tlsOptions": {
+    "rejectUnauthorized": false
+  },
+  "username": "",
+  "password": "",
+  "onNewMail": "/opt/homebrew/bin/mbsync -a",
+  "onNewMailPost": "",
+  "onDeletedMail": "/opt/homebrew/bin/mbsync -a",
+  "boxes": [ "INBOX" ]
+}
