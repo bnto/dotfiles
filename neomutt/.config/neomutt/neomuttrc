@@ -29,6 +29,8 @@ bind index k previous-entry
 bind pager j next-line
 bind pager k previous-line
 bind pager <space> next-page
-bind index G imap-fetch-mail
+bind attach <space> view-attach
 
+# Load custom colors and keybindings
 source colors.neomuttrc
+source keys.neomuttrc
