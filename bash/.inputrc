@@ -13,3 +13,4 @@ set completion-ignore-case On
 "\C-fr": ",radio\n"
 "\C-fn": "newsboat\n"
 "\C-fj": ",twitch\n"
+"\C-fm": "neomutt\n"
