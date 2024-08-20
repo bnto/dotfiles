@@ -18,6 +18,8 @@ my_hdr Bcc: xxx@xxx.com # auto BCC
 # Other optional settings
 set move = no
 set editor = nvim
+set markers = no
+# set help = no
 
 # Display html email
 set mailcap_path = ~/.config/neomutt/mailcap
@@ -30,6 +32,14 @@ bind pager j next-line
 bind pager k previous-line
 bind pager <space> next-page
 bind attach <space> view-attach
+
+# Thread ordering
+set use_threads = yes
+set sort = 'last-date'
+set collapse_all = yes
+set uncollapse_new = yes
+set thread_received = yes
+set narrow_tree = no
 
 # Load custom colors and keybindings
 source colors.neomuttrc
