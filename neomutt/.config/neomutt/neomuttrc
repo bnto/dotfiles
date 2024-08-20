@@ -3,9 +3,11 @@
 # Folders
 set folder = ~/.mail/
 set spoolfile = "+INBOX"
-set record = "+Sent"
+set record = "+Sent Messages"
 set postponed = "+Drafts"
 set trash = "+Deleted Messages"
+
+mailboxes =INBOX =Drafts =Junk
 
 # Sending
 set sendmail = "msmtp"

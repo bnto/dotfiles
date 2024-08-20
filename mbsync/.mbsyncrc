@@ -17,7 +17,8 @@ Inbox ~/.mail/INBOX
 Channel iCloud
 Far :iCloud-Remote:
 Near :Local:
-Patterns "INBOX" "Sent" "Drafts" "Trash"
+# Patterns *
+Patterns "INBOX" "Drafts" "Junk"
 Create Near
 # Sync Pull
 Sync PullNew PullGone Push
