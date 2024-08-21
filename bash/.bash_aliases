@@ -26,6 +26,20 @@ tm() {
     tmux attach $1 || tmux
 }
 
+# Verify that a package is installed.
+have() { type "$1" > /dev/null 2>&1; }
+
+# Add colors in man page.
+man() {
+    LESS_TERMCAP_md=$'\e[01;31m' \
+    LESS_TERMCAP_me=$'\e[0m' \
+    LESS_TERMCAP_se=$'\e[0m' \
+    LESS_TERMCAP_so=$'\e[01;44;33m' \
+    LESS_TERMCAP_ue=$'\e[0m' \
+    LESS_TERMCAP_us=$'\e[01;32m' \
+    command man "$@"
+}
+
 # Launch a Twitch Stream
 tw() { streamlink twitch.tv/"$1" ${2:-480p} -p mpv ;}
 

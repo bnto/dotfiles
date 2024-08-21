@@ -20,17 +20,15 @@ PATH="~/.local/bin:$PATH"
 ## Use Homebrew's coreutils
 PATH="/opt/homebrew/opt/coreutils/libexec/gnubin:$PATH"
 
-if [ -x /opt/homebrew/bin/brew ]; then
-eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
-if [ -f ~/.git-completion.bash ]; then
-. ~/.git-completion.bash
-fi
-
+# Load bash aliases
 if [ -f ~/.bash_aliases ]; then
-. ~/.bash_aliases
+  . ~/.bash_aliases
 fi
+
+if have /opt/homebrew/bin/brew; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 
 # Launch NVM
 export NVM_DIR=$HOME/.nvm
@@ -57,6 +55,7 @@ _fzf_compgen_path() {
 _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
+# FZF colorscheme
 export FZF_DEFAULT_OPTS="--color=16"
 
 # Start line with a random emoji
