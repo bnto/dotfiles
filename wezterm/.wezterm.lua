@@ -7,7 +7,7 @@ config.default_prog = { "/bin/bash", "-l" }
 
 -- ## window configuration
 config.quit_when_all_windows_are_closed = false
-config.window_close_confirmation = "NeverPrompt"
+-- config.window_close_confirmation = "NeverPrompt"
 config.adjust_window_size_when_changing_font_size = false
 config.window_padding = {
   bottom = 0,
@@ -30,7 +30,6 @@ config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 
 -- ## colorscheme
--- config.color_scheme = "rose-pine-dawn"
 config.color_scheme = "rose-pine-moon"
 
 -- ## transparent window

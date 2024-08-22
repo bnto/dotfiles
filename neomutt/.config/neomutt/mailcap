@@ -1,3 +1,4 @@
 # .config/neomutt/mailcap
 
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
+image/*; wezterm imgcat %s; needsterminal;

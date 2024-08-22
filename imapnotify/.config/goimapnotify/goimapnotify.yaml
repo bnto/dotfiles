@@ -10,5 +10,5 @@
   "onNewMail": "/opt/homebrew/bin/mbsync -a",
   "onNewMailPost": "",
   "onDeletedMail": "/opt/homebrew/bin/mbsync -a",
-  "boxes": [ "INBOX" ]
+  "boxes": [ "INBOX", "Junk" ]
 }

@@ -31,6 +31,7 @@ online_channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.
 channels=$(echo $online_channels \
   | jq -r '.data[] | "\(.user_name) is live playing \(.game_name) with \(.viewer_count) viewers.\t\(.thumbnail_url)"' \
   | sed -e "s/{height}/300/" -e "s/{width}/600/" \
+  | sort \
   | fzf --color=bw --with-nth=1 --delimiter='\t' \
   --preview 'curl -s $(echo {2}) | chafa -s 40x20' --preview-window=up)
 
