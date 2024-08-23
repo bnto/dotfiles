@@ -9,7 +9,7 @@ case "$1" in
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*)
     echo "Loading image..." && \
-    curl -s "$1" | wezterm imgcat
+    curl -# "$1" | wezterm imgcat
     read -n 1 -s
     ;;
 

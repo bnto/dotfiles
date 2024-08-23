@@ -7,7 +7,6 @@ config.default_prog = { "/bin/bash", "-l" }
 
 -- ## window configuration
 config.quit_when_all_windows_are_closed = false
--- config.window_close_confirmation = "NeverPrompt"
 config.adjust_window_size_when_changing_font_size = false
 config.window_padding = {
   bottom = 0,
@@ -38,10 +37,6 @@ config.macos_window_background_blur = 0
 config.window_decorations = "RESIZE | MACOS_FORCE_ENABLE_SHADOW"
 
 -- ## key mapping
--- config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 1001 } -- Set <C-a> as the leader key
--- config.disable_default_key_bindings = true
--- config.use_dead_keys = false
--- config.default_cursor_style = "BlinkingBlock"
 config.send_composed_key_when_left_alt_is_pressed = true
 config.send_composed_key_when_right_alt_is_pressed = false
 config.keys = {
