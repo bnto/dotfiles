@@ -1,0 +1,137 @@
+{
+ "config": {
+  "reduceColorSaturation": true,
+  "accessibilityPlayActionSound": false,
+  "theme": "theme1",
+  "openNewTab": "about:newtab",
+  "scrollUDStepsValue": 120,
+  "usageCount": 5944,
+  "useEnglishKeyboardLayout": false,
+  "commandKeyMap": {
+   "switchToPreTab": {
+    "key": "h"
+   },
+   "highlight": {
+    "key": "f"
+   },
+   "switchToNextTab": {
+    "key": "l"
+   },
+   "closeCurrentPage": {
+    "key": "x"
+   },
+   "openURL": {
+    "key": "o"
+   },
+   "copyCurrentURL": {
+    "key": "yy"
+   },
+   "duplicateCurrentTab": {
+    "key": "yt"
+   },
+   "escape": {
+    "key": "Escape"
+   },
+   "refreshPage": {
+    "key": "r"
+   },
+   "scrollUpHalf": {
+    "key": "u"
+   },
+   "selectNextFrameOnThePage": {
+    "key": "gf"
+   },
+   "scrollRight": {
+    "key": ""
+   },
+   "scrollToBottom": {
+    "key": "G"
+   },
+   "toggleMute": {
+    "key": ""
+   },
+   "openNewTab": {
+    "key": "T"
+   },
+   "temporarilyDisableMode": {
+    "key": "i"
+   },
+   "navigateGoBack": {
+    "key": "H"
+   },
+   "openCopyUrlOnNewTab": {
+    "key": "P"
+   },
+   "soundVolumeDown": {
+    "key": ""
+   },
+   "scrollUp": {
+    "key": "k"
+   },
+   "soundVolumeUp": {
+    "key": ""
+   },
+   "scrollToTop": {
+    "key": "gg"
+   },
+   "restorePage": {
+    "key": "X"
+   },
+   "needHelp": {
+    "key": "?"
+   },
+   "scrollDownHalf": {
+    "key": "d"
+   },
+   "searchTabs": {
+    "key": "t"
+   },
+   "openCopyUrlOnCurrentTab": {
+    "key": "p"
+   },
+   "scrollDown": {
+    "key": "j"
+   },
+   "scrollLeft": {
+    "key": ""
+   },
+   "navigateGoForward": {
+    "key": "L"
+   },
+   "focusOnInputField": {
+    "key": "gi"
+   }
+  },
+  "animation": true,
+  "excludeRules": {
+   "youtube.com": {
+    "enable": true,
+    "type": 1
+   },
+   "vim-adventures.com": {
+    "enable": true,
+    "type": 1
+   },
+   "www.youtube.com": {
+    "enable": true,
+    "type": 1
+   },
+   "bazqux.com": {
+    "enable": true,
+    "type": 1
+   }
+  },
+  "experimentalFeatures": {
+   "macOSNativeSmoothScroll": false,
+   "ipadOSNativeSmoothScroll": false
+  },
+  "scrollJKHLStepsValue": 80,
+  "searchEngine": "Ecosia",
+  "preventInputAutofocus": true,
+  "showKeyboardLayoutTips": true,
+  "detectMoreButtonTarget": false,
+  "colorSaturationValue": "0.79"
+ },
+ "isVimkey": true,
+ "configVersion": 1
+}
