@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.local.goimapnotify</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/goimapnotify</string>
+        <!-- Add any arguments here if needed -->
+    </array>
+    <key>RunAtLoad</key>
+    <true/>
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/goimapnotify.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/goimapnotify.err</string>
+</dict>
+</plist>
