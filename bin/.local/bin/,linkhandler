@@ -5,16 +5,16 @@
 
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
-case "$1" in
+case "$1 $2" in
   # Render images
-  *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*)
+  *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
     echo "Loading image..." && \
     curl -# "$1" | wezterm imgcat
     read -n 1 -s
     ;;
 
   # Save to Pinboard
-  *youtube.com/watch*|*youtube.com/playlist*|*youtu.be*)
+  *youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*youtube.com/embed/*)
     read -p "Do you want to save this to Pinboard? [y/N] " -n 1 -r
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       clear
@@ -35,7 +35,7 @@ case "$1" in
     ;;
 
   # Download torrent
-  *.torrent)
+  *.torrent*)
     read -p "Do you want to download this torrent? [y/N]" -n 1 -r
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       clear
