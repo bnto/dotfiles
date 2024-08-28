@@ -1,0 +1,47 @@
+#!/usr/bin/env bash
+
+# This script informs about new unread emails, including the sender
+# and subject. It uses Python to decode base64-encoded email content.
+#
+# new email location is currently set to ~/.mail/INBOX/new/
+
+for email_file in ~/.mail/INBOX/new/*; do
+  # Check if the file is a regular file (not a directory)
+  if [ -f "$email_file" ]; then
+    from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
+    subject=$(cat "$email_file" | awk '/^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
+
+    # echo $subject
+
+    if echo "$subject" | grep -iq "=?utf-8?"; then
+      decoded_subject=$(python3 -c "
+import email
+import email.header
+
+# Input encoded text
+encoded_text = '''$subject'''
+
+# Decode the text
+decoded_parts = []
+for part, encoding in email.header.decode_header(encoded_text):
+    if isinstance(part, bytes):
+        # Decode bytes to string using the specified encoding
+        decoded_parts.append(part.decode(encoding or 'utf-8'))
+    else:
+        # Append decoded part as string
+        decoded_parts.append(part)
+
+# Join all parts into the final decoded text
+decoded_text = ''.join(decoded_parts)
+
+print(decoded_text)
+")
+    else
+      decoded_subject="$subject"
+    fi
+
+    notification="📬 $from • \033[3m$decoded_subject\033[0m"
+    # echo -e "$(echo -e $notification | cut -c 1-90)\033[0m"
+    echo -e $notification
+  fi
+done
