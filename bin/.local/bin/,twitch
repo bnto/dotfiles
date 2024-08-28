@@ -16,6 +16,11 @@ USER_ID=""
 # -H "Authorization: Bearer $OAUTH_TOKEN" \
 # -H "Client-Id: $CLIENT_ID"
 
+# Get a game's id with:
+# curl -X GET 'https://api.twitch.tv/helix/search/categories?query=XXXXX' \
+# -H "Authorization: Bearer $OAUTH_TOKEN" \
+# -H "Client-Id: $CLIENT_ID"
+
 # Get list of followed channels
 channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
 -H "Authorization: Bearer $OAUTH_TOKEN" \
@@ -27,9 +32,13 @@ online_channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.
 -H "Authorization: Bearer $OAUTH_TOKEN" \
 -H "Client-Id: $CLIENT_ID")
 
+# Get list of channels playing GameId 27284 (Retro)
+online_channels+=$(curl -X GET 'https://api.twitch.tv/helix/streams?game_id=27284&type=live' \
+-H "Authorization: Bearer $OAUTH_TOKEN" \
+-H "Client-Id: $CLIENT_ID")
 # Render channel list with thumbnails preview
 channels=$(echo $online_channels \
-  | jq -r '.data[] | "\(.user_name) is live playing \(.game_name) with \(.viewer_count) viewers.\t\(.thumbnail_url)"' \
+  | jq -r '.data[] | "\(.user_name) is live playing \(.game_name): \(.title) with \(.viewer_count) viewers.\t\(.thumbnail_url)"' \
   | sed -e "s/{height}/300/" -e "s/{width}/600/" \
   | sort \
   | fzf --color=bw --with-nth=1 --delimiter='\t' \
