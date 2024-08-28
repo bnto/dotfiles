@@ -1,3 +1,5 @@
+require("linkhandler")
+
 local hotkey = require("hs.hotkey")
 
 -- hyper key
