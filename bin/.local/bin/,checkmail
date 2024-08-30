@@ -13,7 +13,7 @@ for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
 
     # echo $subject
 
-    if echo "$subject" | grep -iq "=?utf-8?"; then
+    if echo "$subject" | grep -iqE "=?utf-8?|=?ISO-8859-1?"; then
       decoded_subject=$(python3 -c "
 import email
 import email.header
