@@ -5,7 +5,7 @@
 #
 # new email location is currently set to ~/.mail/INBOX/new/
 
-for email_file in ~/.mail/INBOX/new/*; do
+for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
   # Check if the file is a regular file (not a directory)
   if [ -f "$email_file" ]; then
     from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
