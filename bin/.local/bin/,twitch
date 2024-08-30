@@ -42,7 +42,7 @@ channels=$(echo $online_channels \
   | sed -e "s/{height}/300/" -e "s/{width}/600/" \
   | sort \
   | fzf --color=bw --with-nth=1 --delimiter='\t' \
-  --preview 'curl -s $(echo {2}) | chafa -s 40x20' --preview-window=up)
+  --preview 'curl -s $(echo {2}) | chafa -s 50x25 -c full -p on -f sixel' --preview-window=up)
 
 # Select channel interactively
 selection=$(echo $channels)
