@@ -1,4 +1,5 @@
 # .config/neomutt/mailcap
 
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
+text/html; w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html %s; nametemplate=%s.html; needsterminal;
 image/*; wezterm imgcat %s; needsterminal;
