@@ -6,32 +6,19 @@ if [[ -n $mpv ]]; then
   kill $mpv & exit;
 fi
 
-selected=`echo lofi vg tendo jazz coffee space | tr " " "\n" | fzf --layout=reverse --height=10 --color=bw`
-if [[ -z $selected ]]; then
-    exit 0
-fi
+selected=$(fzf --layout=reverse --height=10 --color=bw --with-nth=1 <<'EOF'
+lofi https://youtu.be/jfKfPfyJRdk
+vg https://youtu.be/re_K5hDjd1M
+tendo https://youtu.be/mSDmr86MdHw
+jazz https://youtu.be/Dx5qFachd3A
+coffee https://youtu.be/fEvM-OUbaKs
+space https://youtu.be/5-anTj1QrWs
+EOF
+)
 
-case $selected in
-    "lofi")
-      # streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' -v &
-      streamlink https://youtu.be/jfKfPfyJRdk worst -p mpv -a '--no-video --volume=50' &
-      radio="https://youtu.be/jfKfPfyJRdk"
-      ;;
-    "vg")
-      streamlink https://youtu.be/re_K5hDjd1M worst -p mpv -a '--no-video --volume=50' -v &
-      radio="https://youtu.be/re_K5hDjd1M"
-      ;;
-    "tendo")
-      streamlink https://youtu.be/mSDmr86MdHw worst -p mpv -a '--no-video --volume=50' -v &
-      radio="https://youtu.be/mSDmr86MdHw"
-      ;;
-    "jazz")
-      streamlink https://youtu.be/Dx5qFachd3A worst -p mpv -a '--no-video --volume=50' -v &
-      ;;
-    "coffee")
-      streamlink https://youtu.be/fEvM-OUbaKs worst -p mpv -a '--no-video --volume=50' -v &
-      ;;
-    "space")
-      streamlink https://youtu.be/5-anTj1QrWs worst -p mpv -a '--no-video --volume=50' -v &
-      ;;
-esac
+if [[ -z $selected ]]; then
+  exit 0
+else
+  # Launch stream
+  streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '--no-video --volume=50' -v &
+fi
