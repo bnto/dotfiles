@@ -1,7 +1,7 @@
 # .bash_aliases
 
 # The usual suspects
-alias ll="ls -ahl"
+alias ll="ls -FAh"
 alias ..="cd .."
 
 # Add some color
@@ -11,6 +11,7 @@ alias grep="grep --color=auto"
 # Confirm before overwriting
 alias cp="cp -i"
 alias mv="mv -i"
+alias rm="rm -i"
 
 # Lazy shortcuts
 alias gs="git status"
