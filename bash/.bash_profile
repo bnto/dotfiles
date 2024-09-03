@@ -56,7 +56,12 @@ _fzf_compgen_dir() {
   fd --type=d --hidden --exclude .git . "$1"
 }
 # FZF colorscheme
-export FZF_DEFAULT_OPTS="--color=16"
+export FZF_DEFAULT_OPTS="\
+  --reverse \
+  --border rounded \
+  --no-info \
+  --ansi \
+  --color='16,bg+:-1,gutter:-1,prompt:5,pointer:5,marker:6,border:4,label:4'"
 
 # Start line with a random emoji
 emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙)
