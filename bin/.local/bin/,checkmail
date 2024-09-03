@@ -11,15 +11,16 @@ for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
     from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
     subject=$(cat "$email_file" | awk '/^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
 
-    # echo $subject
+    message="$from ||| $subject"
 
-    if echo "$subject" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?"; then
-      decoded_subject=$(python3 -c "
+    # decode content
+    if echo "$message" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?"; then
+      decoded_message=$(python3 -c "
 import email
 import email.header
 
 # Input encoded text
-encoded_text = '''$subject'''
+encoded_text = '''$message'''
 
 # Decode the text
 decoded_parts = []
@@ -37,11 +38,11 @@ decoded_text = ''.join(decoded_parts)
 print(decoded_text)
 ")
     else
-      decoded_subject="$subject"
+      decoded_message="$message"
     fi
 
-    notification="📬 $from • \033[3m$decoded_subject\033[0m"
     # echo -e "$(echo -e $notification | cut -c 1-90)\033[0m"
+    notification=$(echo $decoded_message | sed 's/|||/•\\033[3m/; s/$/\\033[0m/; s/^/📬 /')
     echo -e $notification
   fi
 done
