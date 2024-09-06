@@ -7,10 +7,13 @@ set completion-ignore-case On
 "\e[D": backward-char
 
 # Keybinds
-"\C-ff": ",tmux-session\n"
-"\C-fz": "zk edit -i\nclear\n"
-"\C-ft": ",task\n"
 "\C-fr": ",radio\n"
 "\C-fn": "newsboat\n"
 "\C-fj": ",twitch\n"
 "\C-fm": "neomutt\n"
+"\C-fc": ",checkmail\n"
+
+# Keybings shared with tmux
+"\C-ff": ",tmux-session\n"
+"\C-fz": "zk edit -i\nclear\n"
+"\C-ft": ",task\n"
