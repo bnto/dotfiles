@@ -7,7 +7,7 @@ if [[ $# -eq 1 ]]; then
 else
   selected=$(find $(echo $CWD) \
       -mindepth 1 -maxdepth 3 \
-      -type d ! -path "*/node_modules/*" ! -path "*/.git/*" \
+      -type d ! -path "*/node_modules/*" ! -path "*/.git*" \
       -exec stat --format '%X %n' {} + | sort -nr | cut -d' ' -f2- | \
       fzf --delimiter '/' --with-nth=5..)
 fi
