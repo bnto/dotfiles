@@ -29,6 +29,7 @@ if [[ -n "$query" ]]; then
     -H "Authorization: Bearer $OAUTH_TOKEN" \
     -H "Client-Id: $CLIENT_ID")
 fi
+
 # Get list of followed channels
 channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
 -H "Authorization: Bearer $OAUTH_TOKEN" \
