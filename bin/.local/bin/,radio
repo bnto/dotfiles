@@ -6,7 +6,7 @@ if [[ -n $mpv ]]; then
   kill $mpv & exit;
 fi
 
-selected=$(fzf --layout=reverse --height=10 --color=bw --with-nth=1 <<'EOF'
+selected=$(fzf --height=10 --with-nth=1 <<'EOF'
 lofi https://youtu.be/jfKfPfyJRdk
 vg https://youtu.be/re_K5hDjd1M
 tendo https://youtu.be/mSDmr86MdHw

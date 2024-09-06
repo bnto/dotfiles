@@ -9,7 +9,7 @@ else
       -mindepth 1 -maxdepth 3 \
       -type d ! -path "*/node_modules/*" ! -path "*/.git/*" \
       -exec stat --format '%X %n' {} + | sort -nr | cut -d' ' -f2- | \
-      fzf --layout=reverse --color=bw --delimiter '/' --with-nth=5..)
+      fzf --delimiter '/' --with-nth=5..)
 fi
 
 if [[ -z $selected ]]; then
