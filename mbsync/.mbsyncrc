@@ -21,4 +21,4 @@ Near :Local:
 Patterns "INBOX" "Drafts" "Junk"
 Create Near
 # Sync Pull
-Sync PullNew PullGone Push
+Sync Pull Push
