@@ -41,7 +41,6 @@ print(decoded_text)
       decoded_message="$message"
     fi
 
-    # echo -e "$(echo -e $notification | cut -c 1-90)\033[0m"
     notification=$(echo $decoded_message | sed 's/|||/•\\033[3m/; s/$/\\033[0m/; s/^/📬 /')
     echo -e $notification
   fi
