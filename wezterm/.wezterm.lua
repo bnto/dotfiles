@@ -19,7 +19,7 @@ config.inactive_pane_hsb = {
 
 -- ## font configuration
 config.font_size = 18
-config.font = wezterm.font("Iosevka Nerd Font", { weight = "Regular" })
+config.font = wezterm.font("IosevkaTermSlab Nerd Font", { weight = "Regular" })
 
 -- ## disable ligatures
 config.harfbuzz_features = { "calt=0", "clig=0", "liga=0" }
