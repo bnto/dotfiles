@@ -16,10 +16,10 @@ Clone repo and its submodule:
 | Name               | Description                                                                     |
 | ------------------ | ------------------------------------------------------------------------------- |
 | **Editor**         | ✏️ Neovim with my [config](https://github.com/bnto/bnto.nvim)          |
-| **Shell**          | 🖥️ Bash with my .bashrc                                                            |
+| **Shell**          | 🖥️ Bash                                                                            |
 | **Palette**        | 🎨 [Rosé Pine Moon](https://rosepinetheme.com) Colorscheme            |
-| **Fonts**          | 🖋️[IosevkaTermSlab](https://github.com/be5invis/Iosevka) & Nerd Font symbols  |
-| **Window Manager** | 🪟 Snapping setup with [Rectangle](https://rectangleapp.com) . |
+| **Fonts**          | 🖋️ [IosevkaTermSlab](https://github.com/be5invis/Iosevka) & Nerd Font symbols  |
+| **Window Manager** | 🪟 Snapping setup with [Rectangle](https://rectangleapp.com)  |
 | **Terminal**       | 📺 WezTerm                                                                     |
 | **Email**          | 📨 Neomutt + msmtp + goimapnotify + mbsync (isync)                                 |
 | **Rss Reader**     | 📰 Newsboat                                                                        |
