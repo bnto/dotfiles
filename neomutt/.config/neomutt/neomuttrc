@@ -19,7 +19,7 @@ my_hdr Bcc: xxx@xxx.com # auto BCC
 set move = no
 set editor = nvim
 set markers = no
-# set help = no
+set help = no
 
 # Display html email
 set mailcap_path = ~/.config/neomutt/mailcap
