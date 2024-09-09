@@ -15,5 +15,6 @@ set completion-ignore-case On
 
 # Keybings shared with tmux
 "\C-ff": ",tmux-session\n"
+"\C-fgg": "lazygit\n"
 "\C-fz": "zk edit -i\nclear\n"
 "\C-ft": ",task\n"
