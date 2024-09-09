@@ -1,4 +1,4 @@
-browser ",linkhandler %u %t"
+browser ",linkhandler %u %t %T"
 
 # Open in browser
 macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
