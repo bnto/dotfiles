@@ -20,6 +20,7 @@ set move = no
 set editor = nvim
 set markers = no
 set help = no
+set wait_key = no
 
 # Display html email
 set mailcap_path = ~/.config/neomutt/mailcap
