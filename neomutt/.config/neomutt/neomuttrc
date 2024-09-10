@@ -7,7 +7,7 @@ set record = "+Sent Messages"
 set postponed = "+Drafts"
 set trash = "+Deleted Messages"
 
-mailboxes =INBOX =Drafts =Junk
+mailboxes =INBOX =Drafts =Junk ="Deleted Messages"
 
 # Sending
 set sendmail = "msmtp"
