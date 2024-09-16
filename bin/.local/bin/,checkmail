@@ -14,7 +14,7 @@ for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
     message="$from ||| $subject"
 
     # decode content
-    if echo "$message" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?"; then
+    if echo "$message" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?|\=?iso-8859-2\?"; then
       decoded_message=$(python3 -c "
 import email
 import email.header
