@@ -1,0 +1,94 @@
+#!/usr/bin/env bash
+
+case "$1" in
+  ack|fd|find|fzf|grep|rg)
+      echo ""
+      ;;
+  atop|htop|top)
+      echo ""
+      ;;
+  bash|fish|zsh|sh|ash)
+      echo ""
+      ;;
+  bat|cat)
+      echo ""
+      ;;
+  clx)
+      echo ""
+      ;;
+  cp|duplicate)
+      echo ""
+      ;;
+  mv)
+      echo "󰉒"
+      ;;
+  curl|http|pint|lynx|wget|w3m)
+      echo ""
+      ;;
+  docker|docker-compose|podman)
+      echo ""
+      ;;
+  lf|ls|nnn|ranger|lsd)
+      echo ""
+      ;;
+  elixir|mix)
+      echo ""
+      ;;
+  gh|gh-dash)
+      echo ""
+      ;;
+  git|lazygit|tig)
+      echo ""
+      ;;
+  glow)
+      echo ""
+      ;;
+  go|goreleaser)
+      echo ""
+      ;;
+  java|mvn)
+      echo ""
+      ;;
+  less|more)
+      echo ""
+      ;;
+  lua)
+      echo ""
+      ;;
+  man)
+      echo ""
+      ;;
+  nano|pico)
+      echo ""
+      ;;
+  node|npm|yarn)
+      echo ""
+      ;;
+  nix*)
+      echo "󱄅"
+      ;;
+  vim|vi|nvim)
+      echo ""
+      ;;
+  nvim)
+      echo ""
+      ;;
+  python|pip)
+      echo ""
+      ;;
+  rm)
+      echo ""
+      ;;
+  rsync)
+      echo ""
+      ;;
+  ruby|irb)
+      echo ""
+      ;;
+  scp|ssh)
+      echo "󰣀"
+      ;;
+  sleep)
+      echo ""
+      ;;
+esac
