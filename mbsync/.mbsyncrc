@@ -2,8 +2,8 @@
 
 IMAPAccount iCloud
 Host imap.mail.me.com
-UserCmd "$(security find-generic-password -a ${USER} -s MAIL_LOGIN -w)"
-PassCmd "$(security find-generic-password -a ${USER} -s MAIL_PASS -w)"
+UserCmd "echo $(security find-generic-password -a ${USER} -s MAIL_LOGIN -w)"
+PassCmd "echo $(security find-generic-password -a ${USER} -s MAIL_PASS -w)"
 TLSType IMAPS
 AuthMechs LOGIN
 

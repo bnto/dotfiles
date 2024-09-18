@@ -5,8 +5,8 @@
   "tlsOptions": {
     "rejectUnauthorized": false
   },
-  "username": "",
-  "password": "",
+  "usernameCMD": "echo $(security find-generic-password -a ${USER} -s MAIL_LOGIN -w)",
+  "passwordCMD": "echo $(security find-generic-password -a ${USER} -s MAIL_PASS -w)",
   "onNewMail": "/opt/homebrew/bin/mbsync -a",
   "onNewMailPost": "",
   "onDeletedMail": "/opt/homebrew/bin/mbsync -a",

@@ -3,6 +3,10 @@
 # linkhandler
 #   A bash script that smartly handles a given URL
 
+export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_COOKIE -w)"
+export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
+export PINBOARD_TOKEN=$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)
+
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
 case "$1 $2" in
