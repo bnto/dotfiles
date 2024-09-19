@@ -7,9 +7,9 @@
 # Dependencies: curl, jq, awk, sed, streamlink, mpv, fzf, chafa
 
 # Replace OAUTH_TOKEN and CLIENT_ID with your actual credentials
-OAUTH_TOKEN=""
-CLIENT_ID=""
-USER_ID=""
+OAUTH_TOKEN="$(security find-generic-password -a ${USER} -s TW_OAUTH_TOKEN -w)"
+CLIENT_ID="$(security find-generic-password -a ${USER} -s TW_CLIENT_ID -w)"
+USER_ID="$(security find-generic-password -a ${USER} -s TW_USER_ID -w)"
 
 # Get your USER_ID with:
 # curl -X GET 'https://api.twitch.tv/helix/users' \
