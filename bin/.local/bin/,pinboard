@@ -30,8 +30,9 @@ if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
     "https://api.pinboard.in/v1/posts/all?auth_token=$PINBOARD_TOKEN"
 fi
 
-  links=$(cat $PINBOARD_CACHE | jq -r '.[] | "(\(.tags)) \(.description)\t\(.href)"' \
-    | fzf --with-nth=1 --delimiter='\t' --exact)
+  links=$(cat $PINBOARD_CACHE | jq -r \
+    '.[] | (if .toread != "no" then "● " else "" end) + (if .tags != "" then ("\u001b[1m\u001b[35m#" + (.tags | gsub(" "; " #")) + "\u001b[0m ") else "" end) + (.description) + (if .extended != "" then "\u001b[3m — " + (.extended | gsub("\n"; " ")) + "\u001b[0m" else "" end) + "\t\(.href)"' \
+    | fzf --with-nth=1 --delimiter='\t' --exact --ansi --color=16)
   # --preview 'curl -s -L  "$(echo {} | grep -o "http[^ ]*")" | readable -q | pandoc -f html -t gfm --wrap=none --quiet | glow' --preview-window=up)
 
 if [ -n "$links" ]; then
