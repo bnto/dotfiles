@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+# Pinboard
+# Load or Save urls
+
+PINBOARD_TOKEN="$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)"
+PINBOARD_CACHE="/tmp/pinboard.json"
+
+if [[ ! -z $1 ]]; then
+  # if given an url, save it to pinboard
+  curl -X GET -G \
+    -d url="$1" \
+    -d toread=yes \
+    -d description=$(echo "$2" | tr ' ' '_') \
+    https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN
+    exit 0
+fi
+
+if [ ! -f "$PINBOARD_CACHE" ]; then
+  # Create cache file
+  echo "Setting up cache..."
+  touch -d "2 days ago" $PINBOARD_CACHE
+  sleep 2
+fi
+
+if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
+  # Update cache only if older than 1 hour to prevent api rate limits
+  echo "Getting latest update..."
+  curl -o "$PINBOARD_CACHE" -X GET -G -d format=json \
+    "https://api.pinboard.in/v1/posts/all?auth_token=$PINBOARD_TOKEN"
+fi
+
+  links=$(cat $PINBOARD_CACHE | jq -r '.[] | "(\(.tags)) \(.description)\t\(.href)"' | fzf --with-nth=1 --delimiter='\t' )
+  # --preview 'curl -s -L  "$(echo {} | grep -o "http[^ ]*")" | readable -q | pandoc -f html -t gfm --wrap=none --quiet | glow' --preview-window=up)
+
+if [ -n "$links" ]; then
+  echo $links | awk '{print $NF}'
+  # ,linkhandler $(echo $links | awk '{print $NF}')
+fi
