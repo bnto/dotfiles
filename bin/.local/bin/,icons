@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+shopt -s nocasematch
+
 case "$1" in
   ack|fd|find|fzf|grep|rg)
       echo ""
