@@ -26,7 +26,7 @@ fi
 if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
   # Update cache only if older than 1 hour to prevent api rate limits
   echo "Getting latest update..."
-  curl -o "$PINBOARD_CACHE" -X GET -G -d format=json \
+  curl -o "$PINBOARD_CACHE" -# -X GET -G -d format=json \
     "https://api.pinboard.in/v1/posts/all?auth_token=$PINBOARD_TOKEN"
 fi
 
