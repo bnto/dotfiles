@@ -42,7 +42,9 @@ man() {
 }
 
 # Launch a Twitch Stream
-tw() { streamlink twitch.tv/"$1" ${2:-480p} -p mpv ;}
+tw() { streamlink twitch.tv/"$1" ${2:-480p} \
+  --twitch-proxy-playlist=https://eu2.luminous.dev,https://lb-eu2.cdn-perfprod.com \
+  -p mpv &}
 
 # Send a notification
 notify() {
