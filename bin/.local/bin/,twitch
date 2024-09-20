@@ -4,7 +4,7 @@
 # Fetches followed channels, shows who's live with cool previews,
 # and launches the chosen stream like a boss using streamlink and mpv.
 
-# Dependencies: curl, jq, awk, sed, streamlink, mpv, fzf, chafa
+# Dependencies: curl, jq, awk, sed, streamlink, mpv, fzf, chafa, libsixel
 
 # Replace OAUTH_TOKEN and CLIENT_ID with your actual credentials
 OAUTH_TOKEN="$(security find-generic-password -a ${USER} -s TW_OAUTH_TOKEN -w)"
