@@ -35,6 +35,7 @@ fi
   # --preview 'curl -s -L  "$(echo {} | grep -o "http[^ ]*")" | readable -q | pandoc -f html -t gfm --wrap=none --quiet | glow' --preview-window=up)
 
 if [ -n "$links" ]; then
-  echo $links | awk '{print $NF}'
-  # ,linkhandler $(echo $links | awk '{print $NF}')
+  # w3m "$(echo $links | awk '{print $NF}')" -sixel -o auto_image=TRUE -o display_image=1
+  # echo $links | awk '{print $NF}'
+  ,linkhandler $(echo $links | awk '{print $NF}')
 fi
