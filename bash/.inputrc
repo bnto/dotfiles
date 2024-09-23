@@ -6,15 +6,16 @@ set completion-ignore-case On
 "\e[C": forward-char
 "\e[D": backward-char
 
-# Keybinds
-"\C-fr": ",radio\n"
-"\C-fn": "newsboat\n"
-"\C-fj": ",twitch\n"
-"\C-fm": "neomutt\n"
-"\C-fc": ",checkmail\n"
+# Bash Keybinds
+"\C-fr": ",radio\n"             # (R)adio
+"\C-fn": "newsboat\n"           # (N)ews
+"\C-fj": ",twitch\n"            # Stream (J)ustin
+"\C-fm": "neomutt\n"            # (M)ail
+"\C-fc": ",checkmail\n"         # (C)heck new mail
+"\C-fb": ",pinboard\n"          # (B)ookmarks
 
-# Keybings shared with tmux
-"\C-ff": ",tmux-session\n"
-"\C-fgg": "lazygit\n"
-"\C-fz": "zk edit -i\nclear\n"
-"\C-ft": ",task\n"
+# Bash and Tmux Keybinds
+"\C-ff": ",tmux-session\n"      # (F)ind projects
+"\C-fgg": "lazygit\n"           # Lazy(G)it (G)
+"\C-fz": "zk edit -i\nclear\n"  # (Z)ettelkasten
+"\C-ft": ",task\n"              # (T)ask
