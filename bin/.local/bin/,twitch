@@ -24,10 +24,12 @@ if [[ -n "$query" ]]; then
     -H "Authorization: Bearer $OAUTH_TOKEN" \
     -H "Client-Id: $CLIENT_ID" | jq -r '.data[] | "\(.id) \(.name)"' | fzf --with-nth=1.. | awk '{print $1}')
 
-  # Get list of channels playing GAME_ID
-  online_channels=$(curl -s -X GET "https://api.twitch.tv/helix/streams?game_id=$GAME_ID&type=live" \
-    -H "Authorization: Bearer $OAUTH_TOKEN" \
-    -H "Client-Id: $CLIENT_ID")
+  if [ "$GAME_ID" -eq "$GAME_ID" ] 2>/dev/null; then
+    # Get list of channels playing GAME_ID
+    online_channels=$(curl -s -X GET "https://api.twitch.tv/helix/streams?game_id=$GAME_ID&type=live" \
+      -H "Authorization: Bearer $OAUTH_TOKEN" \
+      -H "Client-Id: $CLIENT_ID")
+  fi
 fi
 
 # Get list of followed channels
