@@ -38,12 +38,10 @@ if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
 fi
 
   links=$(cat $PINBOARD_CACHE | jq -r \
-    '.[] | (if .toread != "no" then "● " else "" end) + (if .tags != "" then ("\u001b[1m\u001b[35m#" + (.tags | gsub(" "; " #")) + "\u001b[0m ") else "" end) + (.description) + (if .extended != "" then "\u001b[3m — " + (.extended | gsub("\n"; " ")) + "\u001b[0m" else "" end) + "\t\(.href)"' \
-    | fzf --with-nth=1 --delimiter='\t' --exact --ansi --color=16)
-  # --preview 'curl -s -L  "$(echo {} | grep -o "http[^ ]*")" | readable -q | pandoc -f html -t gfm --wrap=none --quiet | glow' --preview-window=up)
+    '.[] | (.time | gsub("T.*";" ") ) + (if .toread != "no" then "● " else "" end) + (if .tags != "" then ("\u001b[1m\u001b[35m#" + (.tags | gsub(" "; " #")) + "\u001b[0m ") else "" end) + (.description) + (if .extended != "" then "\u001b[3m — " + (.extended | gsub("\n"; " ")) + "\u001b[0m" else "" end) + "\t\(.href)"' \
+    | sort -R | fzf --with-nth=1 --delimiter='\t' --exact --ansi --color=16 \
+    --bind 'ctrl-o:execute(open -a Safari $(echo {} | awk "{print \$NF}"))')
 
 if [ -n "$links" ]; then
-  # w3m "$(echo $links | awk '{print $NF}')" -sixel -o auto_image=TRUE -o display_image=1
-  # echo $links | awk '{print $NF}'
   ,linkhandler $(echo $links | awk '{print $NF}')
 fi
