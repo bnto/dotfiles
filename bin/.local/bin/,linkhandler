@@ -61,7 +61,7 @@ case "$1 $2" in
   http://*|https://*)
     echo "Loading article..." && \
     curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | \
-    pandoc -f html -t gfm --wrap=none --quiet | glow -p
+    pandoc -f html -t gfm --wrap=none --quiet | sed 's/\\//g' | glow -p
     ;;
 
   # Open with default browser using +url
