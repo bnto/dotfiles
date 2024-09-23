@@ -102,25 +102,32 @@ wezterm.on("format-window-title", function()
 end)
 
 wezterm.on("update-right-status", function(window)
-  local date = wezterm.strftime("%d/%m")
+  -- local date = wezterm.strftime("%d/%m")
   local hour = wezterm.strftime("%H:%M")
   local newmail = tonumber(io.popen("ls -1 ~/.mail/INBOX/new | wc -l"):read("*a"))
   local inbox = newmail > 0 and " ● " .. newmail .. "" or ""
 
   local battery = ""
+  local state = ""
   for _, b in ipairs(wezterm.battery_info()) do
     battery = string.format("%.0f%%", b.state_of_charge * 100)
+    state = b.state == "Charging" and " " .. wezterm.nerdfonts.md_battery_charging or ""
   end
 
   window:set_right_status(wezterm.format({
+    -- inbox
     { Foreground = { Color = dawn_palette.muted } },
-    -- { Text = " " .. date .. " " },
     { Text = inbox .. " " },
+
+    -- time
     { Foreground = { Color = dawn_palette.muted } },
     { Background = { Color = dawn_palette.overlay } },
     { Text = " " .. hour .. " " },
     { Foreground = { Color = dawn_palette.muted } },
     { Background = { Color = dawn_palette.base } },
+
+    -- battery
+    { Text = state },
     { Text = " " .. battery .. " " },
   }))
 end)
