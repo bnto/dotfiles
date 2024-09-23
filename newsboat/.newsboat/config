@@ -15,8 +15,8 @@ max-items 20
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
-feedhq-login "`echo $FEEDHQ_LOGIN`"
-feedhq-password "`echo $FEEDHQ_PASSWORD`"
+feedhq-login "`echo $(security find-generic-password -a ${USER} -s FEEDHQ_LOGIN -w)`"
+feedhq-password "`echo $(security find-generic-password -a ${USER} -s FEEDHQ_PASSWORD -w)`"
 feedhq-flag-star "s"
 
 # Interface
