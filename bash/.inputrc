@@ -16,6 +16,6 @@ set completion-ignore-case On
 
 # Bash and Tmux Keybinds
 "\C-ff": ",tmux-session\n"      # (F)ind projects
-"\C-fgg": "lazygit\n"           # Lazy(G)it (G)
+"\C-fg": "lazygit\n"           # Lazy(G)it
 "\C-fz": "zk edit -i\nclear\n"  # (Z)ettelkasten
 "\C-ft": ",task\n"              # (T)ask
