@@ -20,37 +20,45 @@ USER_ID="$(security find-generic-password -a ${USER} -s TW_USER_ID -w)"
 read -p "Search game: " query
 
 if [[ -n "$query" ]]; then
-  GAME_ID=$(curl -s -X GET "https://api.twitch.tv/helix/search/categories?query=$(echo $query | tr ' ' '+')&first=100" \
+  GAME_ID=$(curl -s -X GET \
+    "https://api.twitch.tv/helix/search/categories?query=$(echo $query | tr ' ' '+')&first=100" \
     -H "Authorization: Bearer $OAUTH_TOKEN" \
-    -H "Client-Id: $CLIENT_ID" | jq -r '.data[] | "\(.id) \(.name)"' | fzf --with-nth=1.. | awk '{print $1}')
+    -H "Client-Id: $CLIENT_ID" | jq -r '.data[] | "\(.id) \(.name)"' \
+    | fzf --with-nth=1.. | awk '{print $1}')
 
   if [ "$GAME_ID" -eq "$GAME_ID" ] 2>/dev/null; then
     # Get list of channels playing GAME_ID
-    online_channels=$(curl -s -X GET "https://api.twitch.tv/helix/streams?game_id=$GAME_ID&type=live" \
+    online_channels=$(curl -s -X GET \
+      "https://api.twitch.tv/helix/streams?game_id=$GAME_ID&type=live" \
       -H "Authorization: Bearer $OAUTH_TOKEN" \
       -H "Client-Id: $CLIENT_ID")
   fi
 fi
 
 # Get list of followed channels
-channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
--H "Authorization: Bearer $OAUTH_TOKEN" \
--H "Client-Id: $CLIENT_ID" \
-| jq -r '.data[].broadcaster_id' | awk '{printf "user_id=%s&", $0}' | sed 's/&$//')
+channels=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET \
+  "https://api.twitch.tv/helix/channels/followed?user_id=$USER_ID&first=100" \
+  -H "Authorization: Bearer $OAUTH_TOKEN" \
+  -H "Client-Id: $CLIENT_ID" \
+  | jq -r '.data[].broadcaster_id' | awk '{printf "user_id=%s&", $0}' | sed 's/&$//')
 
 # Get list of online channels
-online_channels+=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET "https://api.twitch.tv/helix/streams?$channels" \
--H "Authorization: Bearer $OAUTH_TOKEN" \
--H "Client-Id: $CLIENT_ID")
+online_channels+=$(curl --connect-timeout 5 -m 10 --http2 -s -X GET \
+  "https://api.twitch.tv/helix/streams?$channels" \
+  -H "Authorization: Bearer $OAUTH_TOKEN" \
+  -H "Client-Id: $CLIENT_ID")
 
 # Render channel list with thumbnails preview
 channels=$(echo $online_channels \
-  | jq -r '.data[] | "\(.user_name) is playing \(.game_name) with \(.viewer_count) viewers. \(.title)\t\(.thumbnail_url)"' \
+  | jq -r '.data[] | "\(.user_name)"
+    + " is playing \(.game_name) with \(.viewer_count) viewers. "
+    + "\(.title)\t\(.thumbnail_url)"' \
   | sed -e "s/{height}/300/" -e "s/{width}/600/" \
   | sort \
   | awk '!seen[$0]++' \
   | fzf --with-nth=1 --delimiter='\t' \
-  --preview 'curl -s $(echo {2}) | chafa -s 50x25 -c full -p on -f sixel' --preview-window=up)
+  --preview 'curl -s $(echo {2}) | chafa -s 50x25 -c full -p on -f sixel' \
+  --preview-window=up)
 
 # Select channel interactively
 selection=$(echo $channels)

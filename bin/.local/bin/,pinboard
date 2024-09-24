@@ -38,7 +38,13 @@ if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
 fi
 
   links=$(cat $PINBOARD_CACHE | jq -r \
-    '.[] | (.time | gsub("T.*";" ") ) + (if .toread != "no" then "● " else "" end) + (if .tags != "" then ("\u001b[1m\u001b[35m#" + (.tags | gsub(" "; " #")) + "\u001b[0m ") else "" end) + (.description) + (if .extended != "" then "\u001b[3m — " + (.extended | gsub("\n"; " ")) + "\u001b[0m" else "" end) + "\t\(.href)"' \
+    '.[] | (.time | gsub("T.*";" ") )
+      + (if .toread != "no" then "● " else "" end)
+      + (if .tags != "" then ("\u001b[1m\u001b[35m#" + (.tags | gsub(" "; " #")) + "\u001b[0m ") else "" end)
+      + (.description)
+      + (if .extended != "" then "\u001b[3m — "
+      + (.extended | gsub("\n"; " "))
+      + "\u001b[0m" else "" end) + "\t\(.href)"' \
     | sort -R | fzf --with-nth=1 --delimiter='\t' --exact --ansi --color=16 \
     --bind 'ctrl-o:execute(open -a Safari $(echo {} | awk "{print \$NF}"))')
 
