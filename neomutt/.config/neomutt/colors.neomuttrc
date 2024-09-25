@@ -27,7 +27,7 @@ set flag_chars = "●●●   "
 ifdef crypt_chars set crypt_chars = " "
 
 # Pager bar
-set date_format = "%a %d %h %H:%M"
+set date_format = "%h %d, %Y, at %H:%M"
 set pager_format = " %n  %T %s%* %?X? %X ?%P "
 
 # Index listing

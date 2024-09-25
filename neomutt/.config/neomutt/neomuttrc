@@ -14,6 +14,7 @@ set sendmail = "msmtp"
 set realname = ""
 set from = ""
 my_hdr Bcc: xxx@xxx.com # auto BCC
+set attribution = "\n> On %d, %n <%a> wrote:\n> "
 
 # Other optional settings
 set move = no
