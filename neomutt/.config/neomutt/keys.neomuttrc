@@ -366,6 +366,7 @@ bind index N toggle-new
 bind index,pager p search-opposite
 bind index,pager,attach,editor,compose <F5> refresh
 # macro index,pager \cl '<pipe-message>urlscan -d -w 80<enter>' "call urlscan to open links"
+macro pager O "<view-attachments>/html<Enter><Space><exit>" "Open email as HTML"
 macro index O "<shell-escape>clear;mbsync -a<enter>" "run mbsync to sync all mail"
 macro attach s '<save-entry><kill-line>~/Downloads/<enter>a' "Save file to ~/Downloads"
 macro browser h '<change-dir><kill-line>..<enter>' "Go to parent folder"
