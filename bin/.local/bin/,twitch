@@ -65,7 +65,9 @@ selection=$(echo $channels)
 
 # Launch stream of selected channel
 if [ -n "$selection" ]; then
-  streamlink twitch.tv/$(echo $selection | awk '{print $1}') ${1:-480p} \
+  streamlink --loglevel=none twitch.tv/$(echo $selection | awk '{print $1}') ${1:-480p} \
     --twitch-proxy-playlist=https://eu2.luminous.dev,https://lb-eu2.cdn-perfprod.com \
     -p mpv &
+  echo "Preparing stream..."
+  sleep 2
 fi
