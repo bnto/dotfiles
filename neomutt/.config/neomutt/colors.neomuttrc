@@ -31,7 +31,7 @@ set date_format = "%h %d, %Y, at %H:%M"
 set pager_format = " %n  %T %s%* %?X? %X ?%P "
 
 # Index listing
-set index_format = ' %Z  %-25.25F ┃ %?M?[%-1M] ?%s %*  %?X?  %X?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
+set index_format = ' %Z  %-25.25F ┃ %?M?%-1M ?%s %*  %?X?  %X?%<[y?%<[m?%<[d?%[  %H:%M]&%[ %a %d]>&%[ %b %d]>&%[ %Y-%m]> '
 
 color index color08 default '~R'
 color index_author color07 default '~R'
