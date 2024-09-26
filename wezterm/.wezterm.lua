@@ -101,6 +101,8 @@ wezterm.on("format-window-title", function()
   return ""
 end)
 
+wezterm.status_update_interval = 30000 -- update every 30 seconds
+
 wezterm.on("update-right-status", function(window)
   -- local date = wezterm.strftime("%d/%m")
   local hour = wezterm.strftime("%H:%M")
