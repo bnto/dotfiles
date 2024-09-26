@@ -9,7 +9,8 @@ for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
   # Check if the file is a regular file (not a directory)
   if [ -f "$email_file" ]; then
     from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
-    subject=$(cat "$email_file" | awk '/^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
+    subject=$(cat "$email_file" | awk '
+    /^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
 
     message="$from ||| $subject"
 
