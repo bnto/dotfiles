@@ -23,8 +23,8 @@ if [ ! -f "$PINBOARD_CACHE" ]; then
   sleep 2
 fi
 
-if [ $(find "$PINBOARD_CACHE" -mmin +60 -print) ]; then
-  # Download latest changes if cache is older than 1 hour
+if [ $(find "$PINBOARD_CACHE" -mmin +360 -print) ]; then
+  # Download latest changes if cache is older than 6 hours
   echo "Getting latest update..."
   curl -o "$PINBOARD_CACHE.tmp" -# -X GET -G -d format=json \
     "https://api.pinboard.in/v1/posts/all?auth_token=$PINBOARD_TOKEN"
