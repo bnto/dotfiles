@@ -3,7 +3,7 @@ browser ",linkhandler %u %t %T"
 # Open in browser
 macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
 macro f set browser "open -a firefox '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
-macro t set browser "w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
+macro t set browser ",linkhandler %u use_w3m"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
 
 show-read-feeds no
 confirm-mark-feed-read no
