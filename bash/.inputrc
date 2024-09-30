@@ -7,15 +7,15 @@ set completion-ignore-case On
 "\e[D": backward-char
 
 # Bash Keybinds
-"\C-fr": " ,radio\n"             # (R)adio
-"\C-fn": " newsboat\n"           # (N)ews
-"\C-fj": " ,twitch\n"            # Stream (J)ustin
-"\C-fm": " neomutt\n"            # (M)ail
-"\C-fc": " ,checkmail\n"         # (C)heck new mail
-"\C-fb": " ,pinboard\n"          # (B)ookmarks
+"\C-fr": " ,radio\nclear\n"         # (R)adio
+"\C-fn": " newsboat\nclear\n"       # (N)ews
+"\C-fj": " ,twitch\nclear\n"        # Stream (J)ustin
+"\C-fm": " neomutt\nclear\n"        # (M)ail
+"\C-fc": " ,checkmail\n"            # (C)heck new mail
+"\C-fb": " ,pinboard\nclear\n"      # (B)ookmarks
 
 # Bash and Tmux Keybinds
-"\C-ff": " ,tmux-session\n"      # (F)ind projects
-"\C-fg": " lazygit\n"           # Lazy(G)it
-"\C-fz": " zk edit -i\nclear\n"  # (Z)ettelkasten
-"\C-ft": " ,task\n"              # (T)ask
+"\C-ff": " ,tmux-session\nclear\n"  # (F)ind projects
+"\C-fg": " lazygit\nclear\n"        # Lazy(G)it
+"\C-fz": " zk edit -i\nclear\n"     # (Z)ettelkasten
+"\C-ft": " ,task\nclear\n"          # (T)ask
