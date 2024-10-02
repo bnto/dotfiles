@@ -1,1 +1,2 @@
 confirm_qq 0
+extbrowser open -a 'Safari' %s
