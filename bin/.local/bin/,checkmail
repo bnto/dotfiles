@@ -8,14 +8,18 @@
 for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
   # Check if the file is a regular file (not a directory)
   if [ -f "$email_file" ]; then
+
+    # check encoding
+    encoding=$(file -bI $email_file | sed -n 's/.*charset=\(.*\)/\1/p')
+
     from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
-    subject=$(cat "$email_file" | awk '
+    subject=$(iconv -f $encoding -t UTF-8 "$email_file" | awk '
     /^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
 
     message="$from ||| $subject"
 
     # decode content
-    if echo "$message" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?|\=?iso-8859-2\?"; then
+    if echo "$message" | grep -iqE "=\?utf-8\?|=\?ISO-8859-1\?|\=?iso-8859-2\?|\=?windows-1250\?"; then
       decoded_message=$(python3 -c "
 import email
 import email.header
