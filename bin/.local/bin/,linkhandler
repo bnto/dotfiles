@@ -13,7 +13,9 @@ case "$1 $2" in
   *use_w3m*)
     clear
     echo "Loading article in w3m..."
-    curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html
+    curl -s -L --cookie $COURRIER_COOKIE "$1" \
+      | readable -q \
+      | w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html
   ;;
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
