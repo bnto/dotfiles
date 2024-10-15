@@ -3,6 +3,7 @@ browser ",linkhandler %u %t %T"
 # Open in browser
 macro o set browser "open -a safari '%u'"; open-in-browser-and-mark-read; set browser ",linkhandler %u %t %T"
 macro t set browser ",linkhandler %u use_w3m"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
+macro p set browser ",linkhandler %u bypass_paywall"; open-in-browser-and-mark-read; set browser ",linkhandler %u %T"
 
 show-read-feeds no
 confirm-mark-feed-read no

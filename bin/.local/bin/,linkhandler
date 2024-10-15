@@ -17,6 +17,13 @@ case "$1 $2" in
       | readable -q \
       | w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html
   ;;
+  *bypass_paywall*)
+    # using https://github.com/everywall/ladder
+    echo "Loading article..." && \
+    echo "Stripping out paywall..." && \
+    curl -X GET "http://localhost:8080/$1" | readable -q | \
+    pandoc -f html -t gfm --wrap=none --quiet | sed 's/\\//g' | glow -p
+  ;;
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
     echo "Loading image..." && \
