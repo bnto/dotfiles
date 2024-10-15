@@ -107,7 +107,7 @@ wezterm.on("update-right-status", function(window)
   -- local date = wezterm.strftime("%d/%m")
   local hour = wezterm.strftime("%H:%M")
   local newmail = tonumber(io.popen("ls -1 ~/.mail/INBOX/new | wc -l"):read("*a"))
-  local inbox = newmail > 0 and " ● " .. newmail .. "" or ""
+  local inbox = newmail > 0 and wezterm.nerdfonts.md_mailbox_up .. " " .. newmail .. "" or ""
 
   local battery = ""
   local state = ""
