@@ -14,8 +14,8 @@
     <key>KeepAlive</key>
     <true/>
     <key>StandardOutPath</key>
-    <string>/var/log/goimapnotify.log</string>
+    <string>/tmp/goimapnotify.log</string>
     <key>StandardErrorPath</key>
-    <string>/var/log/goimapnotify_err.log</string>
+    <string>/tmp/goimapnotify.err</string>
 </dict>
 </plist>
