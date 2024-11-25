@@ -12,6 +12,10 @@ for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
     # check encoding
     encoding=$(file -bI $email_file | sed -n 's/.*charset=\(.*\)/\1/p')
 
+    if [ "$encoding" == "unknown-8bit" ]; then
+      encoding="iso-8859-1"
+    fi
+
     from=$(grep -m 1 "^From: " "$email_file" | sed 's/^From: //')
     subject=$(iconv -f $encoding -t UTF-8 "$email_file" | awk '
     /^Subject:/ {flag=1; print substr($0, 10); next} /^ / && flag {print; next} {flag=0}')
