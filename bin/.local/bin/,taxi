@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+TAXI_APIKEY=
+TAXI_URL_BOARD=https://cdt.hafas.de/opendata/apiserver/departureBoard
+STATION_ID=${1:-}
+DIR=${2:-}
+
+curl -sS "$TAXI_URL_BOARD?accessId=$TAXI_APIKEY&lang=fr&id=$STATION_ID&format=json&duration=120&direction=$DIR" \
+  | jq -r '.Departure[] |
+  (if .cancelled then "CANCELLED #" + "\(.time)#" else "#" + "\(.rtTime)#" end)
+  + .time + "#"
+  + "➤\(.name) " + .direction + "#"' \
+  | sed '/CANCELLED/ s/^/\x1b[31m/; /CANCELLED/ s/$/\x1b[0m/' \
+  | awk -F'#' '{
+
+    # Split both timestamps into hours, minutes, and seconds
+    split($2, a, ":"); split($3, b, ":");
+    s = a[1]*3600 + a[2]*60 + a[3];
+    e = b[1]*3600 + b[2]*60 + b[3];
+
+    # Ensure s is the later timestamp
+    if (s <= e) {
+        diff = ""; sign = ""; rtTime = "";
+    } else {
+        diff = (s - e) / 60;
+        sign = "+";
+        rtTime = $2;
+    }
+
+    # Print with the time difference
+    print $1 $3, sign diff, rtTime $4, $5;
+  }' \
+  | awk '{
+    split($0, parts, "➤");
+    printf "%-25s ➤ %s\n", parts[1], parts[2]
+  }'
