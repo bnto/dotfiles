@@ -18,6 +18,17 @@ if [ -f ~/.bash_aliases ]; then
   . ~/.bash_aliases
 fi
 
+# WSL options
+if have /usr/bin/wslpath; then
+  export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r'))
+
+  # start at ~
+  if [[ $(pwd) == $WINHOME ]]
+  then
+    cd ~
+  fi
+fi
+
 if have /opt/homebrew/bin/brew; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
