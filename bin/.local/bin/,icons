@@ -30,6 +30,9 @@ case "$1" in
   docker|docker-compose|podman)
       echo ""
       ;;
+  dotnet)
+      echo "󰪮 "
+      ;;
   lf|ls|nnn|ranger|lsd)
       echo ""
       ;;
