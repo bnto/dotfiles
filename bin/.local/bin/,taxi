@@ -5,9 +5,14 @@ TAXI_URL_BOARD=https://cdt.hafas.de/opendata/apiserver/departureBoard
 STATION_ID=${1:-}
 DIR=${2:-}
 
-curl -sS "$TAXI_URL_BOARD?accessId=$TAXI_APIKEY&lang=fr&id=$STATION_ID&format=json&duration=120&direction=$DIR" \
+request=$(curl -sS \
+  "$TAXI_URL_BOARD?accessId=$TAXI_APIKEY&lang=fr&id=$STATION_ID&format=json&duration=120&direction=$DIR")
+
+last_update=$(echo $request | jq -r '.TechnicalMessages.TechnicalMessage[0].value' | awk '{print $2}')
+
+echo $request \
   | jq -r '.Departure[] |
-  (if .cancelled then " CANCELLED #" + "\(.time)#" else "#" + "\(.rtTime)#" end)
+  (if .cancelled then "CANCELLED #" + "\(.time)#" else "#" + "\(.rtTime)#" end)
   + .time + "#"
   + "〜\(.name) " + .direction + "#"' \
   | awk -F'#' '{
