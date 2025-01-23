@@ -1,6 +1,6 @@
 # zk configuration file
 [notebook]
-dir = "~/.zk/notes"
+dir = "~/zk" # location where to clone all the zk notes
 [note]
 filename = "{{id}}-{{slug title}}"
 template = "default.md"
