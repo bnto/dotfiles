@@ -6,7 +6,6 @@ export HISTCONTROL=ignoreboth:erasedups
 export HISTFILESIZE=
 export HISTSIZE=
 
-
 # Add my custom scripts
 PATH="~/.local/bin:$PATH"
 
@@ -27,10 +26,19 @@ if have /usr/bin/wslpath; then
   then
     cd ~
   fi
+
+  # open the windows home folder
+  wsl() {
+    nvim $(echo $WINHOME)
+  }
 fi
 
 if have /opt/homebrew/bin/brew; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if have /home/linuxbrew/.linuxbrew/bin/brew; then
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 fi
 
 # Launch NVM
