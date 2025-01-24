@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+DATASET_CACHE=/tmp/dataset.zip
+
+# this script will download the latest dataset and
+# list all the stations available in the stops.txt file
+
+if [ ! -f "$DATASET_CACHE" ]; then
+  # Create cache file if not available
+  echo "Setting up cache..."
+  touch -d "2 days ago" $DATASET_CACHE
+  sleep 2
+fi
+
+if [ $(find "$DATASET_CACHE" -mmin +43200 -print) ]; then
+  # Download latest changes if cache is older than 30 days
+  echo "Getting latest update..."
+  curl -o "$DATASET_CACHE.tmp" -# -X GET \
+    $(curl -sL  "https://data.public.lu/api/1/datasets/gtfs" | jq -r '.resources[0].url')
+    
+  # Replace old cache if download is successfull
+  if [ $? -eq 0 ]; then
+    mv "$DATASET_CACHE.tmp" "$DATASET_CACHE"
+  else
+    touch $DATASET_CACHE
+  fi
+fi
+
+# get stops.txt file from the zip
+stops=$(unzip -p $DATASET_CACHE stops.txt | awk -F'"' '{print $1 $4}' | sed 's/,/ /' | sed '1d')
+
+# get departure information
+departure=$(echo -e "$stops" | sort -R | fzf --with-nth=2.. --header="Where are you?" --header-first)
+departure_id=$(echo $departure | awk '{print $1}' | sed 's/^0*//')
+
+# get direction information
+direction=$(echo -e "$stops" | sort -R | fzf --with-nth=2.. --header="Where are you going?" --header-first)
+direction_id=$(echo $direction | awk '{print $1}' | sed 's/^0*//')
+
+# send result to the taxi custom script
+~/.local/bin/,taxi $departure_id $direction_id
