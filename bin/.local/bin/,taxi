@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 
+# This script queries a public transportation API to retrieve information
+# about the next scheduled bus or train for a specific stop ($STATION_ID).
+# Optionally, the user can specify a direction ($DIR) to filter results for
+# vehicules traveling towards a specific destination
+
 TAXI_APIKEY=
 TAXI_URL_BOARD=https://cdt.hafas.de/opendata/apiserver/departureBoard
 STATION_ID=${1:-}
