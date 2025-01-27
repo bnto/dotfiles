@@ -8,7 +8,7 @@ DATASET_CACHE=/tmp/dataset.zip
 if [ ! -f "$DATASET_CACHE" ]; then
   # Create cache file if not available
   echo "Setting up cache..."
-  touch -d "2 days ago" $DATASET_CACHE
+  touch -d "30 days ago" $DATASET_CACHE
   sleep 2
 fi
 
@@ -16,7 +16,7 @@ if [ $(find "$DATASET_CACHE" -mmin +43200 -print) ]; then
   # Download latest changes if cache is older than 30 days
   echo "Getting latest update..."
   curl -o "$DATASET_CACHE.tmp" -# -X GET \
-    $(curl -sL  "https://data.public.lu/api/1/datasets/gtfs" | jq -r '.resources[0].url')
+    $(curl -sL "https://data.public.lu/api/1/datasets/gtfs" | jq -r '.resources[0].url')
     
   # Replace old cache if download is successfull
   if [ $? -eq 0 ]; then
