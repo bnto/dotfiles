@@ -15,9 +15,7 @@ alias rm="rm -i"
 
 # Lazy shortcuts
 alias gs="git status"
-alias vim="nvim"
-alias v="nvim"
-alias nv="nvim"
+alias nivm="nvim"
 alias tmk="tmux kill-server"
 
 # Attach tmux with grace
