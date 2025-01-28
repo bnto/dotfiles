@@ -32,10 +32,14 @@ stops=$(unzip -p $DATASET_CACHE stops.txt | awk -F'"' '{print $1 $4}' | sed 's/,
 # get departure information
 departure=$(echo -e "$stops" | sort -R | fzf --with-nth=2.. --header="Where are you?" --header-first)
 departure_id=$(echo $departure | awk '{print $1}' | sed 's/^0*//')
+departure_name=$(echo -e "$stops" | grep -i "$departure_id" | sed 's/^[^ ]* //')
 
 # get direction information
 direction=$(echo -e "$stops" | sort -R | fzf --with-nth=2.. --header="Where are you going?" --header-first)
 direction_id=$(echo $direction | awk '{print $1}' | sed 's/^0*//')
+direction_name=$(echo -e "$stops" | grep -i "$direction_id" | sed 's/^[^ ]* //')
+
+# echo -e "$departure_name 〜 $direction_name"
 
 # send result to the taxi custom script
 ~/.local/bin/,taxi $departure_id $direction_id
