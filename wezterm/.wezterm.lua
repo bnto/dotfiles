@@ -134,5 +134,37 @@ wezterm.on("update-right-status", function(window)
   }))
 end)
 
+if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+  -- windows specific configuration
+  config.default_prog = { "wsl.exe", "~" }
+  config.window_decorations = "NONE"
+  config.font_size = 13
+  config.hide_tab_bar_if_only_one_tab = true
+  config.initial_rows = 45
+  config.initial_cols = 130
+  config.window_padding = {
+    bottom = 0,
+    top = 20,
+    right = 10,
+    left = 20,
+  }
+  wezterm.on("update-right-status", function(window)
+    local date = wezterm.strftime("%d/%m")
+    local hour = wezterm.strftime("%H:%M")
+
+    window:set_right_status(wezterm.format({
+      -- time
+      { Foreground = { Color = dawn_palette.muted } },
+      { Background = { Color = dawn_palette.overlay } },
+      { Text = " " .. hour .. " " },
+
+      -- date
+      { Foreground = { Color = dawn_palette.muted } },
+      { Background = { Color = dawn_palette.base } },
+      { Text = " " .. date .. " " },
+    }))
+  end)
+end
+
 -- and finally, return the configuration to wezterm
 return config
