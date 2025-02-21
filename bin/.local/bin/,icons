@@ -63,6 +63,9 @@ case "$1" in
   man|zk)
       echo ""
       ;;
+  newsboat)
+      echo ""
+      ;;
   nano|pico)
       echo ""
       ;;
