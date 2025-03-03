@@ -20,7 +20,7 @@ echo $request \
   (if .cancelled then "CANCELLED #" + "\(.time)#" else "#" + "\(.rtTime)#" end)
   + .time + "#"
   + "〜\(.name) " + .direction + "#"' \
-  | awk -F'#' '{
+    | awk -F'#' '{
 
     # Split both timestamps into hours, minutes, and seconds
     split($2, a, ":"); split($3, b, ":");
@@ -30,16 +30,16 @@ echo $request \
     e = b[1]*3600 + b[2]*60 + b[3];
 
     if (s > e) {
-        diff = (s - e) / 60;
-        sign = "+";
-        rtTime = $2;
+      diff = (s - e) / 60;
+      sign = "+";
+      rtTime = $2;
     } else { diff = sign = rtTime = ""; }
 
     # Print with the time difference
     print $1 $3, sign diff, rtTime $4, $5;
   }' \
-  | awk '{
-    split($0, parts, "〜");
-    printf "%-25s 〜 %s\n", parts[1], parts[2];
-  }' \
-  | sed '/CANCELLED/ s/^/\x1b[31m/; /CANCELLED/ s/$/\x1b[0m/'
+    | awk '{
+      split($0, parts, "〜");
+      printf "%-25s 〜 %s\n", parts[1], parts[2];
+    }' \
+      | sed '/CANCELLED/ s/^/\x1b[31m/; /CANCELLED/ s/$/\x1b[0m/'
