@@ -8,7 +8,7 @@ fi
 
 selected=$(fzf --height=10 --with-nth=1 <<'EOF'
 lofi https://youtu.be/jfKfPfyJRdk
-vg https://youtu.be/re_K5hDjd1M
+vg https://youtu.be/jP9EsyxcdTo
 tendo https://youtu.be/mSDmr86MdHw
 jazz https://youtu.be/Dx5qFachd3A
 coffee https://youtu.be/fEvM-OUbaKs
@@ -22,3 +22,6 @@ else
   # Launch stream
   streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '--no-video --volume=50' -v &
 fi
+
+# seemingly defunct streams:
+# vg https://youtu.be/re_K5hDjd1M
