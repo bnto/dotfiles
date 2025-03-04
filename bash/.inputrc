@@ -18,4 +18,4 @@ set completion-ignore-case On
 "\C-ff": " ,tmux-session\nclear\n"  # (F)ind projects
 "\C-fg": " lazygit\nclear\n"        # Lazy(G)it
 "\C-fz": " zk edit -i\nclear\n"     # (Z)ettelkasten
-"\C-ft": " ,task\nclear\n"          # (T)ask
+"\C-ft": " vit\n"                   # (T)askwarrior
