@@ -17,6 +17,7 @@ alias rm="rm -i"
 alias gs="git status"
 alias nivm="nvim"
 alias tmk="tmux kill-server"
+alias docker="podman"
 
 # Attach tmux with grace
 tm() {
