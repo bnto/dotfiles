@@ -88,3 +88,8 @@ iris_fg='\[\e[38;2;144;122;169m\]'
 reset='\[\e[0m\]' # reset color
 
 export PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
+
+# Launch ble.sh if available https://github.com/akinomyoga/ble.sh
+if [ -f $HOME/.local/share/blesh/ble.sh ]; then
+  source $HOME/.local/share/blesh/ble.sh
+fi

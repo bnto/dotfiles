@@ -1,0 +1,4 @@
+# .blerc
+
+bleopt default_keymap=vi
+bleopt complete_menu_style=linewise
