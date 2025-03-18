@@ -40,6 +40,12 @@ man() {
     command man "$@"
 }
 
+# easier copy & paste from the cli
+if have /usr/bin/xclip; then
+  alias pbcopy="xclip -selection c"
+  alias pbpaste="xclip -selection c -o"
+fi
+
 colortest() {
   T='gYw' # The test text
 
