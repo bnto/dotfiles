@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+os=$(uname -s | tr '[:upper:]' '[:lower:]')
+
+if [[ $os == "linux" ]]; then
+  if grep -qE "WSL" /proc/sys/kernel/osrelease; then
+    # Open in Firefox for windows
+    /mnt/c/Program\ Files/Mozilla\ Firefox/firefox.exe $1
+  else
+    # Open in the linux $BROWSER
+    $BROWSER $1
+  fi
+else
+  # Open in safari
+  open -a safari $1
+fi
