@@ -149,6 +149,7 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   config.window_decorations = "NONE"
   config.font_size = 13
   config.hide_tab_bar_if_only_one_tab = true
+  -- config.tab_bar_at_bottom = true
   config.initial_rows = 45
   config.initial_cols = 130
   config.window_padding = {
@@ -173,6 +174,17 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
       { Text = " " .. date .. " " },
     }))
   end)
+
+  wezterm.on('format-tab-title', function(tab)
+    if tab.is_active then
+      return '      '
+      -- return '  ' .. tostring(tab.tab_index + 1) .. '  '
+    else
+      return '   '
+      -- return '  ' .. tostring(tab_index) .. '  '
+    end
+  end)
+
 end
 
 -- and finally, return the configuration to wezterm
