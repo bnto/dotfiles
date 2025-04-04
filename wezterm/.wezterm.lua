@@ -130,8 +130,10 @@ end)
 wezterm.status_update_interval = 30000 -- update every 30 seconds
 
 wezterm.on("update-right-status", function(window)
+  if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+    return
+  end
 
-  if wezterm.target_triple == "x86_64-pc-windows-msvc" then return end
   -- local date = wezterm.strftime("%d/%m")
   local hour = wezterm.strftime("%H:%M")
   local newmail = tonumber(io.popen("ls -1 ~/.mail/INBOX/new | wc -l"):read("*a"))

@@ -71,6 +71,20 @@ local dawn_palette = {
   -- highlight_high = '#cecacd',
 }
 
+local moon_palette = {
+  base = "#232136",
+  overlay = "#2a273f",
+  muted = "#6e6a86",
+  text = "#e0def4",
+  love = "#eb6f92",
+  gold = "#f6c177",
+  rose = "#ea9a97",
+  pine = "#3e8fb0",
+  foam = "#9ccfd8",
+  iris = "#c4a7e7",
+  highlight_high = "#56526e",
+}
+
 config.colors = {
   tab_bar = {
     background = dawn_palette.base,
@@ -101,17 +115,30 @@ config.colors = {
   },
   selection_bg = dawn_palette.rose,
   selection_fg = "#ffffff",
+  -- cursor_bg = moon_palette.highlight_high,
+  -- cursor_border = moon_palette.highlight_high,
+  -- cursor_fg = moon_palette.base,
+  -- visual_bell = moon_palette.highlight_high,
 }
 
 wezterm.on("format-window-title", function()
   return ""
 end)
 
+wezterm.on("format-tab-title", function(tab)
+  if tab.is_active then
+    return "      "
+  else
+    return "   "
+  end
+end)
+
 wezterm.status_update_interval = 30000 -- update every 30 seconds
 
 wezterm.on("update-right-status", function(window)
-
-  if wezterm.target_triple == "x86_64-pc-windows-msvc" then return end
+  if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+    return
+  end
 
   -- local date = wezterm.strftime("%d/%m")
   local hour = wezterm.strftime("%H:%M")
@@ -174,17 +201,6 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
       { Text = " " .. date .. " " },
     }))
   end)
-
-  wezterm.on('format-tab-title', function(tab)
-    if tab.is_active then
-      return '      '
-      -- return '  ' .. tostring(tab.tab_index + 1) .. '  '
-    else
-      return '   '
-      -- return '  ' .. tostring(tab_index) .. '  '
-    end
-  end)
-
 end
 
 -- and finally, return the configuration to wezterm
