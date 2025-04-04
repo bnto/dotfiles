@@ -119,6 +119,14 @@ wezterm.on("format-window-title", function()
   return ""
 end)
 
+wezterm.on("format-tab-title", function(tab)
+  if tab.is_active then
+    return "      "
+  else
+    return "   "
+  end
+end)
+
 wezterm.status_update_interval = 30000 -- update every 30 seconds
 
 wezterm.on("update-right-status", function(window)
@@ -185,17 +193,6 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
       { Text = " " .. date .. " " },
     }))
   end)
-
-  wezterm.on('format-tab-title', function(tab)
-    if tab.is_active then
-      return '      '
-      -- return '  ' .. tostring(tab.tab_index + 1) .. '  '
-    else
-      return '   '
-      -- return '  ' .. tostring(tab_index) .. '  '
-    end
-  end)
-
 end
 
 -- and finally, return the configuration to wezterm
