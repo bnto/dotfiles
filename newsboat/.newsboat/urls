@@ -1,1 +1,3 @@
 "query:# Unread Articles:unread = \"yes\""
+"query:# Starred Articles:flags # \"s\""
+"query:# Youtube:link =~ \"youtube\""

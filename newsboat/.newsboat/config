@@ -13,8 +13,8 @@ download-full-page yes
 refresh-on-startup no
 feed-sort-order lastupdated-desc
 datetime-format "%d/%m"
-# prepopulate-query-feeds yes
-max-items 20
+prepopulate-query-feeds yes # show query filter on top
+max-items 50
 
 urls-source "feedhq"
 feedhq-url "https://bazqux.com/"
