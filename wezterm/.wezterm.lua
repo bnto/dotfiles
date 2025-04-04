@@ -65,6 +65,20 @@ local dawn_palette = {
   -- highlight_high = '#cecacd',
 }
 
+local moon_palette = {
+  base = "#232136",
+  overlay = "#2a273f",
+  muted = "#6e6a86",
+  text = "#e0def4",
+  love = "#eb6f92",
+  gold = "#f6c177",
+  rose = "#ea9a97",
+  pine = "#3e8fb0",
+  foam = "#9ccfd8",
+  iris = "#c4a7e7",
+  highlight_high = "#56526e",
+}
+
 config.colors = {
   tab_bar = {
     background = dawn_palette.base,
@@ -95,6 +109,10 @@ config.colors = {
   },
   selection_bg = dawn_palette.rose,
   selection_fg = "#ffffff",
+  -- cursor_bg = moon_palette.highlight_high,
+  -- cursor_border = moon_palette.highlight_high,
+  -- cursor_fg = moon_palette.base,
+  -- visual_bell = moon_palette.highlight_high,
 }
 
 wezterm.on("format-window-title", function()
