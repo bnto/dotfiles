@@ -89,6 +89,20 @@ reset='\[\e[0m\]' # reset color
 
 export PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
 
+# Keybindings
+bind -x '"\C-fr": ,radio'         # (R)adio
+bind -x '"\C-fn": newsboat'       # (N)ews
+bind -x '"\C-fj": ,twitch'        # Stream (J)ustin
+bind -x '"\C-fm": neomutt'        # (M)ail
+bind -x '"\C-fc": ,checkmail'     # (C)heck new mail
+bind -x '"\C-fb": ,pinboard'      # (B)ookmarks
+
+# Bash and Tmux Keybinds
+bind -x '"\C-ff": ,tmux-session'  # (F)ind projects
+bind -x '"\C-fg": lazygit'        # Lazy(G)it
+bind -x '"\C-fz": zk edit -i'     # (Z)ettelkasten
+bind -x '"\C-ft": vit'            # (T)askwarrior
+
 # Launch ble.sh if available https://github.com/akinomyoga/ble.sh
 if [ -f $HOME/.local/share/blesh/ble.sh ]; then
   source $HOME/.local/share/blesh/ble.sh
