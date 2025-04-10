@@ -2,6 +2,9 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+-- ## set light background
+local light_mode = true
+
 -- ## set default shell
 config.default_prog = { "/bin/bash", "-l" }
 
@@ -51,68 +54,74 @@ config.keys = {
   },
 }
 
-local dawn_palette = {
-  base = "#faf4ed",
-  overlay = "#f2e9e1",
-  muted = "#9893a5",
-  text = "#575279",
-  love = "#b4637a",
-  gold = "#ea9d34",
-  rose = "#d7827e",
-  pine = "#286983",
-  foam = "#56949f",
-  iris = "#907aa9",
-  -- highlight_high = '#cecacd',
-}
-
-local moon_palette = {
-  base = "#232136",
-  overlay = "#2a273f",
-  muted = "#6e6a86",
-  text = "#e0def4",
-  love = "#eb6f92",
-  gold = "#f6c177",
-  rose = "#ea9a97",
-  pine = "#3e8fb0",
-  foam = "#9ccfd8",
-  iris = "#c4a7e7",
-  highlight_high = "#56526e",
-}
+-- ## color palette
+local palette = {}
+if light_mode then
+  -- Rose Pine Dawn Palette
+  palette = {
+    base = "#faf4ed",
+    overlay = "#f2e9e1",
+    muted = "#9893a5",
+    text = "#575279",
+    love = "#b4637a",
+    gold = "#ea9d34",
+    rose = "#d7827e",
+    pine = "#286983",
+    foam = "#56949f",
+    iris = "#907aa9",
+    -- highlight_high = '#cecacd',
+  }
+else
+  -- Rose Pine Moon Palette
+  palette = {
+    base = "#232136",
+    overlay = "#2a273f",
+    muted = "#6e6a86",
+    text = "#e0def4",
+    love = "#eb6f92",
+    gold = "#f6c177",
+    rose = "#ea9a97",
+    pine = "#3e8fb0",
+    foam = "#9ccfd8",
+    iris = "#c4a7e7",
+    highlight_high = "#56526e",
+  }
+end
 
 config.colors = {
   tab_bar = {
-    background = dawn_palette.base,
+    background = palette.base,
     active_tab = {
-      bg_color = dawn_palette.overlay,
-      fg_color = dawn_palette.text,
+      bg_color = palette.overlay,
+      fg_color = palette.text,
       intensity = "Normal",
     },
     inactive_tab = {
-      bg_color = dawn_palette.base,
-      fg_color = dawn_palette.muted,
+      bg_color = palette.base,
+      fg_color = palette.muted,
     },
     inactive_tab_hover = {
-      bg_color = dawn_palette.overlay,
-      fg_color = dawn_palette.text,
+      bg_color = palette.overlay,
+      fg_color = palette.text,
       italic = true,
     },
     new_tab = {
-      bg_color = dawn_palette.base,
-      fg_color = dawn_palette.muted,
+      bg_color = palette.base,
+      fg_color = palette.muted,
     },
     new_tab_hover = {
-      bg_color = dawn_palette.overlay,
-      fg_color = dawn_palette.text,
+      bg_color = palette.overlay,
+      fg_color = palette.text,
       italic = true,
     },
-    inactive_tab_edge = dawn_palette.muted,
+    inactive_tab_edge = palette.muted,
   },
-  selection_bg = dawn_palette.rose,
+  selection_bg = palette.rose,
   selection_fg = "#ffffff",
-  -- cursor_bg = moon_palette.highlight_high,
-  -- cursor_border = moon_palette.highlight_high,
-  -- cursor_fg = moon_palette.base,
-  -- visual_bell = moon_palette.highlight_high,
+  -- cursor_bg = palette.highlight_high,
+  -- cursor_border = palette.highlight_high,
+  -- cursor_fg = palette.base,
+  -- visual_bell = palette.highlight_high,
 }
 
 wezterm.on("format-window-title", function()
@@ -148,15 +157,15 @@ wezterm.on("update-right-status", function(window)
 
   window:set_right_status(wezterm.format({
     -- inbox
-    { Foreground = { Color = dawn_palette.muted } },
+    { Foreground = { Color = palette.muted } },
     { Text = inbox .. " " },
 
     -- time
-    { Foreground = { Color = dawn_palette.muted } },
-    { Background = { Color = dawn_palette.overlay } },
+    { Foreground = { Color = palette.muted } },
+    { Background = { Color = palette.overlay } },
     { Text = " " .. hour .. " " },
-    { Foreground = { Color = dawn_palette.muted } },
-    { Background = { Color = dawn_palette.base } },
+    { Foreground = { Color = palette.muted } },
+    { Background = { Color = palette.base } },
 
     -- battery
     { Text = state },
@@ -185,13 +194,13 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
 
     window:set_right_status(wezterm.format({
       -- time
-      { Foreground = { Color = dawn_palette.muted } },
-      { Background = { Color = dawn_palette.overlay } },
+      { Foreground = { Color = palette.muted } },
+      { Background = { Color = palette.overlay } },
       { Text = " " .. hour .. " " },
 
       -- date
-      { Foreground = { Color = dawn_palette.muted } },
-      { Background = { Color = dawn_palette.base } },
+      { Foreground = { Color = palette.muted } },
+      { Background = { Color = palette.base } },
       { Text = " " .. date .. " " },
     }))
   end)
