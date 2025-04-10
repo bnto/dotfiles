@@ -33,8 +33,7 @@ config.hide_tab_bar_if_only_one_tab = false
 config.use_fancy_tab_bar = false
 
 -- ## colorscheme
-config.color_scheme = "rose-pine-moon"
-config.color_scheme = "rose-pine-dawn"
+config.color_scheme = light_mode and "rose-pine-dawn" or "rose-pine-moon"
 
 -- ## transparent window
 config.window_background_opacity = 0.9
