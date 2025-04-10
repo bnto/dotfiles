@@ -6,6 +6,8 @@
 export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_COOKIE -w)"
 export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
 export PINBOARD_TOKEN=$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)
+export PROXY=
+export PROXY_AUTH=
 
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
@@ -17,12 +19,13 @@ case "$1 $2" in
       | readable -q \
       | w3m -sixel -o auto_image=TRUE -o display_image=1 -T text/html
   ;;
+
   *bypass_paywall*)
     # using https://github.com/everywall/ladder
     echo "Loading article..." && \
     echo "Stripping out paywall..." && \
-    curl -X GET "http://localhost:8080/$1" | readable -q | \
-    pandoc -f html -t gfm --wrap=none --quiet | sed 's/\\//g' | glow -p
+    curl -s -X GET "$PROXY/$1" -u $PROXY_AUTH | readable -q | \
+    pandoc -f html -t gfm --wrap=preserve --quiet | sed 's/\\//g' | glow -p
   ;;
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
