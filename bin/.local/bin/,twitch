@@ -57,7 +57,7 @@ channels=$(echo $online_channels \
   | sort \
   | awk '!seen[$0]++' \
   | fzf --with-nth=1 --delimiter='\t' \
-  --preview 'curl -s $(echo {2}) | chafa -s 50x25 -c full -p on -f sixel' \
+  --preview 'curl -s $(echo {2}) | chafa -s 50x20 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on -f sixel' \
   --preview-window=up)
 
 # Select channel interactively
