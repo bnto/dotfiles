@@ -5,6 +5,7 @@ export EDITOR=nvim
 export HISTCONTROL=ignoreboth:erasedups
 export HISTFILESIZE=
 export HISTSIZE=
+export ZK_NOTEBOOK_DIR=""
 
 # Add my custom scripts
 PATH="~/.local/bin:$PATH"
@@ -96,12 +97,7 @@ bind -x '"\C-fj": ,twitch'        # Stream (J)ustin
 bind -x '"\C-fm": neomutt'        # (M)ail
 bind -x '"\C-fc": ,checkmail'     # (C)heck new mail
 bind -x '"\C-fb": ,pinboard'      # (B)ookmarks
-
-# Bash and Tmux Keybinds
 bind -x '"\C-ff": ,tmux-session'  # (F)ind projects
-bind -x '"\C-fg": lazygit'        # Lazy(G)it
-bind -x '"\C-fz": zk edit -i'     # (Z)ettelkasten
-bind -x '"\C-ft": vit'            # (T)askwarrior
 
 # Launch ble.sh if available https://github.com/akinomyoga/ble.sh
 if [ -f $HOME/.local/share/blesh/ble.sh ]; then
