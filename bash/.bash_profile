@@ -59,6 +59,10 @@ export FZF_DEFAULT_OPTS="\
   --ansi \
   --color=bw"
 
+if have fzf; then
+  FZF_CTRL_T_COMMAND= FZF_ALT_C_COMMAND= eval "$(fzf --bash)"
+fi
+
 # Start line with a random emoji
 emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙 🦝 🐢)
 emoji='`echo ${emojis[$RANDOM % 18]}`'
