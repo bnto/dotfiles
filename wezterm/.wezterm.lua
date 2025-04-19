@@ -51,6 +51,25 @@ config.keys = {
     mods = "CMD",
     action = wezterm.action.DisableDefaultAssignment,
   },
+  {
+    -- zen mode
+    key = "Z",
+    mods = "CMD",
+    action = wezterm.action_callback(function(win)
+      local overrides = win:get_config_overrides() or {}
+      if not overrides.window_padding then
+        overrides.window_padding = {
+          bottom = 0,
+          top = 10,
+          right = 450,
+          left = 450,
+        }
+      else
+        overrides.window_padding = nil
+      end
+      win:set_config_overrides(overrides)
+    end),
+  },
 }
 
 -- ## color palette
