@@ -70,6 +70,20 @@ config.keys = {
       win:set_config_overrides(overrides)
     end),
   },
+  {
+    -- toggle background mode
+    key = "L",
+    mods = "CMD",
+    action = wezterm.action_callback(function(win)
+      local overrides = win:get_config_overrides() or {}
+      if not overrides.color_scheme then
+        overrides.color_scheme = "rose-pine-moon"
+      else
+        overrides.color_scheme = nil
+      end
+      win:set_config_overrides(overrides)
+    end),
+  },
 }
 
 -- ## color palette
