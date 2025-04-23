@@ -102,8 +102,3 @@ bind -x '"\C-fm": neomutt'        # (M)ail
 bind -x '"\C-fc": ,checkmail'     # (C)heck new mail
 bind -x '"\C-fb": ,pinboard'      # (B)ookmarks
 bind -x '"\C-ff": ,tmux-session'  # (F)ind projects
-
-# Launch ble.sh if available https://github.com/akinomyoga/ble.sh
-if [ -f $HOME/.local/share/blesh/ble.sh ]; then
-  source $HOME/.local/share/blesh/ble.sh
-fi
