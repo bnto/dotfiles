@@ -5,12 +5,8 @@ CWD=~/Developer
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-  # selected=$(find $(echo $CWD) \
-  #     -mindepth 1 -maxdepth 4 \
-  #     -type d ! -path "*/node_modules/*" ! -path "*/.git*" \
-  #     -exec stat --format '%X %n' {} + | sort -nr | cut -d' ' -f2- | \
-  #     fzf --delimiter '/' --with-nth=5..)
   selected=$(fd --type d --max-depth 4 --exclude node_modules --exclude .git . "$CWD" \
+    | sed 's:/*$::' \
     | xargs stat --format='%X %n' \
     | sort -nr | cut -d' ' -f2- \
     | fzf --delimiter '/' --with-nth=5..)
