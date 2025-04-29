@@ -1,50 +1,33 @@
-# rose-pine-dawn.py
-
-# theme = [
-#     ('list-header', 'light cyan', 'black', '', '#56949f', '#faf4ed'),  # Foam on Base
-#     ('list-header-column', 'black', 'light gray', '', '#575279', '#fffaf3'),  # Text on Surface
-#     ('list-header-column-separator', 'black', 'light gray', '', '#575279', '#fffaf3'),  # Text on Surface
-#     ('striped-table-row', 'light gray', 'dark gray', '', '#f2e9e1', '#797593'),  # Overlay on Subtle
-#     ('reveal focus', 'black', 'light cyan', 'standout', '#286983', '#faf4ed'),  # Pine on Base
-#     ('message status', 'light gray', 'dark blue', 'standout', '#faf4ed', '#56949f'),  # Base on Foam
-#     ('message error', 'light gray', 'dark red', 'standout', '#faf4ed', '#b4637a'),  # Base on Love
-#     ('status', 'dark magenta', 'black', '', '#907aa9', '#faf4ed'),  # Iris on Base
-#     ('flash off', 'black', 'black', 'standout', '#575279', '#faf4ed'),  # Text on Base
-#     ('flash on', 'light gray', 'black', 'standout', '#faf4ed', '#575279'),  # Base on Text
-#     ('pop_up', 'light gray', 'black', '', '#faf4ed', '#575279'),  # Base on Text
-#     ('button action', 'light gray', 'light red', '', '#faf4ed', '#d7827e'),  # Base on Rose
-#     ('button cancel', 'black', 'light gray', '', '#575279', '#f2e9e1'),  # Text on Overlay
-# ]
-
-# theme = [
-#     ('list-header', 'light cyan', 'black', '', '#56949f', '#faf4ed'),  # Foam on Base
-#     ('list-header-column', 'black', 'light gray', '', '#d7827e', '#fffaf3'),  # Rose on Surface
-#     ('list-header-column-separator', 'black', 'light gray', '', '#d7827e', '#fffaf3'),  # Rose on Surface
-#     ('striped-table-row', 'light gray', 'dark gray', '', '#f2e9e1', '#ea9d34'),  # Overlay on Gold
-#     ('reveal focus', 'black', 'light cyan', 'standout', '#286983', '#faf4ed'),  # Pine on Base
-#     ('message status', 'light gray', 'dark blue', 'standout', '#faf4ed', '#56949f'),  # Base on Foam
-#     ('message error', 'light gray', 'dark red', 'standout', '#faf4ed', '#b4637a'),  # Base on Love
-#     ('status', 'dark magenta', 'black', '', '#907aa9', '#faf4ed'),  # Iris on Base
-#     ('flash off', 'black', 'black', 'standout', '#575279', '#faf4ed'),  # Text on Base
-#     ('flash on', 'light gray', 'black', 'standout', '#faf4ed', '#575279'),  # Base on Text
-#     ('pop_up', 'light gray', 'black', '', '#faf4ed', '#575279'),  # Base on Text
-#     ('button action', 'light gray', 'light red', '', '#faf4ed', '#d7827e'),  # Base on Rose
-#     ('button cancel', 'black', 'light gray', '', '#575279', '#ea9d34'),  # Text on Gold
-# ]
+# base00 = "#faf4ed", -- Base
+# base01 = "#fffaf3", -- Surface
+# base02 = "#f2e9de", -- Overlay
+# base03 = "#9893a5", -- Muted
+# base04 = "#797593", -- Subtle
+# base05 = "#575279", -- Text
+# base06 = "#575279", -- Text
+# base07 = "#cecacd",
+# base08 = "#b4637a", -- Love
+# base09 = "#ea9d34", -- Gold
+# base0A = "#d7827e", -- Rose
+# base0E = "#286983", -- Pine
+# base0C = "#56949f", -- Foam
+# base0D = "#907aa9", -- Iris
+# base0B = "#ea9d34", -- Gold
+# base0F = "#cecacd",
 
 theme = [
-    ('list-header', 'light cyan', 'black', '', 'light cyan', 'black'),  # Light cyan on black
-    ('list-header-column', 'black', 'light gray', '', 'black', 'light gray'),  # Black on light gray
-    ('list-header-column-separator', 'black', 'light gray', '', 'black', 'light gray'),  # Black on light gray
-    ('striped-table-row', 'light gray', 'dark gray', '', 'light gray', '#faf4ed'),  # Light gray on dark gray
-    ('reveal focus', 'black', 'light cyan', 'standout', 'black', 'light cyan'),  # Black on light cyan
-    # ('message status', 'light gray', 'dark blue', 'standout', 'light gray', 'dark blue'),  # Light gray on dark blue
-    ('message status', 'light gray', 'dark blue', 'standout', '#faf4ed', '#56949f'),  # Base on Foam
-    ('message error', 'light gray', 'dark red', 'standout', 'light gray', 'dark red'),  # Light gray on dark red
-    ('status', 'light magenta', 'black', '', 'light magenta', 'black'),  # Light magenta on black
-    ('flash off', 'black', 'black', 'standout', 'black', 'black'),  # Black on black
-    ('flash on', 'light gray', 'black', 'standout', 'light gray', 'black'),  # Light gray on black
-    ('pop_up', 'light gray', 'black', '', 'light gray', 'black'),  # Light gray on black
-    ('button action', 'light gray', 'light red', '', 'light gray', 'light red'),  # Light gray on light red
-    ('button cancel', 'black', 'light gray', '', 'black', 'light gray'),  # Black on light gray
+    # fg-base16, bg-base16, monochrome, fg-base256, bg-base256
+    ('list-header', '', '', '', '', ''),
+    ('list-header-column', '', '', '', 'underline', ''),
+    ('list-header-column-separator', '', '', '', 'underline', ''),
+    ('striped-table-row', '', '', '', '', ''), # alternated row
+    ('reveal focus', '', '', '', 'standout, #d7827e', ''),
+    ('message status', '', '', '', '', ''), # message that show in the bottom of the screen
+    ('message error', '', '', '', 'standout', ''),
+    ('status', '', '', '', '', ''), # header title
+    ('flash off', '', '', '', 'black', 'black'),
+    ('flash on', '', '', '', 'white', 'black'),
+    ('pop_up', '', '', '', 'white', 'black'),
+    ('button action', '', '', '', 'underline, white', 'light red'),
+    ('button cancel', '', '', '', 'black', 'light gray'),
 ]
