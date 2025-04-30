@@ -2,3 +2,5 @@
 data.location=
 news.version=3.3.0
 include no-color.theme
+
+report.ls.sort=start+,modified-
