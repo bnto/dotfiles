@@ -5,3 +5,5 @@ news.version=3.3.1
 include no-color.theme
 
 report.ls.sort=start+,modified-
+report.ls.columns=id,project,start.active,depends.indicator,recur.indicator,wait.remaining,scheduled.countdown,due.countdown,until.countdown,description.count
+report.ls.labels=ID,Project,A,D,R,Wait,S,Due,Until,Description
