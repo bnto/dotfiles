@@ -91,10 +91,7 @@ reset='\[\e[0m\]' # reset color
 export PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
 
 # Keybindings
-bind -x '"\C-fr": ,radio'         # (R)adio
 bind -x '"\C-fn": newsboat'       # (N)ews
-bind -x '"\C-fj": ,twitch'        # Stream (J)ustin
 bind -x '"\C-fm": neomutt'        # (M)ail
-bind -x '"\C-fc": ,checkmail'     # (C)heck new mail
-bind -x '"\C-fb": ,pinboard'      # (B)ookmarks
-bind -x '"\C-ff": ,tmux-session'  # (F)ind projects
+
+bind -x '"\C-ff": clear;$HOME/.local/bin/$(find $HOME/.local/bin/ -type f -executable -printf "%f\n" | fzf)'
