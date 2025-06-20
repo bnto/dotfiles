@@ -1,4 +1,5 @@
 set completion-ignore-case On
+# set editing-mode vi
 
 # Arrow keys match what you've typed so far against your command history
 "\e[A": history-search-backward

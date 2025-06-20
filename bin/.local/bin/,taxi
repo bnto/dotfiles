@@ -7,20 +7,29 @@
 
 TAXI_APIKEY=
 TAXI_URL_BOARD=https://cdt.hafas.de/opendata/apiserver/departureBoard
+TAXI_STOPS=https://cdt.hafas.de/opendata/apiserver/location.nearbystops
+
 STATION_ID=${1:-}
 DIR=${2:-}
 
 request=$(curl -sS \
   "$TAXI_URL_BOARD?accessId=$TAXI_APIKEY&lang=fr&id=$STATION_ID&format=json&duration=120&direction=$DIR")
 
+error=$(echo $request | jq -r '.errorCode')
+# if [ -n $error ]; then
+#   echo "ERROR CODE: $error"
+#   echo $request | jq -r '.errorText'
+#   exit 1
+# fi
+
 last_update=$(echo $request | jq -r '.TechnicalMessages.TechnicalMessage[0].value' | awk '{print $2}')
 
 echo $request \
-  | jq -r '.Departure[] |
+  | jq -r '.Departure[] | select(.directionFlag = "1") |
   (if .cancelled then "CANCELLED #" + "\(.time)#" else "#" + "\(.rtTime)#" end)
   + .time + "#"
-  + "〜\(.name) " + .direction + "#"' \
-    | awk -F'#' '{
+  + "〜\u001b[90m \(.name) \u001b[0m " + .direction + "#"' \
+  | awk -F'#' '{
 
     # Split both timestamps into hours, minutes, and seconds
     split($2, a, ":"); split($3, b, ":");
@@ -38,8 +47,8 @@ echo $request \
     # Print with the time difference
     print $1 $3, sign diff, rtTime $4, $5;
   }' \
-    | awk '{
+  | awk '{
       split($0, parts, "〜");
       printf "%-25s 〜 %s\n", parts[1], parts[2];
     }' \
-      | sed '/CANCELLED/ s/^/\x1b[31m/; /CANCELLED/ s/$/\x1b[0m/'
+    | sed '/CANCELLED/ s/^/\x1b[31m/; /CANCELLED/ s/$/\x1b[0m/'

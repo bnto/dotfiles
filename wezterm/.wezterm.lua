@@ -209,6 +209,8 @@ if wezterm.target_triple == "x86_64-pc-windows-msvc" then
   -- windows specific configuration
   config.default_prog = { "wsl.exe", "~" }
   config.window_decorations = "NONE"
+  config.window_background_opacity = 0.5
+  config.win32_system_backdrop = "Acrylic"
   config.font_size = 13
   config.hide_tab_bar_if_only_one_tab = true
   -- config.tab_bar_at_bottom = true

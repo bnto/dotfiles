@@ -25,8 +25,9 @@ case "$1 $2" in
     echo "Loading article..." && \
     echo "Stripping out paywall..." && \
     curl -s -X GET "$PROXY/$1" -u $PROXY_AUTH | readable -q | \
-    pandoc -f html -t gfm --wrap=preserve --quiet | sed 's/\\//g' | glow -p
+    pandoc -f html -t gfm --wrap=none --columns=80 --quiet | sed 's/\\//g' | glow -p
   ;;
+
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
     echo "Loading image..." && \
@@ -78,7 +79,8 @@ case "$1 $2" in
   http://*|https://*)
     echo "Loading article..." && \
     curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | \
-    pandoc -f html -t gfm --wrap=none --quiet | sed 's/\\//g' | glow -p
+    pandoc -f html -t gfm --wrap=none --columns=80 --quiet | sed 's/\\//g' | \
+    awk '{print} END {for(i=0;i<20;i++) print "~\n"}' | glow -p
     ;;
 
   # Open with default browser using +url

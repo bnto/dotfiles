@@ -1,6 +1,5 @@
 # [Created by task 3.3.0 3/3/2025 14:02:52]
-data.location=
-news.version=3.3.0
+data.location=$HOME/.task
 news.version=3.3.1
 include no-color.theme
 

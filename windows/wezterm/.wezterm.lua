@@ -51,6 +51,45 @@ config.keys = {
     mods = "CMD",
     action = wezterm.action.DisableDefaultAssignment,
   },
+  {
+    -- this adds the ability to use ctrl+V to paste the system clipboard
+    key = "V",
+    mods = "CTRL",
+    action = wezterm.action.PasteFrom("Clipboard"),
+  },
+  {
+    -- zen mode
+    key = "Z",
+    mods = "CMD",
+    action = wezterm.action_callback(function(win)
+      local overrides = win:get_config_overrides() or {}
+      if not overrides.window_padding then
+        overrides.window_padding = {
+          bottom = 0,
+          top = 10,
+          right = 450,
+          left = 450,
+        }
+      else
+        overrides.window_padding = nil
+      end
+      win:set_config_overrides(overrides)
+    end),
+  },
+  {
+    -- toggle background mode
+    key = "L",
+    mods = "CMD",
+    action = wezterm.action_callback(function(win)
+      local overrides = win:get_config_overrides() or {}
+      if not overrides.color_scheme then
+        overrides.color_scheme = "rose-pine-moon"
+      else
+        overrides.color_scheme = nil
+      end
+      win:set_config_overrides(overrides)
+    end),
+  },
 }
 
 -- ## color palette
