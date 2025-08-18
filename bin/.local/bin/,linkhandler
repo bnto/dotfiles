@@ -31,7 +31,7 @@ case "$1 $2" in
   # Render images
   *.png*|*.jpg*|*.webp*|*.jpeg*|*.gif*|*assets.amuniversal.com*|*pbs.twimg.com*|*image)
     echo "Loading image..." && \
-    curl -# "$1" | wezterm imgcat
+    curl -# "$1" | feh --borderless -
     read -n 1 -s
     ;;
 
