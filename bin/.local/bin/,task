@@ -1,20 +1,32 @@
 #!/usr/bin/env bash
 
 PROJECT=$(tmux display-message -p '#S')
+
+# taskwarrior
 CMD="task rc.defaultwidth:0 rc.verbose:nothing ls created- desc project:$PROJECT or project:"
+CMD_NEW="task add {q} project:$PROJECT start:now"
+CMD_START="task {1} start"
+CMD_TOGGLE="task {1} | grep -q active && task {1} stop || task {1} start"
+CMD_SHOW_ALL="task rc.defaultwidth:0 rc.verbose:nothing ls created- desc"
+CMD_DELETE="task rc.verbose:nothing rc.confirmation=no delete {1}"
+CMD_ECHO="task _get {1}.description"
+CMD_UNDO="task rc.confirmation=no undo"
+CMD_EDIT="tmux new-window 'task edit {1}'"
+CMD_EDIT_INLINE="clear; read -p 'Description: ' -e -i \"\$(task _get {1}.description)\" desc; task {1} modify description:\"\$desc\""
 
 $CMD | fzf \
+eval $CMD | fzf \
   --ansi \
-  --with-nth=3.. \
+  --with-nth=2.. \
   --header $'\n\e[40m \uf0ae  '"$PROJECT"$' \e[0m \e[32mctrl-a\e[0m add | \e[36mctrl-e\e[0m edit | \e[31mctrl-x\e[0m delete | \e[33mctrl-u\e[0m undo | \e[35menter\e[0m toggle\n\n' \
-  --bind "ctrl-a:execute(task add {q} project:$PROJECT start:now)+change-query()+reload($CMD)" \
-  --bind "ctrl-x:execute(task rc.verbose:nothing rc.confirmation=no delete {1})+reload($CMD)" \
-  --bind "ctrl-e:execute(clear; read -p 'Description: ' -e -i \"\$(task _get {1}.description)\" desc; task {1} modify description:\"\$desc\")+reload($CMD)" \
-  --bind "ctrl-p:execute-silent(task _get {1}.description > /tmp/tmuxmessage ; task {1} start ; tmux refresh-client -S)+reload($CMD)+accept" \
-  --bind "ctrl-y:execute-silent(task _get {1}.description | xclip -selection clipboard)" \
-  --bind "ctrl-u:execute(task rc.confirmation=no undo)+reload($CMD)" \
-  --bind "ctrl-i:execute(tmux new-window 'task edit {1}')+accept" \
+  --bind "ctrl-a:execute($CMD_NEW)+change-query()+reload($CMD)" \
+  --bind "ctrl-x:execute($CMD_DELETE)+reload($CMD)" \
+  --bind "ctrl-e:execute($CMD_EDIT_INLINE)+reload($CMD)" \
+  --bind "ctrl-p:execute-silent($CMD_ECHO > /tmp/tmuxmessage ; $CMD_START ; tmux refresh-client -S)+reload($CMD)+accept" \
+  --bind "ctrl-y:execute-silent($CMD_ECHO | xclip -selection clipboard)+reload($CMD)+accept" \
+  --bind "ctrl-u:execute($CMD_UNDO)+reload($CMD)" \
+  --bind "ctrl-i:execute($CMD_EDIT)+accept" \
   --bind "ctrl-r:reload($CMD)" \
-  --bind "ctrl-t:reload(task rc.defaultwidth:0 rc.verbose:nothing ls created- desc)" \
+  --bind "ctrl-t:reload($CMD_SHOW_ALL)" \
   --bind "ctrl-d:,esc:" \
-  --bind "enter:execute-silent(task {1} | grep -q active && task {1} stop || task {1} start)+reload($CMD)"
+  --bind "enter:execute-silent($CMD_TOGGLE)+reload($CMD)"
