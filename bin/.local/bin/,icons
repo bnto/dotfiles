@@ -96,4 +96,7 @@ case "$1" in
   sleep)
       echo ""
       ;;
+  *)
+      echo ""
+      ;;
 esac
