@@ -6,6 +6,10 @@ macro t set browser ".local/bin/,linkhandler %u use_w3m"; open-in-browser-and-ma
 
 # Bypass paywalls
 macro p set browser ".local/bin/,linkhandler %u bypass_paywall"; open-in-browser-and-mark-read; set browser "bash ,linkhandler %u %T"
+
+# Copy url to clipboard
+macro c set browser "echo '%u' | xclip -selection clipboard"; open-in-browser; set browser ".local/bin/,linkhandler %u %T"
+
 # bind O \
 #        set browser ".local/bin/,browser '%u'"; \
 #        open-in-browser-and-mark-read; \
