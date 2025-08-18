@@ -6,6 +6,26 @@ macro t set browser ".local/bin/,linkhandler %u use_w3m"; open-in-browser-and-ma
 
 # Bypass paywalls
 macro p set browser ".local/bin/,linkhandler %u bypass_paywall"; open-in-browser-and-mark-read; set browser "bash ,linkhandler %u %T"
+# bind O \
+#        set browser ".local/bin/,browser '%u'"; \
+#        open-in-browser-and-mark-read; \
+#        set browser ".local/bin/,linkhandler %u %t %T" \
+#        "Open in external Browser"
+# bind <C-o> \
+#        set browser ".local/bin/,linkhandler %u use_w3m"; \
+#        open-in-browser-and-mark-read; \
+#        set browser ".local/bin/,linkhandler %u %T" \
+#        "Open in w3m"
+# bind b \
+#        set browser ".local/bin/,linkhandler %u bypass_paywall"; \
+#        open-in-browser-and-mark-read; \
+#        set browser "bash ,linkhandler %u %T" \
+#        "Bypass Paywall"
+# bind <C-y> \
+#        set browser "echo '%u' | xclip -selection clipboard"; \
+#        open-in-browser; \
+#        set browser ".local/bin/,linkhandler %u %T" \
+#        "Copy URL"
 
 show-read-feeds no
 confirm-mark-feed-read no
