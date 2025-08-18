@@ -77,8 +77,11 @@ case "$1 $2" in
 
   # everything else gets filtered through readability
   http://*|https://*)
+    BASE_URL=$(echo "$1" | sed -E 's|(https?://[^/]+).*|\1|') && \
     echo "Loading article..." && \
-    curl -s -L --cookie $COURRIER_COOKIE "$1" | readable -q | \
+    curl -s -L --cookie $COURRIER_COOKIE "$1" | \
+    sed -E "s|href=\"(/[^\"#]*)\"|href=\"$BASE_URL\1\"|g; s|src=\"(/[^\"#]*)\"|src=\"$BASE_URL\1\"|g" | \
+    readable -q | \
     pandoc -f html -t gfm --wrap=none --columns=80 --quiet | sed 's/\\//g' | \
     awk '{print} END {for(i=0;i<20;i++) print "~\n"}' | glow -p
     ;;
