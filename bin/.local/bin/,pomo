@@ -5,6 +5,8 @@ PID_FILE="/tmp/pomo_pid"
 STATE_FILE="/tmp/pomo_state"
 POMODORO_DURATION=1500  # 25 minutes
 BREAK_DURATION=300      # 5 minutes
+COFFEE=$(printf '\xEF\x83\xB4') # 
+POMODORO=$(printf '\xEE\x80\x81') # 
 
 update_status() {
     echo "$1" > "$STATUS_FILE"
@@ -26,43 +28,19 @@ run_timer() {
 }
 
 start_pomodoro() {
+    cancel_pomodoro
+
     (
         echo "running" > "$STATE_FILE"
-        run_timer $POMODORO_DURATION $(printf '\xEE\x80\x81')
-        update_status "  $(printf '\xEF\x83\xB4') "
+        run_timer $POMODORO_DURATION $POMODORO
+        update_status "  $COFFEE "
         sleep 3
         echo "break" > "$STATE_FILE"
-        run_timer $BREAK_DURATION $(printf '\xEF\x83\xB4')
-        update_status "  $(printf '\xEE\x80\x81') "
+        run_timer $BREAK_DURATION $COFFEE
+        update_status "  $POMODORO "
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
     echo $! > "$PID_FILE"
-}
-
-toggle_pomodoro() {
-    if [ -f "$PID_FILE" ]; then
-        PID=$(cat "$PID_FILE")
-        STATE=$(cat "$STATE_FILE" 2>/dev/null)
-
-        if kill -0 "$PID" 2>/dev/null; then
-            if [ "$STATE" = "paused" ]; then
-                kill -CONT "$PID"
-                echo "running" > "$STATE_FILE"
-                # echo "Pomodoro resumed"
-                tmux display-message "Pomodoro resumed"
-            else
-                kill -STOP "$PID"
-                echo "paused" > "$STATE_FILE"
-                # echo "Pomodoro paused"
-                tmux display-message "Pomodoro paused"
-            fi
-        else
-            echo "No active Pomodoro process"
-            rm -f "$PID_FILE"
-        fi
-    else
-        start_pomodoro
-    fi
 }
 
 cancel_pomodoro() {
@@ -73,13 +51,10 @@ cancel_pomodoro() {
         fi
         rm -f "$PID_FILE" "$STATE_FILE"
         update_status ""
-        echo "Pomodoro canceled"
-    else
-        echo "No Pomodoro running"
     fi
 }
 
 case "$1" in
     cancel) cancel_pomodoro ;;
-    *) toggle_pomodoro ;;
+    *) start_pomodoro ;;
 esac
