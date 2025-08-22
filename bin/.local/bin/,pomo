@@ -21,7 +21,7 @@ run_timer() {
     while [ $SECONDS_LEFT -gt 0 ]; do
         MIN=$((SECONDS_LEFT / 60))
         SEC=$((SECONDS_LEFT % 60))
-        update_status "  $emoji  $(printf "%02d:%02d" $MIN $SEC)"
+        update_status "  $emoji  $(printf "%02d:%02d" $MIN $SEC)  "
         sleep 1
         SECONDS_LEFT=$((SECONDS_LEFT - 1))
     done
@@ -33,11 +33,13 @@ start_pomodoro() {
     (
         echo "running" > "$STATE_FILE"
         run_timer $POMODORO_DURATION $POMODORO
-        update_status "  $COFFEE "
+        update_status "  $COFFEE   "
+        tmux display-popup "echo -n 'Time for a break !'"
         sleep 3
+
         echo "break" > "$STATE_FILE"
         run_timer $BREAK_DURATION $COFFEE
-        update_status "  $POMODORO "
+        update_status "  $POMODORO   "
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
     echo $! > "$PID_FILE"
