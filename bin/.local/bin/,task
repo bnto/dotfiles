@@ -24,10 +24,12 @@ CMD_NEW="todo.sh add {q} +$PROJECT"
 CMD_TOGGLE="$CMD_ECHO | grep '^\*' && { todo.sh replace {1} \"\$(eval $CMD_ECHO | sed 's/\* //') +$PROJECT\"; } || { todo.sh prepend {1} '*'; }"
 CMD_START="$CMD_ECHO | grep '^\*' || { todo.sh prepend {1} '*'; }"
 CMD_SHOW_ALL="TODOTXT_VERBOSE=0 todo.sh list"
-CMD_DELETE="todo.sh -fn rm {1}"
+CMD_SHOW_ALL="$CMD"
+CMD_DELETE="todo.sh -n rm {1}"
 CMD_EDIT_INLINE="clear; read -p 'Description: ' -e -i \"\$(eval $CMD_ECHO)\" desc; todo.sh replace {1} \"\$desc +$PROJECT\""
 CMD_UNDO=""
 CMD_EDIT="$CMD_EDIT_INLINE"
+CMD_DONE="todo.sh -a done {1}"
 
 eval $CMD | fzf \
   --ansi \
@@ -42,5 +44,5 @@ eval $CMD | fzf \
   --bind "ctrl-i:execute($CMD_EDIT)+accept" \
   --bind "ctrl-r:reload($CMD)" \
   --bind "ctrl-t:reload($CMD_SHOW_ALL)" \
-  --bind "ctrl-d:,esc:" \
+  --bind "ctrl-d:execute($CMD_DONE)+reload($CMD)" \
   --bind "enter:execute-silent($CMD_TOGGLE)+reload($CMD)"

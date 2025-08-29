@@ -28,7 +28,16 @@ run_timer() {
 }
 
 start_pomodoro() {
-    cancel_pomodoro
+    # Check if a Pomodoro is already running
+    if [ -f "$STATE_FILE" ]; then
+        STATE=$(cat "$STATE_FILE")
+        if [ "$STATE" = "running" ]; then
+            echo "Pomodoro already running. Use 'cancel' to stop it."
+            exit 0
+        elif [ "$STATE" = "break" ]; then
+            cancel_pomodoro
+        fi
+    fi
 
     (
         echo "running" > "$STATE_FILE"
