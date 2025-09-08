@@ -38,7 +38,7 @@ eval $CMD | fzf \
   --bind "ctrl-a:execute($CMD_NEW)+change-query()+reload($CMD)" \
   --bind "ctrl-x:execute($CMD_DELETE)+reload($CMD)" \
   --bind "ctrl-e:execute($CMD_EDIT_INLINE)+reload($CMD)" \
-  --bind "ctrl-p:execute-silent({ printf '\xEF\x82\xAE  '; $CMD_ECHO | sed 's/^\* //'; } > /tmp/tmuxmessage ; $CMD_START ; tmux refresh-client -S)+reload($CMD)+accept" \
+  --bind "ctrl-p:execute-silent({ printf '\xEF\x82\xAE  '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > /tmp/tmuxmessage ; $CMD_START ; tmux refresh-client -S)+reload($CMD)+accept" \
   --bind "ctrl-y:execute-silent($CMD_ECHO | xclip -selection clipboard)+reload($CMD)+accept" \
   --bind "ctrl-u:execute($CMD_UNDO)+reload($CMD)" \
   --bind "ctrl-i:execute($CMD_EDIT)+accept" \
