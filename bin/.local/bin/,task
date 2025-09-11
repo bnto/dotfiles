@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 PROJECT=$(tmux display-message -p '#S')
+MESSAGE=/tmp/tmuxmessage
 
 # taskwarrior
 CMD="task rc.defaultwidth:0 rc.verbose:nothing ls created- desc project:$PROJECT or project:"
@@ -18,18 +19,20 @@ CMD_EDIT_INLINE="clear; read -p 'Description: ' -e -i \"\$(task _get {1}.descrip
 TASKS="TODOTXT_VERBOSE=0 todo.sh -p list +$PROJECT | sort -nr | sed 's/\ +$PROJECT//g'" # list tasks
 SORTED="$TASKS | awk '/\*/' && $TASKS | awk '!/\*/' | sort -nr" # sort the tasks
 
-CMD="$SORTED"
+CMD="$SORTED" # Default command
 CMD_ECHO="$TASKS | grep ^{1} | cut -d' ' -f2- | tr -d '\r'" # echo the task {1}
 CMD_NEW="todo.sh add {q} +$PROJECT"
 CMD_TOGGLE="$CMD_ECHO | grep '^\*' && { todo.sh replace {1} \"\$(eval $CMD_ECHO | sed 's/\* //') +$PROJECT\"; } || { todo.sh prepend {1} '*'; }"
 CMD_START="$CMD_ECHO | grep '^\*' || { todo.sh prepend {1} '*'; }"
-CMD_SHOW_ALL="TODOTXT_VERBOSE=0 todo.sh list"
+# CMD_SHOW_ALL="TODOTXT_VERBOSE=0 todo.sh list"
 CMD_SHOW_ALL="$CMD"
 CMD_DELETE="todo.sh -n rm {1}"
 CMD_EDIT_INLINE="clear; read -p 'Description: ' -e -i \"\$(eval $CMD_ECHO)\" desc; todo.sh replace {1} \"\$desc +$PROJECT\""
 CMD_UNDO=""
 CMD_EDIT="$CMD_EDIT_INLINE"
 CMD_DONE="todo.sh -a done {1}"
+CMD_PROMOTE="{ printf '\xEF\x82\xAE  '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > $MESSAGE"
+CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
 
 eval $CMD | fzf \
   --ansi \
@@ -38,7 +41,7 @@ eval $CMD | fzf \
   --bind "ctrl-a:execute($CMD_NEW)+change-query()+reload($CMD)" \
   --bind "ctrl-x:execute($CMD_DELETE)+reload($CMD)" \
   --bind "ctrl-e:execute($CMD_EDIT_INLINE)+reload($CMD)" \
-  --bind "ctrl-p:execute-silent({ printf '\xEF\x82\xAE  '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > /tmp/tmuxmessage ; $CMD_START ; tmux refresh-client -S)+reload($CMD)+accept" \
+  --bind "ctrl-p:execute-silent($CMD_PROMOTE ; $CMD_POMO ; $CMD_START ; tmux refresh-client -S)+reload($CMD)+accept" \
   --bind "ctrl-y:execute-silent($CMD_ECHO | xclip -selection clipboard)+reload($CMD)+accept" \
   --bind "ctrl-u:execute($CMD_UNDO)+reload($CMD)" \
   --bind "ctrl-i:execute($CMD_EDIT)+accept" \
