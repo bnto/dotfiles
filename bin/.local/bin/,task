@@ -19,7 +19,7 @@ CMD_UNDO=""
 CMD_EDIT="$CMD_EDIT_INLINE"
 CMD_DONE="todo.sh -a done {1}"
 CMD_PROMOTE="{ printf '\xEF\x82\xAE  '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > $MESSAGE"
-CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
+CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
 
 eval $CMD | fzf \
   --ansi \

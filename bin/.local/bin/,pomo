@@ -7,6 +7,7 @@ POMODORO_DURATION=1500  # 25 minutes
 BREAK_DURATION=300      # 5 minutes
 COFFEE=$(printf '\xEF\x83\xB4') # 
 POMODORO=$(printf '\xEE\x80\x81') # 
+TASK=$(cat /tmp/tmuxmessage | tail -n 1)
 
 update_status() {
     echo "$1" > "$STATUS_FILE"
@@ -33,6 +34,7 @@ start_pomodoro() {
         STATE=$(cat "$STATE_FILE")
         if [ "$STATE" = "running" ]; then
             echo "Pomodoro already running. Use 'cancel' to stop it."
+            timew rc.verbose="" start "$TASK"
             exit 0
         elif [ "$STATE" = "break" ]; then
             cancel_pomodoro
@@ -40,14 +42,26 @@ start_pomodoro() {
     fi
 
     (
+        # Start a new pomodoro
+        timew rc.verbose="" stop
+        timew rc.verbose="" start "$TASK"
         echo "running" > "$STATE_FILE"
         run_timer $POMODORO_DURATION $POMODORO
-        update_status "$COFFEE   "
-        tmux display-popup "echo -n 'Time for a break !'"
-        sleep 3
 
+        # End the pomodoro...
+        timew rc.verbose="" stop
+        update_status "$COFFEE   "
+
+        # ... and send notification
+        powershell.exe -Command "[System.Media.SystemSounds]::Hand.Play()"
+        tmux display-popup -w 80% "echo '$COFFEE  Time for a break $COFFEE  \n'; timew summary :day :no-ids :no-annotations"
+
+        # Start a new coffee break
+        sleep 3
         echo "break" > "$STATE_FILE"
         run_timer $BREAK_DURATION $COFFEE
+
+        # End the coffee break
         update_status "$POMODORO   "
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
@@ -60,8 +74,9 @@ cancel_pomodoro() {
         if kill -0 "$PID" 2>/dev/null; then
             kill -9 "$PID"
         fi
-        rm -f "$PID_FILE" "$STATE_FILE"
+        rm -f "$PID_FILE" "$STATE_FILE" "$STATUS_FILE"
         update_status ""
+        timew rc.verbose="" stop
     fi
 }
 
