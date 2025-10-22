@@ -89,9 +89,3 @@ iris_fg='\[\e[38;2;144;122;169m\]'
 reset='\[\e[0m\]' # reset color
 
 export PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
-
-# Keybindings
-bind -x '"\C-fn": newsboat'       # (N)ews
-bind -x '"\C-fm": neomutt'        # (M)ail
-
-bind -x '"\C-ff": clear;$HOME/.local/bin/$(find $HOME/.local/bin/ -type f -executable -printf "%f\n" | fzf)'

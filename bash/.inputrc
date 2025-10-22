@@ -6,3 +6,8 @@ set completion-ignore-case On
 "\e[B": history-search-forward
 "\e[C": forward-char
 "\e[D": backward-char
+
+# Keybinds
+"\C-ff": " ,tmux-session\n"  # (F)ind projects
+"\C-fn": " newsboat\n"       # (N)ews
+"\C-fm": " neomutt\n"        # (M)ail
