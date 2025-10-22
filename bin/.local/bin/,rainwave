@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Update tmux status with the currently played music on rainwave
+# info is outputted into the TMUXMUSIC file
+
+TMUXMUSIC=/tmp/tmuxmusic
+TMUXMUSICIMG=/tmp/tmuxmimg
+DATA=$(xh post "https://rainwave.cc/api4/info" sid==1)
+TIMESTAMP=$(echo $DATA | jq -r '.sched_current.end')
+SONG=$(echo $DATA | jq -r '.all_stations_info["1"] | [.album, .title] | join (" - ")')
+
+echo -e "\uF001  $SONG" > $TMUXMUSIC
+curl -s -o $TMUXMUSICIMG "https://rainwave.cc$(echo $DATA | jq '.all_stations_info | .["1"] | .art' | sed 's/"//g')_320.jpg"
+
+while [ "$(date +%s)" -lt "$TIMESTAMP" ]; do
+  TIME_LEFT=$(( TIMESTAMP - $(date +%s) ))
+  echo -e "\uF001  $(( TIME_LEFT / 60 )):$(printf "%02d" $(( TIME_LEFT % 60 ))) $SONG" > $TMUXMUSIC
+  sleep 5
+done
+
+exec "$0" &
