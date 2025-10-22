@@ -6,18 +6,23 @@ if [[ -n $mpv ]]; then
   kill $mpv & exit;
 fi
 
-selected=$(fzf --height=10 --with-nth=1 <<'EOF'
+selected=$(fzf \
+  --height=10 --with-nth=1 <<'EOF'
 lofi https://youtu.be/jfKfPfyJRdk
 vg https://youtu.be/jP9EsyxcdTo
 tendo https://youtu.be/mSDmr86MdHw
 jazz https://youtu.be/Dx5qFachd3A
 coffee https://youtu.be/fEvM-OUbaKs
 space https://youtu.be/5-anTj1QrWs
+rainwave http://allrelays.rainwave.cc/game.mp3
 EOF
 )
 
 if [[ -z $selected ]]; then
   exit 0
+elif [ "${selected%% *}" = "rainwave" ]; then
+  nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
+    "http://allrelays.rainwave.cc/game.mp3"
 else
   # Launch stream
   streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '--no-video --volume=50' -v &
