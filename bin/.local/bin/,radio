@@ -4,6 +4,7 @@
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 if [[ -n $mpv ]]; then
   kill $mpv & exit;
+  echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m'
 fi
 
 selected=$(fzf \
@@ -22,10 +23,11 @@ if [[ -z $selected ]]; then
   exit 0
 elif [ "${selected%% *}" = "rainwave" ]; then
   nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
-    "http://allrelays.rainwave.cc/game.mp3"
+    "http://allrelays.rainwave.cc/game.mp3" > /dev/null 2>&1
 else
   # Launch stream
-  streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '--no-video --volume=50' -v &
+  nohup streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '
+    --no-video --volume=100 --ao=pulse --input-ipc-server=/tmp/mpvsocket' -v > /dev/null 2>&1
 fi
 
 # seemingly defunct streams:
