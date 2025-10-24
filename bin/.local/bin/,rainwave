@@ -5,7 +5,7 @@
 
 TMUXMUSIC=/tmp/tmuxmusic
 TMUXMUSICIMG=/tmp/tmuxmimg
-DATA=$(xh post "https://rainwave.cc/api4/info" sid==1)
+DATA=$(curl -s "https://rainwave.cc/api4/info?sid=1")
 TIMESTAMP=$(echo $DATA | jq -r '.sched_current.end')
 SONG=$(echo $DATA | jq -r '.all_stations_info["1"] | [.album, .title] | join (" - ")')
 
