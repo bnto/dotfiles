@@ -5,6 +5,16 @@ mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 if [[ -n $mpv ]]; then
   kill $mpv & exit;
   echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m'
+  SONG=$(echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
+
+  if [ -z "$TMUX" ]; then
+    wezterm.exe imgcat /tmp/tmuxmimg
+    echo $SONG
+  else
+    paste \
+      <(chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg) \
+      <(echo $SONG)
+  fi
 fi
 
 selected=$(fzf \
