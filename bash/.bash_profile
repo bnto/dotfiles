@@ -52,6 +52,8 @@ export NVM_DIR=$HOME/.nvm
 
 # FZF colorscheme
 export FZF_DEFAULT_OPTS="\
+  --prompt '  ' \
+  --pointer ' ' \
   --reverse \
   --no-border \
   --no-info \
