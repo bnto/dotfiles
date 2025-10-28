@@ -7,7 +7,7 @@ if [[ $# -eq 1 ]]; then
 else
   selected=$(fd --type d --max-depth 4 --exclude node_modules --exclude .git . "$CWD" \
     | sed 's:/*$::' \
-    | xargs stat --format='%X %n' \
+    | xargs stat --format='%Z %n' \
     | sort -nr | cut -d' ' -f2- \
     | fzf --delimiter '/' --with-nth=5..)
 fi
