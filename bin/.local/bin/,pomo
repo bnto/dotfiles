@@ -22,7 +22,7 @@ run_timer() {
     while [ $SECONDS_LEFT -gt 0 ]; do
         MIN=$((SECONDS_LEFT / 60))
         SEC=$((SECONDS_LEFT % 60))
-        update_status "$emoji  $(printf "%02d:%02d" $MIN $SEC)  "
+        update_status "$emoji  $(printf "%02d:%02d" $MIN $SEC)"
         sleep 1
         SECONDS_LEFT=$((SECONDS_LEFT - 1))
     done
@@ -50,11 +50,12 @@ start_pomodoro() {
 
         # End the pomodoro...
         timew rc.verbose="" stop
-        update_status "$COFFEE   "
+        update_status "$COFFEE "
 
         # ... and send notification
         powershell.exe -Command "[System.Media.SystemSounds]::Hand.Play()"
-        tmux display-popup -w 80% "echo '$COFFEE  Time for a break $COFFEE  \n'; timew summary :day :no-ids :no-annotations"
+        tmux display-popup -w 80% "echo '$COFFEE  Time for a break $COFFEE  \n'; \
+          timew summary :day :no-ids :no-annotations"
 
         # Start a new coffee break
         sleep 3
@@ -62,7 +63,7 @@ start_pomodoro() {
         run_timer $BREAK_DURATION $COFFEE
 
         # End the coffee break
-        update_status "$POMODORO   "
+        update_status "$POMODORO "
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
     echo $! > "$PID_FILE"

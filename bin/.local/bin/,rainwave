@@ -33,12 +33,12 @@ DATA=$(curl -s "https://rainwave.cc/api4/info?sid=1")
 TIMESTAMP=$(echo $DATA | jq -r '.sched_current.end')
 SONG=$(echo $DATA | jq -r '.all_stations_info["1"] | [.album, .title] | join (" - ")')
 
-echo -e "\uF001  $SONG" > $TMUXMUSIC
+echo -e "\uF001\u00A0 $SONG" > $TMUXMUSIC
 curl -s -o $TMUXMUSICIMG "https://rainwave.cc$(echo $DATA | jq '.all_stations_info | .["1"] | .art' | sed 's/"//g')_320.jpg"
 
 while [ "$(date +%s)" -lt "$TIMESTAMP" ]; do
   TIME_LEFT=$(( TIMESTAMP - $(date +%s) ))
-  echo -e "\uF001  $(( TIME_LEFT / 60 )):$(printf "%02d" $(( TIME_LEFT % 60 ))) $SONG" > $TMUXMUSIC
+  echo -e "\uF001\u00A0 $(( TIME_LEFT / 60 )):$(printf "%02d" $(( TIME_LEFT % 60 ))) $SONG" > $TMUXMUSIC
   sleep 5
 done
 
