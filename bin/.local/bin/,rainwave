@@ -3,6 +3,30 @@
 # Update tmux status with the currently played music on rainwave
 # info is outputted into the TMUXMUSIC file
 
+RAINWAVE_DEAMON=false
+for arg in "$@"; do
+  case $arg in
+    --deamon) # If --deamon is passed, keep script in the background
+      RAINWAVE_DEAMON=true
+      shift
+      ;;
+  esac
+done
+
+# Display song info and album art
+if [ "$RAINWAVE_DEAMON" = false ]; then
+  SONG=$(echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
+  if [ -z "$TMUX" ]; then
+    wezterm.exe imgcat /tmp/tmuxmimg
+    echo $SONG
+  else
+    paste \
+      <(chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg) \
+      <(echo -e "$SONG")
+  fi
+  exit 0;
+fi
+
 TMUXMUSIC=/tmp/tmuxmusic
 TMUXMUSICIMG=/tmp/tmuxmimg
 DATA=$(curl -s "https://rainwave.cc/api4/info?sid=1")
@@ -18,4 +42,4 @@ while [ "$(date +%s)" -lt "$TIMESTAMP" ]; do
   sleep 5
 done
 
-exec "$0" &
+exec "$0" --deamon &

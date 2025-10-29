@@ -2,19 +2,11 @@
 
 # check if radio is on
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
-if [[ -n $mpv ]]; then
-  kill $mpv & exit;
-  echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m'
-  SONG=$(echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
+rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
 
-  if [ -z "$TMUX" ]; then
-    wezterm.exe imgcat /tmp/tmuxmimg
-    echo $SONG
-  else
-    paste \
-      <(chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg) \
-      <(echo $SONG)
-  fi
+if [[ -n $mpv && -n $rainwave ]]; then
+
+  ,rainwave # Print song info and cover art
 fi
 
 selected=$(fzf \
@@ -32,6 +24,13 @@ EOF
 if [[ -z $selected ]]; then
   exit 0
 elif [ "${selected%% *}" = "rainwave" ]; then
+
+  if [[ -z $rainwave ]]; then
+    echo "Starting deamon..."
+    nohup bash ,rainwave --deamon > /dev/null 2>&1 &
+  fi
+
+  echo "Now playing..."
   nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
     "http://allrelays.rainwave.cc/game.mp3" > /dev/null 2>&1
 else
