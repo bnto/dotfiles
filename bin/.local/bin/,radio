@@ -5,7 +5,6 @@ mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
 
 if [[ -n $mpv && -n $rainwave ]]; then
-
   ,rainwave # Print song info and cover art
 fi
 
@@ -23,20 +22,32 @@ EOF
 
 if [[ -z $selected ]]; then
   exit 0
-elif [ "${selected%% *}" = "rainwave" ]; then
+else
 
-  if [[ -z $rainwave ]]; then
-    echo "Starting deamon..."
-    nohup bash ,rainwave --deamon > /dev/null 2>&1 &
+  # Stop any running player
+  if [[ -n $mpv ]]; then
+    kill $mpv
   fi
 
-  echo "Now playing..."
-  nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
-    "http://allrelays.rainwave.cc/game.mp3" > /dev/null 2>&1
-else
-  # Launch stream
-  nohup streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '
-    --no-video --volume=100 --ao=pulse --input-ipc-server=/tmp/mpvsocket' -v > /dev/null 2>&1
+  echo $selected
+
+  if [ "${selected%% *}" = "rainwave" ]; then
+
+    if [[ -z $rainwave ]]; then
+      echo "Starting deamon..."
+      nohup bash ,rainwave --deamon > /dev/null 2>&1 &
+    fi
+
+    # Launch rainwave radio
+    echo "Now playing..."
+    nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
+      "http://allrelays.rainwave.cc/game.mp3" > /dev/null 2>&1
+  else
+    # Launch stream
+    echo "Now playing..."
+    nohup streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '
+      --no-video --volume=100 --ao=pulse --input-ipc-server=/tmp/mpvsocket' -v > /dev/null 2>&1
+  fi
 fi
 
 # seemingly defunct streams:
