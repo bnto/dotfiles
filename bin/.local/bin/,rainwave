@@ -15,14 +15,13 @@ done
 
 # Display song info and album art
 if [ "$RAINWAVE_DEAMON" = false ]; then
-  SONG=$(echo $'\n\e[40m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
+  SONG=$(echo $'\e[47m\e[30m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
   if [ -z "$TMUX" ]; then
     wezterm.exe imgcat /tmp/tmuxmimg
     echo $SONG
   else
-    paste \
-      <(chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg) \
-      <(echo -e "$SONG")
+      chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg
+      echo -e "\n$SONG\n" | sed -E 's/ - / \n /'
   fi
   exit 0;
 fi
