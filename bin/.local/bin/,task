@@ -1,5 +1,15 @@
 #!/usr/bin/env bash
 
+# Custom interactive task manager
+#
+# This script provides a fuzzy-search interface for managing tasks that
+# integrates with tmux by automatically detecting the current tmux session and
+# filtering the tasks by project.
+#
+# Dependencies:
+# fzf and tmux
+# todo.sh for task management and timewarrior for time tracking
+
 PROJECT=$(tmux display-message -p '#S')
 MESSAGE=/tmp/tmuxmessage
 
@@ -21,7 +31,7 @@ CMD_DONE="todo.sh -a done {1}"
 CMD_PROMOTE="{ printf '\xEF\x82\xAE\u00A0 '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > $MESSAGE"
 CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
 
-TRACKED_TIME=$(timew day | grep Tracked | awk '{print $2}')
+TRACKED_TIME=$(timew day | grep Tracked | awk '{print $2}' | awk -F: '{print $1"h"$2"m"}')
 
 eval $CMD | fzf \
   --ansi \
