@@ -3,6 +3,9 @@
 # Update tmux status with the currently played music on rainwave
 # info is outputted into the TMUXMUSIC file
 
+TMUXMUSIC=/tmp/tmuxmusic
+TMUXMUSICIMG=/tmp/tmuxmimg
+
 RAINWAVE_DEAMON=false
 for arg in "$@"; do
   case $arg in
@@ -15,19 +18,17 @@ done
 
 # Display song info and album art
 if [ "$RAINWAVE_DEAMON" = false ]; then
-  SONG=$(echo $'\e[47m\e[30m '"$(cat /tmp/tmuxmusic)"$' \e[0m')
+  SONG=$(echo $'\e[47m\e[30m '"$(cat $TMUXMUSIC)"$' \e[0m')
   if [ -z "$TMUX" ]; then
-    wezterm.exe imgcat /tmp/tmuxmimg
+    wezterm.exe imgcat $TMUXMUSICIMG
     echo $SONG
   else
-      chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on /tmp/tmuxmimg
-      echo -e "\n$SONG\n" | sed -E 's/ - / \n /'
+    chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on $TMUXMUSICIMG
+    echo -e "\n$SONG\n" | sed -E 's/ - / \n /'
   fi
   exit 0;
 fi
 
-TMUXMUSIC=/tmp/tmuxmusic
-TMUXMUSICIMG=/tmp/tmuxmimg
 DATA=$(curl -s "https://rainwave.cc/api4/info?sid=1")
 TIMESTAMP=$(echo $DATA | jq -r '.sched_current.end')
 SONG=$(echo $DATA | jq -r '.all_stations_info["1"] | [.album, .title] | join (" - ")')
