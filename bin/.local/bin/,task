@@ -31,13 +31,10 @@ CMD_DONE="todo.sh -a done {1}"
 CMD_PROMOTE="{ printf '\xEF\x82\xAE\u00A0 '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > $MESSAGE"
 CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
 
-TRACKED_TIME=$(timew day | grep Tracked | awk '{print $2}' | awk -F: '{print $1"h"$2"m"}')
-
 eval $CMD | fzf \
   --ansi \
   --with-nth=2.. \
-  --header $'\n\e[30m\e[47m Total time worked today: '"${TRACKED_TIME:=ZERO}"$' \e[0m\n
-\e[40m \uf0ae  '"$PROJECT"$' \e[0m \e[32mctrl-a\e[0m add | \e[36mctrl-e\e[0m edit | \e[31mctrl-x\e[0m delete | \e[33mctrl-p\e[0m promote | \e[35menter\e[0m toggle\n\n' \
+  --header $'\n\e[40m \uf0ae  '"$PROJECT"$' \e[0m \e[32mctrl-a\e[0m add | \e[36mctrl-e\e[0m edit | \e[31mctrl-x\e[0m delete | \e[33mctrl-p\e[0m promote | \e[35menter\e[0m toggle\n\n' \
   --bind "ctrl-a:execute($CMD_NEW)+change-query()+reload($CMD)" \
   --bind "ctrl-x:execute($CMD_DELETE)+reload($CMD)" \
   --bind "ctrl-e:execute($CMD_EDIT_INLINE)+reload($CMD)" \
