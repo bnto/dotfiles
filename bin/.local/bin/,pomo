@@ -6,15 +6,17 @@ STATE_FILE="/tmp/pomo_state"
 POMODORO_DURATION=1500  # 25 minutes
 BREAK_DURATION=300      # 5 minutes
 COFFEE=$(printf '\xEF\x83\xB4 ') # 
-POMODORO=$(printf '\xEE\x80\x81 ') # 
+POMODORO=$(printf '\xEE\x80\x82 ') # 
+POMODORO_DONE=$(printf '\xEE\x80\x81 ') # 
 TASK=$(cat /tmp/tmuxmessage | tail -n 1)
 
 if [ -z "$TASK" ]; then
   tmux display-message -d 2000 "Please promote a task before starting the timer"
   exit 0
 fi
+
 update_status() {
-    echo "$1" > "$STATUS_FILE"
+    echo -e "$1" > "$STATUS_FILE"
     tmux refresh-client -S
 }
 
@@ -69,7 +71,7 @@ start_pomodoro() {
         run_timer $BREAK_DURATION $COFFEE
 
         # End the coffee break
-        update_status "$POMODORO \
+        update_status "$POMODORO_DONE \
           $(timew day | grep Tracked | awk '{print $2}' | awk -F: '{print $1"h"$2"m"}')"
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
