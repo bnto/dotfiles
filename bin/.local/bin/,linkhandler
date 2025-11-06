@@ -37,7 +37,7 @@ case "$1 $2" in
 
   # Save to Pinboard
   *youtube.com/watch*|*youtube.com/playlist*|*youtu.be*|*youtube.com/embed/*)
-    read -p "Do you want to save this to Pinboard? [y/N] " -n 1 -r
+  read -p "Do you want to save $(echo -n \"$3\") to Pinboard? [y/N] " -n 1 -r
     if [[ $REPLY =~ ^[Yy]$ ]]; then
       clear
       echo "Saving to pinboard..." && \
@@ -45,11 +45,27 @@ case "$1 $2" in
       -d url="$1" \
       -d tags=yt \
       -d toread=yes \
-      -d description=$(echo "$2" | tr ' ' '_') \
+      -d description="$(echo -n "$3" | sed 's/ /%20/g')" \
       https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN
     fi
     read -n 1 -s
     ;;
+
+  # Save to Pinboard
+  *save_to_pinboard)
+  # url * type title
+  read -p "Save $(echo -n \"$4\") to pinboard? [y/N] " -n 1 -r
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+      echo "Saving to pinboard..." && \
+      curl --verbose -G \
+      -d url="$1" \
+      -d tags=newsboat \
+      -d toread=yes \
+      -d description="$(echo -n $4 | sed 's/ /%20/g')" \
+      https://api.pinboard.in/v1/posts/add?auth_token=$PINBOARD_TOKEN
+    fi
+    read -n 1 -s
+  ;;
 
   # Play video
   *.mkv*|*.webm*|*.mp4*)

@@ -9,6 +9,8 @@ macro p set browser ".local/bin/,linkhandler %u bypass_paywall"; open-in-browser
 
 # Copy url to clipboard
 macro c set browser "echo '%u' | xclip -selection clipboard"; open-in-browser; set browser ".local/bin/,linkhandler %u %T"
+# Save to pinboard
+macro s set browser ".local/bin/,linkhandler %u save_to_pinboard %t %T"; open-in-browser-and-mark-read; set browser ".local/bin/,linkhandler %u %t %T"
 
 # bind O \
 #        set browser ".local/bin/,browser '%u'"; \
