@@ -4,6 +4,7 @@
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
 MPVSOCKET=/tmp/mpvsocket
+ICON=$(printf '\xEF\x80\xA8\x0A') # 
 
 if [[ -n $mpv ]]; then
   
@@ -13,7 +14,7 @@ if [[ -n $mpv ]]; then
 
   while true; do
     volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data' | awk '{printf "%.0f\n", $1}')
-    echo -ne "\r\033[K\uF028  $volume\e[?25l" # 
+    echo -ne "\r$(printf "\033[K")$ICON  $volume$(printf "\e[?25l")" # 
 
     # Some escape codes used here:
     #
@@ -21,7 +22,7 @@ if [[ -n $mpv ]]; then
     # \e[?25l Hide cursor
     # \e[?25h Restore cursor
 
-    trap 'echo -ne "\e[?25h"' EXIT
+    trap 'echo -ne "$(printf "\e[?25h")"' EXIT
 
     read -rsn1 key
     # Read input: q to quit ...
