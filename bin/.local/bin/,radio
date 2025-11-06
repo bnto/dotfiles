@@ -4,12 +4,52 @@
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
 
-if [[ -n $mpv && -n $rainwave ]]; then
-  ,rainwave # Print song info and cover art
+if [[ -n $mpv ]]; then
+  
+  if [[ -n $rainwave ]]; then
+    ,rainwave # Print song info and cover art
+  fi
+
+  while true; do
+    volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data' | awk '{printf "%.0f\n", $1}')
+    echo -ne "\r\033[K\uF028  $volume\e[?25l" # 
+
+    # Some escape codes used here:
+    #
+    # \033[K Replace entire current line
+    # \e[?25l Hide cursor
+    # \e[?25h Restore cursor
+
+    trap 'echo -ne "\e[?25h"' EXIT
+
+    read -rsn1 key
+    # Read input: q to quit ...
+    if [[ $key == "q" ]]; then
+      kill $mpv
+      if [[ -n $rainwave ]]; then
+        kill $rainwave
+      fi
+      break
+    fi
+
+    # ... u or <c-u> for volume up ...
+    if [[ $key == "u" || $key == $'\x15' ]]; then
+      volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data')
+      volume_up=$(echo "$volume + 25" | bc)
+      echo "{ \"command\": [\"set_property\", \"volume\", $volume_up] }" | socat - /tmp/mpvsocket > /dev/null
+    fi
+
+    # ... d or <c-d> for volume down
+    if [[ $key == "d" || $key == $'\x04' ]]; then
+      volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data')
+      volume_down=$(echo "$volume - 25" | bc)
+      echo "{ \"command\": [\"set_property\", \"volume\", $volume_down] }" | socat - /tmp/mpvsocket > /dev/null
+    fi
+  done
+  exit 0
 fi
 
-selected=$(fzf \
-  --height=10 --with-nth=1 <<'EOF'
+selected=$(fzf --with-nth=1 <<'EOF'
 lofi https://youtu.be/jfKfPfyJRdk
 vg https://youtu.be/jP9EsyxcdTo
 tendo https://youtu.be/mSDmr86MdHw
