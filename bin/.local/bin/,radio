@@ -3,6 +3,7 @@
 # check if radio is on
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
+MPVSOCKET=/tmp/mpvsocket
 
 if [[ -n $mpv ]]; then
   
@@ -11,7 +12,7 @@ if [[ -n $mpv ]]; then
   fi
 
   while true; do
-    volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data' | awk '{printf "%.0f\n", $1}')
+    volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data' | awk '{printf "%.0f\n", $1}')
     echo -ne "\r\033[K\uF028  $volume\e[?25l" # 
 
     # Some escape codes used here:
@@ -34,16 +35,16 @@ if [[ -n $mpv ]]; then
 
     # ... u or <c-u> for volume up ...
     if [[ $key == "u" || $key == $'\x15' ]]; then
-      volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data')
+      volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data')
       volume_up=$(echo "$volume + 25" | bc)
-      echo "{ \"command\": [\"set_property\", \"volume\", $volume_up] }" | socat - /tmp/mpvsocket > /dev/null
+      echo "{ \"command\": [\"set_property\", \"volume\", $volume_up] }" | nc -UN $MPVSOCKET > /dev/null
     fi
 
     # ... d or <c-d> for volume down
     if [[ $key == "d" || $key == $'\x04' ]]; then
-      volume=$(echo '{ "command": ["get_property", "volume"] }' | socat - /tmp/mpvsocket | jq '.data')
+      volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data')
       volume_down=$(echo "$volume - 25" | bc)
-      echo "{ \"command\": [\"set_property\", \"volume\", $volume_down] }" | socat - /tmp/mpvsocket > /dev/null
+      echo "{ \"command\": [\"set_property\", \"volume\", $volume_down] }" | nc -UN $MPVSOCKET > /dev/null
     fi
   done
   exit 0
@@ -80,13 +81,13 @@ else
 
     # Launch rainwave radio
     echo "Now playing..."
-    nohup mpv --no-video --volume=100 --input-ipc-server=/tmp/mpvsocket -v \
-      "http://allrelays.rainwave.cc/game.mp3" > /dev/null 2>&1
+    setsid mpv --no-video --volume=100 --input-ipc-server=$MPVSOCKET -v \
+      "http://allrelays.rainwave.cc/game.mp3"
   else
     # Launch stream
     echo "Now playing..."
-    nohup streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '
-      --no-video --volume=100 --ao=pulse --input-ipc-server=/tmp/mpvsocket' -v > /dev/null 2>&1
+    setsid streamlink $(echo $selected | awk '{print $2}') worst -p mpv -a '
+      --no-video --volume=100 --ao=pulse --input-ipc-server='"$MPVSOCKET" -v
   fi
 fi
 
