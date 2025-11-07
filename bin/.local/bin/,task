@@ -30,11 +30,12 @@ CMD_EDIT="$CMD_EDIT_INLINE"
 CMD_DONE="todo.sh -a done {1}"
 CMD_PROMOTE="{ printf '\xEF\x82\xAE\u00A0 '; $CMD_ECHO | sed 's/^\* //' | perl -pe 's/#(?=[A-Z])/##/g'; } > $MESSAGE"
 CMD_POMO="{ $CMD_ECHO | sed 's/^\* //' | tr -d '\n'; printf \" +$PROJECT\"; } >> $MESSAGE"
+CMD_CLEAR="rm -rf $MESSAGE"
 
 eval $CMD | fzf \
   --ansi \
   --with-nth=2.. \
-  --header $'\n\e[40m \uf0ae  '"$PROJECT"$' \e[0m \e[32mctrl-a\e[0m add | \e[36mctrl-e\e[0m edit | \e[31mctrl-x\e[0m delete | \e[33mctrl-p\e[0m promote | \e[35menter\e[0m toggle\n\n' \
+  --header $'\n\e[40m \uf0ae  '"$PROJECT"$' \e[0m \e[32mctrl-a\e[0m add | \e[36mctrl-e\e[0m edit | \e[31mctrl-x\e[0m delete | \e[33mctrl-p\e[0m promote | \e[34mctrl-l\e[0m clear | \e[35menter\e[0m toggle\n\n' \
   --bind "ctrl-a:execute($CMD_NEW)+change-query()+reload($CMD)" \
   --bind "ctrl-x:execute($CMD_DELETE)+reload($CMD)" \
   --bind "ctrl-e:execute($CMD_EDIT_INLINE)+reload($CMD)" \
@@ -44,5 +45,7 @@ eval $CMD | fzf \
   --bind "ctrl-i:execute($CMD_EDIT)+accept" \
   --bind "ctrl-r:reload($CMD)" \
   --bind "ctrl-t:reload($CMD_SHOW_ALL)" \
-  --bind "ctrl-d:execute($CMD_DONE)+reload($CMD)" \
+  --bind "ctrl-l:execute-silent($CMD_CLEAR)+accept" \
   --bind "enter:execute-silent($CMD_TOGGLE)+reload($CMD)"
+
+  # --bind "ctrl-d:execute($CMD_DONE)+reload($CMD)" \
