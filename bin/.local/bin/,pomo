@@ -11,7 +11,7 @@ POMODORO_DONE=$(printf '\xEE\x80\x81 ') # 
 TASK=$(cat /tmp/tmuxmessage | tail -n 1)
 
 if [ -z "$TASK" ]; then
-  tmux display-message -d 2000 "Please promote a task before starting the timer"
+  tmux display-message -d 5000 " $POMODORO_DONE Timer cannot be started without a task"
   exit 0
 fi
 
@@ -72,7 +72,7 @@ start_pomodoro() {
 
         # End the coffee break
         update_status "$POMODORO_DONE \
-          $(timew day | grep Tracked | awk '{print $2}' | awk -F: '{print $1"h"$2"m"}')"
+          $(timew day | grep Tracked | awk '{print $2}' | awk -F: '{print ($1 != "0" ? $1"h" : "") $2"m"}')"
         rm -f "$PID_FILE" "$STATE_FILE"
     ) &
     echo $! > "$PID_FILE"
