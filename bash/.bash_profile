@@ -62,8 +62,8 @@ export FZF_DEFAULT_OPTS="\
   --color=bw"
 
 # Start line with a random emoji
-emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙 🦝 🐢)
-emoji='`echo ${emojis[$RANDOM % 18]}`'
+emojis=(🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐙 🦝 🐢 🐺)
+emoji='`echo ${emojis[$RANDOM % ${#emojis[@]}]}`'
 
 # rose-pine-dawn colorscheme
 base_bg='\[\e[48;2;242;233;225m\]'
