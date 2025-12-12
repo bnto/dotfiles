@@ -1,6 +1,7 @@
 -- Pull in the wezterm API
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
+local on_win = wezterm.target_triple == "x86_64-pc-windows-msvc"
 
 -- ## set light background
 local light_mode = true
@@ -54,15 +55,15 @@ config.keys = {
   {
     -- zen mode
     key = "Z",
-    mods = "CMD",
+    mods = "CMD", -- Win+Shift on Windows
     action = wezterm.action_callback(function(win)
       local overrides = win:get_config_overrides() or {}
       if not overrides.window_padding then
         overrides.window_padding = {
           bottom = 0,
           top = 10,
-          right = 450,
-          left = 450,
+          right = on_win and 300 or 450,
+          left = on_win and 300 or 450,
         }
       else
         overrides.window_padding = nil
@@ -171,7 +172,7 @@ end)
 wezterm.status_update_interval = 30000 -- update every 30 seconds
 
 wezterm.on("update-right-status", function(window)
-  if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+  if on_win then
     return
   end
 
@@ -205,7 +206,7 @@ wezterm.on("update-right-status", function(window)
   }))
 end)
 
-if wezterm.target_triple == "x86_64-pc-windows-msvc" then
+if on_win then
   -- windows specific configuration
   config.default_prog = { "wsl.exe", "~" }
   config.window_decorations = "NONE"
