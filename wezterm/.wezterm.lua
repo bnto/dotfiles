@@ -53,6 +53,11 @@ config.keys = {
     action = wezterm.action.DisableDefaultAssignment,
   },
   {
+    -- this adds the ability to use ctrl+V to paste the system clipboard
+    key = "V",
+    mods = "CTRL",
+    action = on_win and wezterm.action.PasteFrom("Clipboard") or "",
+  },
     -- zen mode
     key = "Z",
     mods = "CMD", -- Win+Shift on Windows
@@ -210,24 +215,26 @@ if on_win then
   -- windows specific configuration
   config.default_prog = { "wsl.exe", "~" }
   config.window_decorations = "NONE"
-  config.window_background_opacity = 0.5
-  config.win32_system_backdrop = "Acrylic"
+  config.window_background_opacity = 0.8
+  config.win32_system_backdrop = "Disable"
   config.font_size = 13
-  config.hide_tab_bar_if_only_one_tab = true
-  -- config.tab_bar_at_bottom = true
   config.initial_rows = 45
   config.initial_cols = 130
   config.window_padding = {
-    bottom = 0,
+    bottom = 20,
     top = 20,
     right = 10,
     left = 20,
   }
+
   wezterm.on("update-right-status", function(window)
     local date = wezterm.strftime("%d/%m")
     local hour = wezterm.strftime("%H:%M")
 
     window:set_right_status(wezterm.format({
+      { Foreground = { Color = palette.muted } },
+      { Background = { Color = palette.base } },
+
       -- time
       { Foreground = { Color = palette.muted } },
       { Background = { Color = palette.overlay } },
