@@ -32,14 +32,15 @@ if have /usr/bin/wslpath; then
   wsl() {
     nvim $(echo $WINHOME)
   }
-fi
 
-if have /opt/homebrew/bin/brew; then
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
 
-if have /home/linuxbrew/.linuxbrew/bin/brew; then
-  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  if have /home/linuxbrew/.linuxbrew/bin/brew; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+else
+  if have /opt/homebrew/bin/brew; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
 fi
 
 # Launch NVM
