@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+break=30
+duration=$((break * 60))
+started=$(date '+%T')
+
+while [ $duration -ge 1 ]; do
+  min=$((duration / 60))
+  sec=$((duration % 60))
+  echo -ne "\r $(printf %02d:%02d $min $sec)   $started\e[?25l"
+  sleep 1
+  duration=$((duration - 1))
+done
+clear
+
+colors=(31 33 32 36 34 35)
+while true; do
+  rows=$(tput lines 2>/dev/null || echo 24)
+  cols=$(tput cols  2>/dev/null || echo 80)
+
+  # Message
+  line1="   $started"
+  line2=" Break over."
+  line3=" Don't forget to badge!"
+
+  # Compute center position
+  max_w=${#line3}
+  (( ${#line1} > max_w )) && max_w=${#line1}
+  (( ${#line2} > max_w )) && max_w=${#line2}
+  start_row=$(( (rows/2) - 1 ))   # three lines → start one above center
+  start_col=$(( (cols - max_w) / 2 ))
+  (( start_row < 1 )) && start_row=1
+  (( start_col < 1 )) && start_col=1
+
+  for c in "${colors[@]}"; do
+    printf "\033[H\033[J"
+    printf "\033[1;%sm" "$c"
+    # Position and print lines
+    printf "\033[%d;%dH%s\n" "$start_row" "$start_col" "$line1"
+    printf "\033[%d;%dH%s\n" "$((start_row+2))" "$start_col" "$line2"
+    printf "\033[%d;%dH%s\n" "$((start_row+3))" "$start_col" "$line3"
+    printf "\033[0m\e[?25l"
+    sleep 0.1
+  done
+done

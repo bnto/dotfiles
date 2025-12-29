@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+
+export JIRA_API_TOKEN=
+export JIRA_AUTH_TYPE=bearer
+
+# Host authentification
+URL=""
+PORT=9999
+SESSION=""
+SERAPH=""
+
+# Build the cookie
+COOKIE="AM-S-SESSION-ID=$SESSION; seraph.rememberme.cookie=$SERAPH"
+
+# Create temporary Caddyfile
+cat > /tmp/Caddyfile <<EOF
+:$PORT
+
+reverse_proxy ${URL} {
+  header_up Cookie "${COOKIE}"
+  header_up Host {http.reverse_proxy.upstream.hostport}
+}
+EOF
+
+# Check if caddy is installed
+if ! command -v caddy >/dev/null 2>&1; then
+  echo "Caddy not found"
+  exit 1
+fi
+
+# Run caddy using a temporary Caddyfile
+proxy=$(ps aux | grep '[c]addy')
+if [ -z "$proxy" ]; then
+  echo "  Starting JIRA..."
+  caddy run --config /tmp/Caddyfile > /dev/null 2>&1 &
+  sleep 1
+fi
+
+# Stop caddy upon exit
+trap cleanup EXIT HUP INT TERM
+cleanup() {
+  kill $(ps aux | grep '[c]addy' | awk '{print $2}' | xargs)
+}
+
+# Run the cli through our caddy reverse proxy
+if [ $# -eq 0 ]; then
+  # command jira issues ls -q"project IS NOT EMPTY AND project NOT IN (TESTJIRA)" --order-by updated
+  command jira issues ls --plain --no-truncate --no-headers --order-by updated --columns key,status,summary,assignee \
+    -q"project IS NOT EMPTY AND project NOT IN (TESTJIRA)" |\
+    awk '{ gsub(/\tDone[\t]*/, "\t󰸞  "); print }' |\
+    awk '{ gsub(/\tIn Progress[\t]*/, "\t  "); print }' |\
+    awk '{ gsub(/\tSelected for Development[\t]*/, "\t  "); print }' |\
+    awk '{ gsub(/\tBacklog[\t]*/, "\t   "); print }' |\
+    fzf --ansi --preview-window hidden --preview 'jira issue view {1} --plain --comments 5 | glow -p -w 0' --preview-window=down \
+    --header $'\n\e[40m   '"JIRA "$' \e[0m   \e[32mctrl-a\e[0m | \e[36mctrl-o\e[0m open | \e[31mctrl-x\e[0m | \e[33mctrl-p\e[0m promote | \e[34mctrl-l\e[0m | \e[35menter\e[0m preview \n\n' \
+    --bind "ctrl-o:execute(,browser $URL/browse/{1})" \
+    --bind "ctrl-p:execute(todo.sh add {})" \
+    --bind "enter:toggle-preview" \
+    --bind "ctrl-x:execute()"
+else
+  command jira "$@"
+fi
