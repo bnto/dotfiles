@@ -34,6 +34,16 @@ if [[ -n $mpv ]]; then
       break
     fi
 
+    # ... esc to exit ...
+    if [[ $key == $'\e' ]]; then
+      exit 0
+    fi
+
+    # ... p to pause ...
+    if [[ $key == "p" ]]; then
+      echo "{ \"command\": [\"cycle\", \"pause\"] }" | nc -UN $MPVSOCKET > /dev/null
+    fi
+
     # ... u or <c-u> for volume up ...
     if [[ $key == "u" || $key == $'\x15' ]]; then
       volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data')
