@@ -1,3 +1,5 @@
+# .inputrc
+
 set completion-ignore-case On
 # set editing-mode vi
 

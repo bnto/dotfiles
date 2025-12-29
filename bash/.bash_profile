@@ -91,4 +91,4 @@ iris_bg='\[\e[48;2;144;122;169m\]'
 iris_fg='\[\e[38;2;144;122;169m\]'
 reset='\[\e[0m\]' # reset color
 
-export PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"
+PS1="$emoji ${base_fg}${gold_bg} \W ${reset} ${reset}"

@@ -64,13 +64,3 @@ colortest() {
   done
   echo
 }
-
-# Launch a Twitch Stream
-tw() { streamlink twitch.tv/"$1" ${2:-480p} \
-  --twitch-proxy-playlist=https://eu2.luminous.dev,https://lb-eu2.cdn-perfprod.com \
-  -p mpv &}
-
-# Send a notification
-notify() {
-  osascript -e 'display notification "'"$1"'" with title "'"$2"'" sound name "Submarine"'
-}
