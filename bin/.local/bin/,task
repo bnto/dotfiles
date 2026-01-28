@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 
-# Custom interactive task manager
+# ,task
+#   Custom interactive task manager
 #
-# This script provides a fuzzy-search interface for managing tasks that
-# integrates with tmux by automatically detecting the current tmux session and
-# filtering the tasks by project.
+#   This script provides a fuzzy-search interface for managing tasks that
+#   integrates with tmux by automatically detecting the current tmux session
+#   and filtering the tasks by project.
 #
 # Dependencies:
 # fzf and tmux

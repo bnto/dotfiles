@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
 
-# Stalk your favorite Twitch streamers:
-# Fetches followed channels, shows who's live with cool previews,
-# and launches the chosen stream like a boss using streamlink and mpv.
-
-# Dependencies: curl, jq, awk, sed, streamlink, mpv, fzf, chafa, libsixel
+# ,twitch
+#   Stalk your favorite Twitch streamers.
+#   This script fetches followed channels, shows who's live,
+#   and launches the chosen stream using streamlink and mpv.
+#
+# Dependencies:
+#   curl, jq, awk, sed, streamlink, mpv, fzf, chafa, libsixel
 
 # Replace OAUTH_TOKEN and CLIENT_ID with your actual credentials
 OAUTH_TOKEN="$(security find-generic-password -a ${USER} -s TW_OAUTH_TOKEN -w)"

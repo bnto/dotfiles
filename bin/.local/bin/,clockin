@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# ,clockin
+#   This script fires up a countdown.
 break=30
 duration=$((break * 60))
 started=$(date '+%T')

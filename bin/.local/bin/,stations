@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 
-DATASET_CACHE=/tmp/dataset.zip
+# ,stations
+#   This script will download the latest dataset and
+#   lists all the stations available in the stops.txt file
 
-# this script will download the latest dataset and
-# list all the stations available in the stops.txt file
+DATASET_CACHE=/tmp/dataset.zip
 
 if [ ! -f "$DATASET_CACHE" ]; then
   # Create cache file if not available

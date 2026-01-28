@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-# Pinboard
-# Load or Save urls
+# ,pinboard
+#   Load or Save urls
 
 PINBOARD_TOKEN="$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)"
 PINBOARD_CACHE="/tmp/pinboard.json"

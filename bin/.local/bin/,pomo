@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# ,pomo
+#   Lauch pomodoro timer
+
 STATUS_FILE="/tmp/pomo_status"
 PID_FILE="/tmp/pomo_pid"
 STATE_FILE="/tmp/pomo_state"

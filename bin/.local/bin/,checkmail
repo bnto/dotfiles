@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# This script informs about new unread emails, including the sender
-# and subject. It uses Python to decode base64-encoded email content.
-#
+# ,checkmail
+#   This script informs about new unread emails, including the sender
+#   and subject. It uses Python to decode base64-encoded email content.
 # new email location is currently set to ~/.mail/INBOX/new/
 
 for email_file in ~/.mail/INBOX/new/* ~/.mail/Junk/new/*; do
