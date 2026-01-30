@@ -7,7 +7,6 @@ export COURRIER_COOKIE="$(security find-generic-password -a ${USER} -s COURRIER_
 export PM_API_KEY=$(security find-generic-password -a ${USER} -s PM_API_KEY -w)
 export PINBOARD_TOKEN=$(security find-generic-password -a ${USER} -s PINBOARD_TOKEN -w)
 export PROXY=
-export PROXY_AUTH=
 
 [ -z "$1" ] && { "$BROWSER"; exit; }
 
@@ -24,8 +23,8 @@ case "$1 $2" in
     # using https://github.com/everywall/ladder
     echo "Loading article..." && \
     echo "Stripping out paywall..." && \
-    curl -s -X GET "$PROXY/$1" -u $PROXY_AUTH | readable -q | \
     pandoc -f html -t gfm --wrap=none --columns=80 --quiet | sed 's/\\//g' | glow -p
+    curl -v -X GET "$PROXY/$1" --netrc | readable -q | \
   ;;
 
   # Render images
