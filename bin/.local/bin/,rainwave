@@ -3,8 +3,8 @@
 # Update tmux status with the currently played music on rainwave
 # info is outputted into the TMUXMUSIC file
 
-TMUXMUSIC=/tmp/tmuxmusic
-TMUXMUSICIMG=/tmp/tmuxmimg
+TMUXMUSIC=/dev/shm/tmuxmusic
+TMUXMUSICIMG=/dev/shm/tmuxmimg
 
 RAINWAVE_DEAMON=false
 for arg in "$@"; do

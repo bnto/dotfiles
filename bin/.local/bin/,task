@@ -11,8 +11,9 @@
 # fzf and tmux
 # todo.sh for task management and timewarrior for time tracking
 
+MESSAGE=/dev/shm/tmuxmessage
+
 PROJECT=$(tmux display-message -p '#S')
-MESSAGE=/tmp/tmuxmessage
 
 TASKS="TODOTXT_VERBOSE=0 todo.sh -p list +$PROJECT | sort -nr | sed 's/\ +$PROJECT//g'" # list tasks
 SORTED="$TASKS | awk '/\*/' && $TASKS | awk '!/\*/' | sort -nr" # sort the tasks
