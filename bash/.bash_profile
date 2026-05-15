@@ -20,16 +20,10 @@ fi
 
 # WSL options
 if have /usr/bin/wslpath; then
-  export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r'))
-
-  # start at ~
-  if [[ $(pwd) == $WINHOME ]]
-  then
-    cd ~
-  fi
 
   # open the windows home folder
   wsl() {
+    export WINHOME=$(wslpath $(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r'))
     nvim $(echo $WINHOME)
   }
 
