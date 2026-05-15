@@ -3,15 +3,16 @@
 # ,pomo
 #   Lauch pomodoro timer
 
-STATUS_FILE="/tmp/pomo_status"
-PID_FILE="/tmp/pomo_pid"
-STATE_FILE="/tmp/pomo_state"
+STATUS_FILE="/dev/shm/pomo_status"
+PID_FILE="/dev/shm/pomo_pid"
+STATE_FILE="/dev/shm/pomo_state"
+
 POMODORO_DURATION=1500  # 25 minutes
 BREAK_DURATION=300      # 5 minutes
 COFFEE=$(printf '\xEF\x83\xB4 ') # 
 POMODORO=$(printf '\xEE\x80\x82 ') # 
 POMODORO_DONE=$(printf '\xEE\x80\x81 ') # 
-TASK=$(cat /tmp/tmuxmessage | tail -n 1)
+TASK=$(cat /dev/shm/tmuxmessage | tail -n 1)
 
 if [ -z "$TASK" ]; then
   tmux display-message -d 5000 " $POMODORO_DONE Timer cannot be started without a task"
