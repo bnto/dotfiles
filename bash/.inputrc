@@ -10,6 +10,6 @@ set completion-ignore-case On
 "\e[D": backward-char
 
 # Keybinds
-"\C-ff": " ,tmux-session\n"  # (F)ind projects
+"\C-bf": " ,tmux-session\n"  # (F)ind projects
 "\C-fn": " newsboat\n"       # (N)ews
 "\C-fm": " neomutt\n"        # (M)ail
