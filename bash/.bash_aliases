@@ -46,11 +46,16 @@ if have /usr/bin/xclip; then
   alias pbpaste="xclip -selection c -o"
 fi
 
-colortest() {
-  T='gYw' # The test text
+# kill stuck app
+stop() {
+  kill -9 $(ps aux | grep "$1" | fzf | awk '{ print $2 }')
+}
 
-  echo -e "\n                 40m     41m     42m     43m\
-       44m     45m     46m     47m"
+# print table of available terminal colors
+printcolors() {
+  T='gYw'
+
+  echo -e "\n                 40m     41m     42m     43m     44m     45m     46m     47m"
 
   for FGs in '    m' '   1m' '  30m' '1;30m' '  31m' '1;31m' '  32m' \
     '1;32m' '  33m' '1;33m' '  34m' '1;34m' '  35m' '1;35m' \
