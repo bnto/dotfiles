@@ -5,7 +5,7 @@ export EDITOR=nvim
 export HISTCONTROL=ignoreboth:erasedups
 export HISTFILESIZE=
 export HISTSIZE=
-export ZK_NOTEBOOK_DIR=""
+export ZK_NOTEBOOK_DIR="$HOME/zk"
 
 # Add my custom scripts
 PATH="~/.local/bin:$PATH"
@@ -27,14 +27,28 @@ if have /usr/bin/wslpath; then
     nvim $(echo $WINHOME)
   }
 
+  # open script for jira auth
+  jira() {
+    command bash ,jira "$@"
+  }
+
+  oracle() {
+    command bash ~/tmp/sqlcl/bin/sql testora/testora@//10.110.23.17:1521/ORNFTEST
+  }
 
   if have /home/linuxbrew/.linuxbrew/bin/brew; then
+    export HOMEBREW_NO_SANDBOX_LINUX=1
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   fi
 else
   if have /opt/homebrew/bin/brew; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
+fi
+
+# Initialize zoxide
+if have zoxide; then
+  eval "$(zoxide init bash)"
 fi
 
 # Launch NVM
