@@ -1,31 +1,38 @@
 #!/usr/bin/env bash
 
-# check if radio is on
 mpv=$(ps -ef | grep mpv | grep -v grep | awk '{print $2}' | xargs)
 rainwave=$(ps -ef | grep ,rainwave | grep -v grep | awk '{print $2}' | xargs)
 MPVSOCKET=/tmp/mpvsocket
 ICON=$(printf '\xEF\x80\xA8\x0A') # 
+HEADER="\e[32m[u]\e[0mp \e[36m[d]\e[0mown volume\ \n\e[33m[v]\e[0miew next\ \n\e[34m[q]\e[0muit player"
 
+# check if radio is on
 if [[ -n $mpv ]]; then
-  
   if [[ -n $rainwave ]]; then
     ,rainwave # Print song info and cover art
   fi
 
+  # print and set key commands
+  echo -e "\n$HEADER\n"
   while true; do
-    volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data' | awk '{printf "%.0f\n", $1}')
-    echo -ne "\r$(printf "\033[K")$ICON  $volume$(printf "\e[?25l")" # 
+    volume=$(echo '{ "command": ["get_property", "volume"] }' \
+      | nc -UN $MPVSOCKET | jq '.data' | awk '{printf "%.0f\n", $1}')
+    # printf "\e[H"
+    echo -ne "\r$(printf "\033[K") $ICON  $volume$(printf "\e[?25l") \e[0m"
 
     # Some escape codes used here:
     #
     # \033[K Replace entire current line
     # \e[?25l Hide cursor
     # \e[?25h Restore cursor
+    # \e[H Move cursor to top-left
+    # \e7 Save cursor position
+    # \e8 Restore cursor to saved position
 
     trap 'echo -ne "$(printf "\e[?25h")"' EXIT
 
     read -rsn1 key
-    # Read input: q to quit ...
+    # Read input: <q> to *quit* ...
     if [[ $key == "q" ]]; then
       kill $mpv
       if [[ -n $rainwave ]]; then
@@ -34,27 +41,44 @@ if [[ -n $mpv ]]; then
       break
     fi
 
-    # ... esc to exit ...
+    # ... <esc> to *exit* ...
     if [[ $key == $'\e' ]]; then
       exit 0
     fi
 
-    # ... p to pause ...
+    # ... <p> to *pause* ...
     if [[ $key == "p" ]]; then
       echo "{ \"command\": [\"cycle\", \"pause\"] }" | nc -UN $MPVSOCKET > /dev/null
     fi
 
-    # ... u or <c-u> for volume up ...
+    # ... <v> to *view* the upcoming songs ...
+    if [[ $key == "v" ]]; then
+      # Vote for the next song
+      vote=$(curl -s "https://rainwave.cc/api4/info?sid=1" \
+        | jq -r '.sched_next | .[].songs | .[] | "\(.id)\t(\(.entry_votes))\t\(.title) - \(.albums[0].name)\thttps://rainwave.cc\(.albums[0].art)_320.jpg"' \
+        | fzf --with-nth=2..3 --delimiter='\t')
+      printf '%s\n' "$vote" | cut -f1
+        # --preview 'curl -s {4} | chafa -s 25x10 -c full --dither diffusion --dither-grain 1 --dither-intensity 10 -p on -f sixel'
+    fi
+
+    # ... <w> to *open a wezterm* tab with better artwork ...
+    if [[ $key == "w" ]]; then
+      cd $(wslpath $(cmd.exe /C "echo %USERPROFILE%" 2>/dev/null | tr -d '\r'))/.local/share/wezterm/ && wezterm cli split-pane --percent 30 -- bash -cl "cd ~ && bash ,radio" > /dev/null 2>&1
+      tmux display-popup -C
+      break
+    fi
+
+    # ... <u> or <c-u> for *volume up* ...
     if [[ $key == "u" || $key == $'\x15' ]]; then
       volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data')
-      volume_up=$(echo "$volume + 25" | bc)
+      volume_up=$(echo "$volume + 10" | bc)
       echo "{ \"command\": [\"set_property\", \"volume\", $volume_up] }" | nc -UN $MPVSOCKET > /dev/null
     fi
 
-    # ... d or <c-d> for volume down
+    # ... <d> or <c-d> for *volume down*
     if [[ $key == "d" || $key == $'\x04' ]]; then
       volume=$(echo '{ "command": ["get_property", "volume"] }' | nc -UN $MPVSOCKET | jq '.data')
-      volume_down=$(echo "$volume - 25" | bc)
+      volume_down=$(echo "$volume - 10" | bc)
       echo "{ \"command\": [\"set_property\", \"volume\", $volume_down] }" | nc -UN $MPVSOCKET > /dev/null
     fi
   done
