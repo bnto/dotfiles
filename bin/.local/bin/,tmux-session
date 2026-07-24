@@ -1,6 +1,30 @@
 #!/usr/bin/env bash
 
+# ,tmux-session
+#   Manage opening tmux sessions
+#
+#   Required:
+#   - tmux fd fzf
+#
+#   Optional:
+#   - zoxide nvim
+
 CWD="$HOME/Developer"
+FD_EXCLUDES=(
+  node_modules
+  .git
+)
+
+# List open sessions
+for arg in "$@"; do
+  case $arg in
+    --list)
+      SESSION="$(tmux ls -F "#{session_name} #{session_last_attached}")"
+      tmux switch-client -t $(echo "$SESSION" | sort -k2 -r | cut -d' ' -f1 | fzf --pointer '•')
+      exit 0
+      ;;
+  esac
+done
 
 if [[ $# -eq 1 ]]; then
     selected=$1
