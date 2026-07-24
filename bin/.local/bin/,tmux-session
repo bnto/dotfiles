@@ -5,30 +5,88 @@ CWD="$HOME/Developer"
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-  selected=$(fd --type d --max-depth 4 --exclude node_modules --exclude .git . "$CWD" \
-    | sed 's:/*$::' \
-    | xargs stat --format='%Z %n' \
-    | sort -nr | cut -d' ' -f2- \
-    | fzf --delimiter '/' --with-nth=5..)
+  if command -v zoxide >/dev/null 2>&1; then
+    zoxide_scores=$(zoxide query --list --score)
+  fi
+  selected=$(
+    fd --type d --max-depth 4 \
+      "${FD_EXCLUDES[@]/#/--exclude=}" \
+      . "$CWD" \
+      | sed 's:/*$::' \
+      | awk -F/ '{ print NF, $0 }' \
+      | sort -n \
+      | cut -d' ' -f2- \
+      | awk -v scores="$zoxide_scores" '
+        BEGIN {
+          # Parse output into z["path"] = score #
+          split(scores, lines, "\n")
+
+          for (i in lines) {
+            line = lines[i]
+
+            score = line
+            sub(/^[[:space:]]*/, "", score)
+            sub(/[[:space:]].*/, "", score)
+
+            path = line
+            sub(/^[[:space:]]*[0-9.]+[[:space:]]+/, "", path)
+
+            z[path] = score
+          }
+        }{
+          score = ($0 in z ? z[$0] : 0)
+
+          # Add the directory unix timestamp to the score #
+          if (score > 0) {
+            cmd = "stat -c %Y \"" $0 "\" 2>/dev/null"
+            cmd | getline mtime
+            close(cmd)
+
+            age_days = (systime() - mtime) / 86400
+            if(age_days < 0) age_days = 0
+
+            score += score * (2 / (2 + age_days))
+          }
+
+          path = $0
+          if (score > 0) path = sprintf("\033[4m%s\033[0m", $0)
+          printf "%s\t%s\n", score, path
+        }
+      ' \
+      | sort -s -nr \
+      | awk '
+        # Seperate scored and no score entries #
+        !seen_zero && $1 == 0 {
+          print "-\t"
+          seen_zero = 1
+        } { print }
+      ' \
+      | cut -f2- \
+      | fzf --ansi --no-sort --preview-window=down \
+      --preview 'basename $(git -C {} rev-parse --show-toplevel 2>/dev/null) 2>/dev/null;
+            echo; git -C {} log --graph --oneline -n 15 2>/dev/null' --delimiter '/' --with-nth=5..
+  )
+
+  [ -n "$selected" ] && command -v zoxide >/dev/null 2>&1 && zoxide add "$selected"
 fi
 
 if [[ -z $selected ]]; then
     exit 0
 fi
 
-session_name=$(basename "$selected" | tr . _)
+session_name=$(basename "$selected" | tr . _ | tr ' ' _)
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
     # Start tmux and new session
-    tmux new-session -s $session_name -c $selected 'nvim README.md'
+    tmux new-session -s "$session_name" -c "$selected" 'nvim README.md'
     exit 0
 fi
 
-if ! tmux has-session -t=$session_name 2> /dev/null; then
+if ! tmux has-session -t="$session_name" 2> /dev/null; then
     # Create new session
-    tmux new-session -ds $session_name -c $selected 'nvim README.md'
+    tmux new-session -ds "$session_name" -c "$selected" 'nvim README.md'
 fi
 
 # Switch to session
-tmux switch-client -t $session_name || tmux attach-session -t $session_name
+tmux switch-client -t "$session_name" || tmux attach-session -t "$session_name"
