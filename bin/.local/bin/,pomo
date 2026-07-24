@@ -66,6 +66,7 @@ start_pomodoro() {
 
         # ... and send notification
         powershell.exe -Command "[System.Media.SystemSounds]::Hand.Play()"
+        tmux display-popup -C # Dismiss any opened popup
         tmux display-popup -w 80% "echo '$COFFEE  Time for a break $COFFEE  \n'; \
           timew summary :day :no-ids :no-annotations"
 
